@@ -12,7 +12,7 @@ public:
     ReplyNode* head = NULL;
     ReplyNode* tail = NULL;
 
-    ReplyNode* createNewReplyNode(string Username, string Reply);
+    ReplyNode* createNewReplyNode(string Username, const string& Reply);
 
-    void insertReplyIntoFeedback(string Username, string Reply);
+    void insertReplyIntoFeedback(string Username, const string& Reply);
 };

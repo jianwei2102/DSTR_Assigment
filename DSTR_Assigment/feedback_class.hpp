@@ -2,6 +2,7 @@
 #include "reply_class.hpp"
 #include "user_class.hpp"
 #include <string>
+#include <ctime>
 using namespace std;
 
 class ReplyList; // forward declaration
@@ -24,11 +25,11 @@ public:
     FeedbackNode* tail = NULL;
 
     // FeedbackID
-    FeedbackNode* createNewFeedbackNode(string UserID, string Feedback);
+    FeedbackNode* createNewFeedbackNode(string UserID, const string& Feedback);
 
     FeedbackNode* getFeedbackNode(string FeedbackID);
 
-    void insertIntoFeedbackList(UserNode* User, string Feedback);
+    void insertIntoFeedbackList(UserNode* User, const string& Feedback);
 
     void insertIntoAllFeedbackList(FeedbackNode* NewFeedback);
 

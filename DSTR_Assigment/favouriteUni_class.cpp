@@ -22,12 +22,13 @@ UserFavouriteUni* FavouriteUnilist::getFavouriteUni(string UserID, string UniID)
 void FavouriteUnilist::insertIntoFavouriteUni(string UserID, string UniID, bool isReportList) {
     // Create a new FeedbackNode
     UserFavouriteUni* newFavouriteUni = createNewFavouriteUni(UserID, UniID);
+    UserFavouriteUni* newAllFavouriteUni = createNewFavouriteUni(UserID, UniID);
 
     if (isReportList) {
         newFavouriteUni->favoriteCount = 1;
     }
     else {
-        insertIntoAllFavouriteList(newFavouriteUni);
+        insertIntoAllFavouriteList(newAllFavouriteUni);
     }
 
     // If the list is empty, set the new node as the head and tail
@@ -41,9 +42,6 @@ void FavouriteUnilist::insertIntoFavouriteUni(string UserID, string UniID, bool 
         newFavouriteUni->PrevUni = tail;
         tail = newFavouriteUni;
     }
-    cout << "Head " << head << " FOR " << UserID << endl;
-    cout << "Tail " << tail << " FOR " << UserID << endl << endl;
-
 }
 
 void FavouriteUnilist::insertIntoAllFavouriteList(UserFavouriteUni* newFavouriteUni) {
@@ -61,12 +59,9 @@ void FavouriteUnilist::insertIntoAllFavouriteList(UserFavouriteUni* newFavourite
         AllFavouriteUnilist->tail->NextUni = newFavouriteUni;
         AllFavouriteUnilist->tail = AllFavouriteUnilist->tail->NextUni;
     }
-
-    /*cout << "ALLFU" << endl;
-    cout << "Head " << AllFavouriteUnilist->head << endl;
-    cout << "Tail " << AllFavouriteUnilist->tail << endl << endl;*/
 }
 
+// TESTING ONLY
 void FavouriteUnilist::displayALL() {
     UserFavouriteUni* currentUni = AllFavouriteUnilist->head;
     int count = 0;
@@ -86,17 +81,18 @@ void FavouriteUnilist::displayALL() {
 void FavouriteUnilist::removeFavouriteUni(string UserID, string UniID) {}
 
 FavouriteUnilist* FavouriteUnilist::generateFavouriteUniRecord() {
+    // Generate a new list for top favourite uni list
     FavouriteUnilist* TopFavouriteList = new FavouriteUnilist();
 
     // Traverse through the AllFavouriteUnilist
     UserFavouriteUni* currentUni = AllFavouriteUnilist->head;
     while (currentUni != NULL) {
-
         // Check if this uni is already in the TopFavouriteList
         UserFavouriteUni* uniInTopList = TopFavouriteList->head;
         UserFavouriteUni* prevUniInTopList = NULL;
         bool uniFoundInTopList = false;
         while (uniInTopList != NULL) {
+            // If the uni already exist in the list
             if (uniInTopList->UniID == currentUni->UniID) {
                 uniFoundInTopList = true;
                 break;
@@ -105,11 +101,9 @@ FavouriteUnilist* FavouriteUnilist::generateFavouriteUniRecord() {
             uniInTopList = uniInTopList->NextUni;
         }
 
-        // If uni is not in the TopFavouriteList, add it with favoriteCount 1
+        // If uni is not in the TopFavouriteList, add it with favoriteCount of 1
         if (!uniFoundInTopList) {
-            UserFavouriteUni* newUni = createNewFavouriteUni("", currentUni->UniID);
-            newUni->favoriteCount = 1;
-            TopFavouriteList->insertIntoFavouriteUni("", newUni->UniID, true);
+            TopFavouriteList->insertIntoFavouriteUni("", currentUni->UniID, true);
         }
         // If uni is already in the TopFavouriteList, update its favoriteCount
         else {

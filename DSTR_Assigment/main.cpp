@@ -25,27 +25,30 @@ int main() {
     UserNode* bob = userList.login("Bob", "qwerty");
     UserNode* ac = userList.login("C", "ac");
     // Create some feedback from Alice
-    userList.addFeedbackToUser(alice, "This is my feedback");
-    userList.addFeedbackToUser(bob, "Test");
-    userList.addFeedbackToUser(alice, "This is my second feedback");
+    //userList.addFeedbackToUser(alice, "This is my feedback");
+    //userList.addFeedbackToUser(bob, "Test");
+    //userList.addFeedbackToUser(alice, "This is my second feedback");
    
    
-    userList.addFeedbackToUser(bob, "Test 2");
-    userList.addFeedbackToUser(bob, "This is my third feedback");
+    //userList.addFeedbackToUser(bob, "Test 2");
+    //userList.addFeedbackToUser(alice, "This is my third feedback");
     //userList.insertReplyIntoFeedbackNode("26500", alice, "This is my reply"); // 41, 6334
-    /*cout << endl << "Show alice" << endl;
-    userList.showOwnFeedback(alice);*/
     //userList.insertReplyIntoFeedbackNode("26500", alice, "This is my second reply"); // 41, 6334
-    cout << endl << "Show bob" << endl;
-    userList.showOwnFeedback(bob);
+    //cout << endl << "Show alice" << endl;
+    //userList.showOwnFeedback(alice);
+    //cout << endl << "Show bob" << endl;
+    //userList.showOwnFeedback(bob);
 
 
     // Create some uni fav from Alice
-    /*userList.addFavouriteUniToUser(alice, "UNI05");
+    userList.addFavouriteUniToUser(alice, "UNI05");
     userList.addFavouriteUniToUser(alice, "UNI031");
     userList.addFavouriteUniToUser(ac, "UNI03");
     userList.addFavouriteUniToUser(alice, "UNI03");
+    userList.addFavouriteUniToUser(alice, "UNI03");
     userList.addFavouriteUniToUser(bob, "UNI031");
+    userList.addFavouriteUniToUser(bob, "UNI021");
+    userList.addFavouriteUniToUser(bob, "UNI021");
     cout << endl << "Show Alice" << endl;
     userList.showOwnFavoriteUni(alice);
     cout << endl << "Show Ac" << endl;
@@ -53,18 +56,17 @@ int main() {
     cout << endl << "Show Bob" << endl;
     userList.showOwnFavoriteUni(bob);
 
-    cout << endl << "Show ALL" << endl;
-    bob->FavouriteUniList->displayALL();*/
     cout << endl << endl << "ADMIN HERE" << endl;
     Admin admin;
-    admin.login("admin", "admin123");
+    /*admin.login("admin", "admin123");
     admin.viewUserFeedbackList();
-    /*admin.generateReport();
+    admin.insertReplyIntoFeedbackNode("26500", "Admin", "This is reply from admin");*/
+    admin.generateReport();
+    //admin.displayUserList();
+    /*admin.modifyUserDetail("41", "Password", "test321");
     admin.displayUserList();
-    admin.modifyUserDetail("41", "Password", "test321");
-    admin.displayUserList();
-    admin.insertReplyIntoFeedbackNode("26500", "Admin", "This is reply from admin");
-    admin.viewUserFeedbackList();
-    userList.showOwnFeedback(alice);*/
+    
+    admin.viewUserFeedbackList();*/
+    //userList.showOwnFeedback(alice);
 	return 0;
 }

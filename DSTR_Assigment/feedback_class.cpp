@@ -1,9 +1,8 @@
 #include "feedback_class.hpp"
-#include <ctime>
 
 Feedbacklist* AllFeedbackLists = NULL;
 
-FeedbackNode* Feedbacklist::createNewFeedbackNode(string UserID, string Feedback) {
+FeedbackNode* Feedbacklist::createNewFeedbackNode(string UserID, const string& Feedback) {
     // Create a new FeedbackNode
     FeedbackNode* newFeedback = new FeedbackNode();
     newFeedback->FeedbackID = to_string(rand());;
@@ -21,9 +20,10 @@ FeedbackNode* Feedbacklist::getFeedbackNode(string FeedbackID) {
     // Traverse the list to find a matching feedback
 
     if (AllFeedbackLists == NULL) {
+        
         return NULL;
     }
-    FeedbackNode* currentFeedback = AllFeedbackLists->head;
+    FeedbackNode* currentFeedback = head;
 
     while (currentFeedback != NULL) {
         if (currentFeedback->FeedbackID == FeedbackID) {
@@ -36,10 +36,12 @@ FeedbackNode* Feedbacklist::getFeedbackNode(string FeedbackID) {
     return NULL;
 }
 
-void Feedbacklist::insertIntoFeedbackList(UserNode* User, string Feedback) {
+void Feedbacklist::insertIntoFeedbackList(UserNode* User, const string& Feedback) {
     // Create a new FeedbackNode
     FeedbackNode* newFeedback = createNewFeedbackNode(User->UserID, Feedback);
-    
+    FeedbackNode* newAllFeedback = createNewFeedbackNode(User->UserID, Feedback);
+    // Same ID
+    newAllFeedback->FeedbackID = newFeedback->FeedbackID;
     // If the list is empty, set the new node as the head and tail
     if (head == NULL) {
         head = newFeedback;
@@ -53,7 +55,7 @@ void Feedbacklist::insertIntoFeedbackList(UserNode* User, string Feedback) {
         tail = newFeedback;
     }
    
-    insertIntoAllFeedbackList(newFeedback);
+    insertIntoAllFeedbackList(newAllFeedback);
 }
 
 void Feedbacklist::insertIntoAllFeedbackList(FeedbackNode* NewFeedback) {

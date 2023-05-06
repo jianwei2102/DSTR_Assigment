@@ -2,6 +2,7 @@
 
 UserList* AllUserList = NULL;
 
+// Task 1.1
 UserNode* UserList::createNewUserNode(string Username, string Email, string Password) {
     // Create a new UserNode
     string userID = "0";
@@ -25,7 +26,8 @@ UserNode* UserList::createNewUserNode(string Username, string Email, string Pass
     return newUser;
 }
 
-// Check duplicate username if same then do to do again - in main
+// Task 1.2
+// Check duplicate username if same then do again
 void UserList::insertIntoUserList(string Username, string Email, string Password) {
 
     // Create a new UserNode
@@ -75,9 +77,11 @@ UserNode* UserList::getUserNode(string UserID) {
     return NULL;
 }
 
+// Admin task
 void UserList::deleteUserNode(string UserID) {}
 
-void UserList::addFavouriteUniToUser(UserNode* User, const string& UniID) {
+// Task 2 
+void UserList::addFavouriteUniToUser(UserNode* User, string UniID) {
     if (!User) {
         cout << "Error: User node is null." << endl;
         return;
@@ -98,7 +102,6 @@ void UserList::showOwnFavoriteUni(UserNode* User) {
     while (currentUni != NULL) {
         cout << "User ID: " << currentUni->UserID << endl;
         cout << "Uni ID: " << currentUni->UniID << endl;
-        //cout << "Create Time: " << ctime(&currentFeedback->CreateTime);
         count++;
         currentUni = currentUni->NextUni;
     }
@@ -162,10 +165,15 @@ void UserList::showOwnFeedback(UserNode* User) {
 }
 
 void UserList::insertReplyIntoFeedbackNode(string FeedbackID, UserNode* User, const string& Reply) {
-    FeedbackNode* currentFeedback = AllFeedbackLists->getFeedbackNode(FeedbackID);
-    if (currentFeedback == NULL) {
+    // Get feedback node for both all feedback list and user feedback list
+    FeedbackNode* currentAllFeedback = AllFeedbackLists->getFeedbackNode(FeedbackID);
+    FeedbackNode* currentFeedback = User->FeedbackList->getFeedbackNode(FeedbackID);
+    // Validation on the feedback node
+    if (currentFeedback == NULL || currentAllFeedback == NULL) {
         cout << "Error: Feedback not found" << endl;
         return;
     }
+    // Insert to both feedback node
+    currentAllFeedback->ReplyList->insertReplyIntoFeedback(User->Username, Reply);
     currentFeedback->ReplyList->insertReplyIntoFeedback(User->Username, Reply);
 }

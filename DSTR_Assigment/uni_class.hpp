@@ -1,4 +1,5 @@
 #pragma once
+#include <iostream>
 #include <string>
 using namespace std;
 
@@ -24,8 +25,6 @@ public:
     void merge(UniNode* arr[], int l, int m, int r);
 
     void quickSort(UniNode* UniArray[], int start, int end);
-
-    int compareValues(UniNode* a, UniNode* b, string fieldName);
 
     int partition(UniNode* UniArray[], int start, int end);
 

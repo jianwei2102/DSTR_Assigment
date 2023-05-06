@@ -34,7 +34,7 @@ public:
 
     void deleteUserNode(string UserID);
 
-    void addFavouriteUniToUser(UserNode* User, const string& UniID);
+    void addFavouriteUniToUser(UserNode* User, string UniID);
 
     void showOwnFavoriteUni(UserNode* User);
 

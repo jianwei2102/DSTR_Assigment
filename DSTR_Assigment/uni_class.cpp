@@ -1,7 +1,4 @@
 #include "uni_class.hpp"
-#include <string>
-#include <iostream>
-using namespace std;
 
 
 UniNode* UniList::createNewUniNode(int Rank, string Insitution, string LocationCode, string Location, double ArScore, int ArRank,
@@ -52,8 +49,6 @@ void UniList::mergeSort(UniNode* arr[], int l, int r) {}
 void UniList::merge(UniNode* arr[], int l, int m, int r) {}
 
 void UniList::quickSort(UniNode* UniArray[], int start, int end) {}
-
-int UniList::compareValues(UniNode* a, UniNode* b, string fieldName) { return 0; }
 
 int UniList::partition(UniNode* UniArray[], int start, int end) { return 0; }
 

@@ -1,14 +1,18 @@
 #include "admin_class.hpp"
 
+// Task 1
 void Admin::deleteInactiveUser() {
+    // Get current time
     time_t now = time(0);
     UserNode* current = AllUserList->head;
     while (current != nullptr) {
+        // Get user last login time
         time_t lastLoginTime = current->LastLogin;
         double secondsSinceLastLogin = difftime(now, lastLoginTime);
+        // A month
         if (secondsSinceLastLogin > 2592000) {
             // delete the user
-            // AllUserList->deleteInactiveUserNode(current->UserID);
+            AllUserList->deleteUserNode(current->UserID);
         }
         current = current->NextUser;
     }
@@ -17,6 +21,7 @@ void Admin::deleteInactiveUser() {
 bool Admin::login(string Username, string Password) {
     // Check if username and password are correct
     if (Username == "admin" && Password == "admin123") {
+        // Delete inactive user after login
         deleteInactiveUser();
         return true;
     }
@@ -25,6 +30,7 @@ bool Admin::login(string Username, string Password) {
     }
 }
 
+// Task 2
 void Admin::displayUserList() {
     UserNode* current = AllUserList->head;
     cout << left << setw(15) << "User ID"
@@ -54,18 +60,17 @@ void Admin::modifyUserDetail(string UserID, string UpdateType, string UpdateData
     }
 }
 
-// View all feedback from all users
+// Task 3
 void Admin::viewUserFeedbackList() {
     if (AllFeedbackLists == NULL) {
         return;
     }
+
     FeedbackNode* currentFeedback = AllFeedbackLists->head;
     while (currentFeedback != NULL) {
-        UserList t;
-
-        cout << t.getUserNode(currentFeedback->UserID)->Username << ": " << currentFeedback->Feedback << endl;
+        cout << AllUserList->getUserNode(currentFeedback->UserID)->Username << ": " << currentFeedback->Feedback << endl;
+        
         ReplyNode* currentReply = currentFeedback->ReplyList->head;
-
         if (currentReply == NULL) {
             cout << "There is no reply yet" << endl;
         }
@@ -80,19 +85,24 @@ void Admin::viewUserFeedbackList() {
 }
 
 void Admin::insertReplyIntoFeedbackNode(string FeedbackID, string Username, string Reply) {
-    FeedbackNode* currentFeedback = AllFeedbackLists->getFeedbackNode(FeedbackID);
-    if (currentFeedback == NULL) {
+    // Get feedback node for both all feedback list and user feedback list
+    FeedbackNode* currentAllFeedback = AllFeedbackLists->getFeedbackNode(FeedbackID);
+    FeedbackNode* currentFeedback = AllUserList->getUserNode(currentAllFeedback->UserID)->FeedbackList->getFeedbackNode(FeedbackID);
+    // Validation on the feedback node
+    if (currentFeedback == NULL || currentAllFeedback == NULL ) {
         cout << "Error: Feedback not found" << endl;
         return;
     }
+    // Insert to both feedback node
+    currentAllFeedback->ReplyList->insertReplyIntoFeedback(Username, Reply);
     currentFeedback->ReplyList->insertReplyIntoFeedback(Username, Reply);
 }
 
+// Task 4
 void Admin::generateReport() {
     FavouriteUnilist* TopFavouriteList = AllFavouriteUnilist->generateFavouriteUniRecord();
     UserFavouriteUni* currentUni = TopFavouriteList->head;
     while (currentUni != NULL) {
-
         cout << "Uni ID: " << currentUni->UniID << endl << endl;
         cout << "Uni Count: " << currentUni->favoriteCount << endl << endl;
         currentUni = currentUni->NextUni;
