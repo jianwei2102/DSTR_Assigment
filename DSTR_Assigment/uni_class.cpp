@@ -44,16 +44,6 @@ void UniList::insertIntoUniList(int Rank, string Insitution, string LocationCode
     UniArray[Rank - 1] = newnode;
 }
 
-void UniList::mergeSort(UniNode* arr[], int l, int r) {}
-
-void UniList::merge(UniNode* arr[], int l, int m, int r) {}
-
-void UniList::quickSort(UniNode* UniArray[], int start, int end) {}
-
-int UniList::partition(UniNode* UniArray[], int start, int end) { return 0; }
-
-void UniList::swap(UniNode* UniArray[], int i, int j) {}
-
 void UniList::linearSearching(string SearchType, string SearchData) {}
 
 void UniList::binarySearching(string SearchType, string SearchData) {}

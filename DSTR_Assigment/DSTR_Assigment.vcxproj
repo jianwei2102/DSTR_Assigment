@@ -140,6 +140,8 @@
     <ClInclude Include="admin_class.hpp" />
     <ClInclude Include="favouriteUni_class.hpp" />
     <ClInclude Include="feedback_class.hpp" />
+    <ClInclude Include="MergeSort.h" />
+    <ClInclude Include="QuickSort.h" />
     <ClInclude Include="read_file.hpp" />
     <ClInclude Include="reply_class.hpp" />
     <ClInclude Include="uni_class.hpp" />

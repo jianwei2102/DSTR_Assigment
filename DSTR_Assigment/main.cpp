@@ -1,4 +1,5 @@
 #include <iostream>
+#include <chrono>
 #include "read_file.hpp"
 #include "uni_class.hpp"
 #include "admin_class.hpp"
@@ -6,12 +7,35 @@
 #include "feedback_class.hpp"
 #include "reply_class.hpp"
 #include "user_class.hpp"
+#include "MergeSort.h"
+#include "QuickSort.h"
+
 using namespace std;
 
 int main() {
+    auto start_time = chrono::high_resolution_clock::now();
+    auto end_time = chrono::high_resolution_clock::now();
+
+
     // Display uni
     UniList list = ReadUniFromFile();
     //list.displayUniList();
+
+    cout << "SORTING" << endl;
+    // time taken for merge sort
+    start_time = chrono::high_resolution_clock::now();
+    mergeSort(list.UniArray, 0, 1422 - 1);
+    end_time = chrono::high_resolution_clock::now();
+    cout << "Time consumption of merge sort: " << (end_time - start_time).count() << " ns" << endl;
+
+    // time taken for quick sort
+    start_time = chrono::high_resolution_clock::now();
+    quickSort(list.UniArray, 0, 1422 - 1);
+    end_time = chrono::high_resolution_clock::now();
+    cout << "Time consumption of quick sort: " << (end_time - start_time).count() << " ns" << endl;
+
+    // sorted list by asc
+    printArray(list.UniArray, 1422 - 1);
 
     // Create a UserList object
     UserList userList;

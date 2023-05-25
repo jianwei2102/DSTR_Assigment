@@ -20,9 +20,9 @@ public:
         double ErScore, int ErRank, double FsrScore, int FsrRank, double CpfScore, int CpfRank, double IfrScore, int IfrRank,
         double IsrScore, int IsrRank, double IrnScore, int IrnRank, double GerScore, int GerRank, double ScoreScaled);
 
-    void mergeSort(UniNode* arr[], int l, int r);
+    void merge(UniNode* array[], int left, int middle, int right);
 
-    void merge(UniNode* arr[], int l, int m, int r);
+    void mergeSort(UniNode* array[], int left, int right);
 
     void quickSort(UniNode* UniArray[], int start, int end);
 
