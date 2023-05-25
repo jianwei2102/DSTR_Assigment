@@ -52,9 +52,34 @@ void quickSort(UniNode* array[], int low, int high) {
 }
 
 // function to print the array
-void printArray(UniNode* array[], int size) {
+void printByPagination(UniNode* array[], int size) {
+    int i;
+    int currentShownTotal = 20;
+    int currentShownLimit = 20;
+    string sortInput;
+
+    int counter; // needed?
+
+    for (i = 0; i < 20; i++)
+        cout << "[" << i << "] " << array[i]->Insitution << endl;
+    cout << endl;
+
+    while (currentShownTotal < 1422) {
+        cout << "Enter [Y] to view another 20 records or [N] to exit: " << endl;
+        cin >> sortInput;
+
+        if (sortInput == "Y") {
+            for (currentShownLimit += 20; currentShownTotal < currentShownLimit; currentShownTotal++)
+                cout << "[" << currentShownTotal << "] " << array[currentShownTotal]->Insitution << endl;
+            cout << endl;
+            cout << "Showing" << currentShownLimit << "records" << endl;
+        }
+    }
+}
+
+void printAll(UniNode* array[], int size) {
     int i;
     for (i = 0; i < size; i++)
-        cout << array[i]->Insitution << endl;
+        cout << array[i]->Insitution << " ";
     cout << endl;
 }

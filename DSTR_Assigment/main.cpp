@@ -37,28 +37,11 @@ int main() {
 
     
     // sorted list by asc
-    printArray(list.UniArray, 1422 - 1);
+    // printAll(list.UniArray, 1422 - 1);
+    printByPagination(list.UniArray, 1422 - 1);
 
 
-    // START ignore the binary search here - thines
-    
-    // Perform binary search
-    UniNode* result = binarySearch(list.UniArray, 0, 1422 - 1, "Wuhan University");
 
-    // Check if key is found
-    if (result != nullptr) {
-        cout << "Key found!" << endl;
-        cout << "Instituatuon: " << result->Insitution << endl;
-        cout << "Ranking: " << result->ArRank << endl;
-        // Do something with the found UniNode
-    }
-    else {
-        cout << "Key not found." << endl;
-    }
-
-    // END ignore the binary search here - thines
-
-    
     // Create a UserList object
     UserList userList;
 
@@ -121,6 +104,8 @@ int main() {
     
     admin.viewUserFeedbackList();*/
     //userList.showOwnFeedback(alice); 
+
+   
 
 
 	return 0;
