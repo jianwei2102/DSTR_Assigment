@@ -41,16 +41,15 @@ int main() {
 
 
     // START ignore the binary search here - thines
-
-    // Assume the array is already sorted
-    string key = "Wuhan University";
-
+    
     // Perform binary search
-    UniNode* result = binarySearch(list.UniArray, 0, 1422 - 1, key);
+    UniNode* result = binarySearch(list.UniArray, 0, 1422 - 1, "Wuhan University");
 
     // Check if key is found
     if (result != nullptr) {
         cout << "Key found!" << endl;
+        cout << "Instituatuon: " << result->Insitution << endl;
+        cout << "Ranking: " << result->ArRank << endl;
         // Do something with the found UniNode
     }
     else {

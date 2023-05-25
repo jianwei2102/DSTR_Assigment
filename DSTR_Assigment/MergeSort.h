@@ -1,5 +1,7 @@
 #pragma once
 
+using namespace std;
+
 void merge(UniNode* array[], int left, int middle, int right)
 {
     int sizeLeft = middle - left + 1;
