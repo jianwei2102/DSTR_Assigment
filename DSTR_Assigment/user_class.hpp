@@ -14,25 +14,72 @@ struct UserNode {
     time_t LastLogin;
     FavouriteUnilist* FavouriteUniList;
     Feedbacklist* FeedbackList;
-    UserNode* NextUser;
+    UserNode* leftUser;
+    UserNode* rightUser;
+    UserNode* parent;
+    char color;
 };
 
 class UserList;
 extern UserList* AllUserList;
 class UserList {
+
+private:
+    UserNode* root;
+    UserNode* nullNode = new UserNode;
+
 public:
-    UserNode* head = NULL;
-    UserNode* tail = NULL;
+    UserList()
+    {
+        nullNode->color = 'B';
+        nullNode->leftUser = nullptr;
+        nullNode->rightUser = nullptr;
+        root = nullNode;
+    }
 
     UserNode* createNewUserNode(string Username, string Email, string Password);
 
-    void insertIntoUserList(string Username, string Email, string Password);
+    void leftRotate(UserNode* node);
+
+    void rightRotate(UserNode* node);
+
+    void insertIntoUserTree(string Username, string Email, string Password);
+
+    void insertFixup(UserNode* node);
+
+    void transplant(UserNode* u, UserNode* v);
+
+    void displayUserTree(UserNode* root, string indent, bool last);
+
+    void deleteNode(string searchKey);
+
+    void deleteFixup(UserNode* x);
+
+    UserNode* searchUser(string searchKey);
+
+    UserNode* minimum(UserNode* node);
+
+    UserNode* getRoot();
+
+    //UserNode* getNullNode();
+
+    //void inorderHelper(UserNode* node);
+
+    void inorder(UserNode* root);
+
+
+    //UserNode* head = NULL;
+    //UserNode* tail = NULL;
+
+    //UserNode* createNewUserNode(string Username, string Email, string Password);
+
+    //void insertIntoUserList(string Username, string Email, string Password);
 
     UserNode* login(string Username, string Password);
 
-    UserNode* getUserNode(string UserID);
+    //UserNode* getUserNode(string UserID);
 
-    void deleteUserNode(string UserID);
+    //void deleteUserNode(string UserID);
 
     void addFavouriteUniToUser(UserNode* User, string UniID);
 

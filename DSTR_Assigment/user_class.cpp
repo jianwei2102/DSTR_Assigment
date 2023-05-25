@@ -3,82 +3,476 @@
 UserList* AllUserList = NULL;
 
 // Task 1.1
-UserNode* UserList::createNewUserNode(string Username, string Email, string Password) {
-    // Create a new UserNode
-    string userID = "0";
+//UserNode* UserList::createNewUserNode(string Username, string Email, string Password) {
+//    // Create a new UserNode
+//    string userID = "0";
+//
+//    if (head != NULL) {
+//        cout << "HERE";
+//        string userID = to_string(stoi(tail->UserID) + 1);
+//    };
+//
+//    UserNode* newUser = new UserNode();
+//
+//    newUser->UserID = to_string(rand()); // to_string(rand()); // just for demonstration purposes
+//    newUser->Username = Username;
+//    newUser->Email = Email;
+//    newUser->Password = Password;
+//    newUser->LastLogin = time(0);
+//    newUser->FavouriteUniList = new FavouriteUnilist();
+//    newUser->FeedbackList = new Feedbacklist();
+//    newUser->NextUser = NULL;
+//
+//    return newUser;
+//}
 
-    if (head != NULL) {
-        cout << "HERE";
-        string userID = to_string(stoi(tail->UserID) + 1);
-    };
+// Task 1.2
+// Check duplicate username if same then do again
+//void UserList::insertIntoUserList(string Username, string Email, string Password) {
+//
+//    // Create a new UserNode
+//    UserNode* newUser = createNewUserNode(Username, Email, Password);
+//
+//    if (AllUserList == NULL) {
+//        AllUserList = new UserList;
+//    }
+// 
+// 
+//    // If the list is empty, set the new node as the head and tail
+//    if (AllUserList->head == NULL) {
+//        AllUserList->head = newUser;
+//        AllUserList->tail = newUser;
+//    }
+//    // Otherwise, insert the new node at the end of the list
+//    else {
+//        AllUserList->tail->NextUser = newUser;
+//        AllUserList->tail = newUser;
+//    }
+//}
 
+
+UserNode* UserList::createNewUserNode(string Username, string Email, string Password)
+{
     UserNode* newUser = new UserNode();
 
-    newUser->UserID = to_string(rand()); // to_string(rand()); // just for demonstration purposes
+    newUser->leftUser = nullptr;
+    newUser->rightUser = nullptr;
+    newUser->parent = nullptr;
     newUser->Username = Username;
     newUser->Email = Email;
     newUser->Password = Password;
+    newUser->color = 'R';
     newUser->LastLogin = time(0);
     newUser->FavouriteUniList = new FavouriteUnilist();
     newUser->FeedbackList = new Feedbacklist();
-    newUser->NextUser = NULL;
+    newUser->UserID = to_string(rand());
 
     return newUser;
 }
 
-// Task 1.2
-// Check duplicate username if same then do again
-void UserList::insertIntoUserList(string Username, string Email, string Password) {
+void UserList::leftRotate(UserNode* node)
+{
+    UserNode* y = node->rightUser; // Set y
+    node->rightUser = y->leftUser; // Turn y's left subtree into node's right subtree
 
-    // Create a new UserNode
-    UserNode* newUser = createNewUserNode(Username, Email, Password);
+    if (y->leftUser != this->nullNode)
+    {
+        y->leftUser->parent = node;
+    }
+
+    y->parent = node->parent;
+
+    if (node->parent == nullptr)
+    {
+        this->root = y;
+    }
+    else if (node == node->parent->leftUser)
+    {
+        node->parent->leftUser = y;
+    }
+    else
+        node->parent->rightUser = y;
+
+    y->leftUser = node;
+    node->parent = y;
+}
+
+void UserList::rightRotate(UserNode* node) {
+    UserNode* y = node->leftUser;
+    node->leftUser = y->rightUser;
+    if (y->rightUser != this->nullNode) {
+        y->rightUser->parent = node;
+    }
+    y->parent = node->parent;
+    if (node->parent == nullptr) {
+        this->root = y;
+    }
+    else if (node == node->parent->rightUser) {
+        node->parent->rightUser = y;
+    }
+    else {
+        node->parent->leftUser = y;
+    }
+    y->rightUser = node;
+    node->parent = y;
+}
+
+void UserList::inorder(UserNode* root) {
+    if (root != this->nullNode) {
+        inorder(root->leftUser);
+        cout << root->Username << " " << endl;
+        inorder(root->rightUser);
+    }
+}
+
+void UserList::insertIntoUserTree(string Username, string Email, string Password)
+{
 
     if (AllUserList == NULL) {
         AllUserList = new UserList;
     }
-    // If the list is empty, set the new node as the head and tail
-    if (AllUserList->head == NULL) {
-        AllUserList->head = newUser;
-        AllUserList->tail = newUser;
+
+    UserNode* newUser = createNewUserNode(Username, Email, Password);
+    newUser->leftUser = this->nullNode;
+    newUser->rightUser = this->nullNode;
+
+    UserNode* y = nullptr;
+    UserNode* x = this->root;
+
+    while (x != this->nullNode)
+    {
+        y = x;
+
+        if (newUser->Username.compare(x->Username) < 0)
+        {
+            x = x->leftUser;
+        }
+        else
+            x = x->rightUser;
     }
-    // Otherwise, insert the new node at the end of the list
-    else {
-        AllUserList->tail->NextUser = newUser;
-        AllUserList->tail = newUser;
+
+    newUser->parent = y;
+
+    if (y == nullptr)
+    {
+        this->root = newUser;
     }
+    else if (newUser->Username.compare(y->Username) < 0)
+        y->leftUser = newUser;
+    else
+        y->rightUser = newUser;
+
+
+    if (newUser->parent == nullptr) {
+        newUser->color = 'B';
+        return;
+    }
+
+    // if the grandparent is null, simply return
+    if (newUser->parent->parent == nullptr) {
+        return;
+    }
+
+    //newUser->leftUser = this->nullNode;
+    //newUser->rightUser = this->nullNode;
+    //newUser->color = 'R';
+
+    insertFixup(newUser);
+}
+
+void UserList::insertFixup(UserNode* node)
+{
+    UserNode* y;
+
+
+    while (node->parent && node->parent->color == 'R')
+    {
+        if (node->parent == node->parent->parent->leftUser)
+        {
+            y = node->parent->parent->rightUser;
+
+            if (y->color == 'R')
+            {
+                node->parent->color = 'B';
+                y->color = 'B';
+                node->parent->parent->color = 'R';
+                node = node->parent->parent;
+            }
+
+            else
+            {
+                if (node == node->parent->rightUser)
+                {
+                    node = node->parent;
+                    leftRotate(node);
+                }
+
+                node->parent->color = 'B';
+                node->parent->parent->color = 'R';
+                rightRotate(node->parent->parent);
+            }
+
+        }
+
+        else {
+            y = node->parent->parent->leftUser;
+
+            if (y->color == 'R')
+            {
+                node->parent->color = 'B';
+                y->color = 'B';
+                node->parent->parent->color = 'R';
+                node = node->parent->parent;
+            }
+            else
+            {
+                if (node == node->parent->leftUser)
+                {
+                    node = node->parent;
+                    rightRotate(node);
+                }
+
+                node->parent->color = 'B';
+                node->parent->parent->color = 'R';
+                leftRotate(node->parent->parent);
+            };
+        }
+
+        if (node == this->root)
+            break;
+    }
+
+    this->root->color = 'B';
+}
+
+void UserList::transplant(UserNode* u, UserNode* v)
+{
+    if (u->parent == nullptr)
+    {
+        this->root = v;
+    }
+
+    else if (u == u->parent->leftUser)
+    {
+        u->parent->leftUser = v;
+    }
+
+    else
+        u->parent->rightUser = v;
+
+    v->parent = u->parent;
+}
+
+void UserList::displayUserTree(UserNode* root, string indent, bool last)
+{
+    if (root)
+    {
+        if (root != nullNode) {
+            cout << indent;
+            if (last) {
+                cout << "R----";
+                indent += "     ";
+            }
+            else {
+                cout << "L----";
+                indent += "|    ";
+            }
+
+            string sColor = root->color == 'R' ? "RED" : "BLACK";
+            cout << root->Username << "(" << sColor << ")" << endl;
+            displayUserTree(root->leftUser, indent, false);
+            displayUserTree(root->rightUser, indent, true);
+        }
+    }
+}
+
+void UserList::deleteNode(string searchKey)
+{
+    UserNode* y;
+    UserNode* x;
+
+    UserNode* target = searchUser(searchKey);
+
+    if (target == this->nullNode)
+    {
+        cout << "User does not exist";
+        return;
+    }
+
+    y = target;
+    char y_original_color = y->color;
+
+    if (target->leftUser == this->nullNode)
+    {
+        x = target->rightUser;
+        transplant(target, target->rightUser);
+    }
+    else if (target->rightUser == this->nullNode)
+    {
+        x = target->leftUser;
+        transplant(target, target->leftUser);
+    }
+    else
+    {
+        y = minimum(target->rightUser);
+        y_original_color = y->color;
+        x = y->rightUser;
+
+        if (y->parent == target)
+        {
+            x->parent = y;
+        }
+        else
+        {
+            transplant(y, y->rightUser);
+            y->rightUser = target->rightUser;
+            y->rightUser->parent = y;
+        }
+
+        transplant(target, y);
+        y->leftUser = target->leftUser;
+        y->leftUser->parent = y;
+        y->color = target->color;
+    }
+
+    if (y_original_color == 'B')
+    {
+        deleteFixup(x);
+    }
+
+    cout << "User has been deleted" << endl;
+}
+
+void UserList::deleteFixup(UserNode* x)
+{
+    UserNode* s;
+
+    while (x != root && x->color == 'B') {
+        if (x == x->parent->leftUser) {
+            s = x->parent->rightUser;
+            if (s->color == 'R') {
+                // case 3.1
+                s->color = 'B';
+                x->parent->color = 'R';
+                leftRotate(x->parent);
+                s = x->parent->rightUser;
+            }
+
+            if (s->leftUser->color == 'B' && s->rightUser->color == 'B') {
+                // case 3.2
+                s->color = 'R';
+                x = x->parent;
+            }
+            else {
+                if (s->rightUser->color == 'B') {
+                    // case 3.3
+                    s->leftUser->color = 'B';
+                    s->color = 'R';
+                    rightRotate(s);
+                    s = x->parent->rightUser;
+                }
+
+                // case 3.4
+                s->color = x->parent->color;
+                x->parent->color = 'B';
+                s->rightUser->color = 'B';
+                leftRotate(x->parent);
+                x = root;
+            }
+        }
+        else {
+            s = x->parent->leftUser;
+            if (s->color == 'R') {
+                // case 3.1
+                s->color = 'B';
+                x->parent->color = 'R';
+                rightRotate(x->parent);
+                s = x->parent->leftUser;
+            }
+
+            if (s->rightUser->color == 'B' && s->rightUser->color == 'B') {
+                // case 3.2
+                s->color = 'R';
+                x = x->parent;
+            }
+            else {
+                if (s->leftUser->color == 'B') {
+                    // case 3.3
+                    s->rightUser->color = 'B';
+                    s->color = 'R';
+                    leftRotate(s);
+                    s = x->parent->leftUser;
+                }
+
+                // case 3.4
+                s->color = x->parent->color;
+                x->parent->color = 'B';
+                s->leftUser->color = 'B';
+                rightRotate(x->parent);
+                x = root;
+            }
+        }
+    }
+    x->color = 'B';
+}
+
+UserNode* UserList::searchUser(string searchKey)
+{
+    UserNode* x = this->root;
+
+    while (x != this->nullNode && searchKey != x->Username)
+    {
+        if (searchKey.compare(x->Username) < 0)
+            x = x->leftUser;
+        else
+            x = x->rightUser;
+    }
+
+    return x;
+}
+
+UserNode* UserList::minimum(UserNode* node)
+{
+    while (node->leftUser != this->nullNode)
+        node = node->leftUser;
+
+    return node;
+}
+
+UserNode* UserList::getRoot()
+{
+    return this->root;
 }
 
 UserNode* UserList::login(string Username, string Password) {
     //Traverse the list to find a matching user
-    UserNode* currentUser = AllUserList->head;
-    while (currentUser != NULL) {
-        if (currentUser->Username == Username && currentUser->Password == Password) {
-            currentUser->LastLogin = time(0); // update last login time
-            return currentUser;
-        }
-        currentUser = currentUser->NextUser;
+    UserNode* currentUser = searchUser(Username);
+
+    if (currentUser->Username == Username && currentUser->Password == Password) {
+        currentUser->LastLogin = time(0); // update last login time
+        return currentUser;
     }
 
     // If no matching user is found, return NULL
     return NULL;
 }
 
-UserNode* UserList::getUserNode(string UserID) {
-    // Traverse the list to find a matching user
-    UserNode* currentUser = AllUserList->head;
-    while (currentUser != NULL) {
-        if (currentUser->UserID == UserID) {
-            return currentUser;
-        }
-        currentUser = currentUser->NextUser;
-    }
-
-    // If no matching user is found, return NULL
-    return NULL;
-}
+//UserNode* UserList::getUserNode(string UserID) {
+//    // Traverse the list to find a matching user
+//    UserNode* currentUser = AllUserList->head;
+//    while (currentUser != NULL) {
+//        if (currentUser->UserID == UserID) {
+//            return currentUser;
+//        }
+//        currentUser = currentUser->NextUser;
+//    }
+//
+//    // If no matching user is found, return NULL
+//    return NULL;
+//}
 
 // Admin task
-void UserList::deleteUserNode(string UserID) {}
+//void UserList::deleteUserNode(string UserID) {}
 
 // Task 2 
 void UserList::addFavouriteUniToUser(UserNode* User, string UniID) {
@@ -120,45 +514,46 @@ void UserList::addFeedbackToUser(UserNode* User, const string& Feedback) {
 }
 
 void UserList::showOwnFeedback(UserNode* User) {
-    if (User == NULL) {
+
+
+    UserNode* currentUser = searchUser(User->Username);
+
+    if (User->UserID == "") {
         cout << "User not found" << endl;
         return;
     }
 
-    UserNode* currentUser = AllUserList->head;
-    while (currentUser != NULL) {
-        if (currentUser->UserID == User->UserID) {
-            FeedbackNode* currentFeedback = currentUser->FeedbackList->head;
-            int count = 0;
-            while (currentFeedback != NULL) {
-                if (currentFeedback->UserID == User->UserID) {
-                    cout << "Feedback ID: " << currentFeedback->FeedbackID << endl;
-                    cout << "Feedback: " << currentFeedback->Feedback << endl;
-                    ReplyNode* currentReply = currentFeedback->ReplyList->head;
+    //UserNode* currentUser = AllUserList->head;
+    if (currentUser->UserID == User->UserID) {
+        FeedbackNode* currentFeedback = currentUser->FeedbackList->head;
+        int count = 0;
+        while (currentFeedback != NULL) {
+            if (currentFeedback->UserID == User->UserID) {
+                cout << "Feedback ID: " << currentFeedback->FeedbackID << endl;
+                cout << "Feedback: " << currentFeedback->Feedback << endl;
+                ReplyNode* currentReply = currentFeedback->ReplyList->head;
 
-                    if (currentReply == NULL) {
-                        cout << "There is no reply yet" << endl;
-                    }
-                    else {
-                        while (currentReply != NULL) {
-                            cout << "Replied by " << currentReply->Username << ": " << currentReply->Reply << endl;
-                            currentReply = currentReply->NextReply;
-                        }
-                    }
-
-
-                    //cout << "Create Time: " << ctime(&currentFeedback->CreateTime);
-                    count++;
+                if (currentReply == NULL) {
+                    cout << "There is no reply yet" << endl;
                 }
-                currentFeedback = currentFeedback->NextFeedback;
+                else {
+                    while (currentReply != NULL) {
+                        cout << "Replied by " << currentReply->Username << ": " << currentReply->Reply << endl;
+                        currentReply = currentReply->NextReply;
+                    }
+                }
+
+
+                //cout << "Create Time: " << ctime(&currentFeedback->CreateTime);
+                count++;
             }
-            if (count == 0) {
-                cout << "No feedback found for the user" << endl;
-            }
-            break;
+            currentFeedback = currentFeedback->NextFeedback;
         }
-        currentUser = currentUser->NextUser;
+        if (count == 0) {
+            cout << "No feedback found for the user" << endl;
+        }
     }
+
     if (currentUser == NULL) {
         cout << "User not found" << endl;
     }

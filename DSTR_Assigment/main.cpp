@@ -16,14 +16,16 @@ int main() {
     // Create a UserList object
     UserList userList;
 
+    cout << "TEST AHHH" << endl;
     // Insert some users into the list
-    userList.insertIntoUserList("Alice", "alice@gmail.com","Alice123");
-    userList.insertIntoUserList("Bob", "bob@gmail.com", "qwerty");
-    userList.insertIntoUserList("C", "ac@gmail.com", "ac");
+    userList.insertIntoUserTree("Alice", "alice@gmail.com","Alice123");
+    userList.insertIntoUserTree("Bob", "bob@gmail.com", "qwerty");
+    userList.insertIntoUserTree("C", "ac@gmail.com", "ac");
     // Get a user object from the list (in this case, Alice)
     UserNode* alice = userList.login("Alice", "Alice123");
     UserNode* bob = userList.login("Bob", "qwerty");
     UserNode* ac = userList.login("C", "ac");
+
     // Create some feedback from Alice
     //userList.addFeedbackToUser(alice, "This is my feedback");
     //userList.addFeedbackToUser(bob, "Test");
@@ -56,12 +58,17 @@ int main() {
     cout << endl << "Show Bob" << endl;
     userList.showOwnFavoriteUni(bob);
 
+    //userList.displayUserTree(userList.getRoot(), "", true);
+    userList.inorder(userList.getRoot());
+    cout << "TEST AHHH" << endl;
+
+
     cout << endl << endl << "ADMIN HERE" << endl;
-    Admin admin;
+    //Admin admin;
     /*admin.login("admin", "admin123");
     admin.viewUserFeedbackList();
     admin.insertReplyIntoFeedbackNode("26500", "Admin", "This is reply from admin");*/
-    admin.generateReport();
+    //admin.generateReport();
     //admin.displayUserList();
     /*admin.modifyUserDetail("41", "Password", "test321");
     admin.displayUserList();

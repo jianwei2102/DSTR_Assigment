@@ -15,10 +15,12 @@ public:
 
     void modifyUserDetail(string UserID, string UpdateType, string UpdateData);
 
+
+    /*
     void viewUserFeedbackList();
 
     void insertReplyIntoFeedbackNode(string FeedbackID, string Username, string Reply);
 
     void generateReport();
-
+    */
 };

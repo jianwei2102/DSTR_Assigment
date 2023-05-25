@@ -1,10 +1,12 @@
 #include "admin_class.hpp"
+#include "user_class.hpp"
 
 // Task 1
 void Admin::deleteInactiveUser() {
     // Get current time
     time_t now = time(0);
-    UserNode* current = AllUserList->head;
+    //UserNode* current = AllUserList->head;
+    UserNode* current = nullptr; //***
     while (current != nullptr) {
         // Get user last login time
         time_t lastLoginTime = current->LastLogin;
@@ -12,9 +14,9 @@ void Admin::deleteInactiveUser() {
         // A month
         if (secondsSinceLastLogin > 2592000) {
             // delete the user
-            AllUserList->deleteUserNode(current->UserID);
+            //AllUserList->deleteUserNode(current->UserID);
         }
-        current = current->NextUser;
+        //current = current->NextUser;
     }
 }
 
@@ -32,7 +34,12 @@ bool Admin::login(string Username, string Password) {
 
 // Task 2
 void Admin::displayUserList() {
-    UserNode* current = AllUserList->head;
+
+    //AllUserList->inorder(AllUserList->getRoot());
+
+    
+    //UserNode* current = AllUserList->head;
+    UserNode* current = nullptr; //***
     cout << left << setw(15) << "User ID"
         << left << setw(20) << "Username"
         << left << setw(20) << "Password"
@@ -43,12 +50,16 @@ void Admin::displayUserList() {
             << left << setw(20) << current->Password
             << left << setw(25) << endl;
         //<< ctime(&current->LastLogin) << endl;
-        current = current->NextUser;
+        //current = current->NextUser;
+        current = nullptr; //***
     }
+
+    
 }
 
 void Admin::modifyUserDetail(string UserID, string UpdateType, string UpdateData) {
-    UserNode* User = AllUserList->getUserNode(UserID);
+    //UserNode* User = AllUserList->getUserNode(UserID);
+    UserNode* User = nullptr; //***
     if (UpdateType == "Username") {
         User->Username = UpdateData;
     }
@@ -60,6 +71,7 @@ void Admin::modifyUserDetail(string UserID, string UpdateType, string UpdateData
     }
 }
 
+/*
 // Task 3
 void Admin::viewUserFeedbackList() {
     if (AllFeedbackLists == NULL) {
@@ -83,7 +95,9 @@ void Admin::viewUserFeedbackList() {
         currentFeedback = currentFeedback->NextFeedback;
     }
 }
+*/
 
+/*
 void Admin::insertReplyIntoFeedbackNode(string FeedbackID, string Username, string Reply) {
     // Get feedback node for both all feedback list and user feedback list
     FeedbackNode* currentAllFeedback = AllFeedbackLists->getFeedbackNode(FeedbackID);
@@ -108,3 +122,5 @@ void Admin::generateReport() {
         currentUni = currentUni->NextUni;
     }
 }
+
+*/
