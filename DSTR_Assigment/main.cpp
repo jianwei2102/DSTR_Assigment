@@ -39,6 +39,9 @@ int main() {
     // sorted list by asc
     printArray(list.UniArray, 1422 - 1);
 
+
+    // START ignore the binary search here - thines
+
     // Assume the array is already sorted
     string key = "Wuhan University";
 
@@ -53,6 +56,8 @@ int main() {
     else {
         cout << "Key not found." << endl;
     }
+
+    // END ignore the binary search here - thines
 
     /*
     // Create a UserList object
