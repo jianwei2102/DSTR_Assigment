@@ -58,7 +58,7 @@ int main() {
 
     // END ignore the binary search here - thines
 
-    /*
+    
     // Create a UserList object
     UserList userList;
 
@@ -120,7 +120,7 @@ int main() {
     admin.displayUserList();
     
     admin.viewUserFeedbackList();*/
-    //userList.showOwnFeedback(alice); */
+    //userList.showOwnFeedback(alice); 
 
 
 	return 0;
