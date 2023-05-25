@@ -9,6 +9,7 @@
 #include "user_class.hpp"
 #include "MergeSort.h"
 #include "QuickSort.h"
+#include "BinarySearchTest.h"
 
 using namespace std;
 
@@ -34,9 +35,26 @@ int main() {
     end_time = chrono::high_resolution_clock::now();
     cout << "Time consumption of quick sort: " << (end_time - start_time).count() << " ns" << endl;
 
+    
     // sorted list by asc
     printArray(list.UniArray, 1422 - 1);
 
+    // Assume the array is already sorted
+    string key = "Wuhan University";
+
+    // Perform binary search
+    UniNode* result = binarySearch(list.UniArray, 0, 1422 - 1, key);
+
+    // Check if key is found
+    if (result != nullptr) {
+        cout << "Key found!" << endl;
+        // Do something with the found UniNode
+    }
+    else {
+        cout << "Key not found." << endl;
+    }
+
+    /*
     // Create a UserList object
     UserList userList;
 
@@ -98,6 +116,8 @@ int main() {
     admin.displayUserList();
     
     admin.viewUserFeedbackList();*/
-    //userList.showOwnFeedback(alice);
+    //userList.showOwnFeedback(alice); */
+
+
 	return 0;
 }
