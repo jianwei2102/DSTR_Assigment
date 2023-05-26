@@ -77,7 +77,13 @@
     <ClInclude Include="BinarySearchTest.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="SortingUser.h">
+    <ClInclude Include="SortingArScore.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="SortingFsrScore.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="SortingErScore.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

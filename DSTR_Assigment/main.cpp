@@ -11,8 +11,47 @@
 #include "QuickSort.h"
 #include "BinarySearchTest.h"
 #include "SortingArScore.h"
+#include "SortingFsrScore.h"
+#include "SortingErScore.h"
 
 using namespace std;
+
+void sortingUserMenu() {
+    int sortingChoiceInput = 0;
+
+    UniList list = ReadUniFromFile();
+
+    cout << "SORTING MENU - University Information" << endl;
+    cout << "[1] Sort by Academic Reputation Score" << endl;
+    cout << "[2] Sort by Faculty/Student Ratio Score" << endl;
+    cout << "[3] Sort by Employer Reputation Score" << endl;
+    cout << "[0] Back" << endl;
+    cout << "Enter your choice: " << endl;
+    cin >> sortingChoiceInput;
+
+    if (sortingChoiceInput == 1) {
+        mergeSortArScore(list.UniArray, 0, 1422 - 1);
+
+        // print sorted list
+        printArScoreByPagination(list.UniArray, 1422 - 1);
+    }
+    else if (sortingChoiceInput == 2) {
+        mergeSortFsrScore(list.UniArray, 0, 1422 - 1);
+
+        // print sorted list
+        printFsrScoreByPagination(list.UniArray, 1422 - 1);
+    }
+    else if (sortingChoiceInput == 3) {
+        mergeSortErScore(list.UniArray, 0, 1422 - 1);
+
+        // print sorted list
+        printErScoreByPagination(list.UniArray, 1422 - 1);
+    }
+    else if (sortingChoiceInput == 0) {
+        sortingUserMenu();
+    }
+
+}
 
 void sortingMenu() {
     int sortingChoiceInput = 0;
@@ -25,7 +64,7 @@ void sortingMenu() {
     cout << "[1] Merge Sort" << endl;
     cout << "[2] Quick Sort" << endl;
     cout << "[3] Comparison of Algorithm" << endl;
-    cout << "[4] ArScore Sort" << endl;
+    cout << "[0] Back" << endl;
     cout << "Enter your choice: " << endl;
     cin >> sortingChoiceInput;
 
@@ -51,7 +90,8 @@ void sortingMenu() {
 
         // print sorted list
         printByPagination(list.UniArray, 1422 - 1);
-    }else if (sortingChoiceInput == 3) {
+    }
+    else if (sortingChoiceInput == 3) {
         // time taken for merge sort
         start_time = chrono::high_resolution_clock::now();
         mergeSort(list.UniArray, 0, 1422 - 1);
@@ -64,11 +104,9 @@ void sortingMenu() {
         quickSort(list.UniArray, 0, 1422 - 1);
         end_time = chrono::high_resolution_clock::now();
         cout << "Time consumption of quick sort: " << (end_time - start_time).count() << " ns" << endl;
-    }else if (sortingChoiceInput == 4) {
-        mergeSortArScore(list.UniArray, 0, 1422 - 1);
-
-        // print sorted list
-        printArScoreByPagination(list.UniArray, 1422 - 1);
+    }
+    else if (sortingChoiceInput == 0) {
+        sortingMenu();
     }
 
 }
@@ -78,7 +116,8 @@ int main() {
     UniList list = ReadUniFromFile();
     //list.displayUniList();
 
-    sortingMenu();
+    //sortingMenu();
+    sortingUserMenu();
 
     /*
 

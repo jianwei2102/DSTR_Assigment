@@ -2,7 +2,7 @@
 
 using namespace std;
 
-void mergeArScore(UniNode* array[], int left, int middle, int right)
+void mergeFsrScore(UniNode* array[], int left, int middle, int right)
 {
     int sizeLeft = middle - left + 1;
     int sizeRight = right - middle;
@@ -19,7 +19,7 @@ void mergeArScore(UniNode* array[], int left, int middle, int right)
     // Merge the temporary arrays back into arr[l..r]
     int i = 0, j = 0, k = left;
     while (i < sizeLeft && j < sizeRight) {
-        if (leftArr[i]->ArScore >= rightArr[j]->ArScore) {
+        if (leftArr[i]->FsrScore >= rightArr[j]->FsrScore) {
             array[k] = leftArr[i];
             ++i;
         }
@@ -50,20 +50,20 @@ void mergeArScore(UniNode* array[], int left, int middle, int right)
 }
 
 // Merge Sort function
-void mergeSortArScore(UniNode* array[], int left, int right) {
+void mergeSortFsrScore(UniNode* array[], int left, int right) {
     if (left < right) {
         int mid = left + (right - left) / 2;
 
         // Sort first and second halves
-        mergeSortArScore(array, left, mid);
-        mergeSortArScore(array, mid + 1, right);
+        mergeSortFsrScore(array, left, mid);
+        mergeSortFsrScore(array, mid + 1, right);
 
         // Merge the sorted halves
-        mergeArScore(array, left, mid, right);
+        mergeFsrScore(array, left, mid, right);
     }
 }
 
-void printArScoreByPagination(UniNode* array[], int size) {
+void printFsrScoreByPagination(UniNode* array[], int size) {
     int i;
     int currentShownTotal = 20;
     int currentShownLimit = 20;
@@ -71,11 +71,11 @@ void printArScoreByPagination(UniNode* array[], int size) {
 
     int counter; // needed?
 
-    cout << "Sorting University Information by Academic Reputation Score" << endl;
+    cout << "Sorting University Information by Faculty/Student Ratio Score" << endl;
 
     for (i = 0; i < 20; i++)
-        cout << "[" << i + 1 << "] " << "ArScore: " << array[i]->ArScore << " - (" << array[i]->Insitution << ")" << endl;
-        cout << endl;
+        cout << "[" << i + 1 << "] " << "FsrScore: " << array[i]->FsrScore << " - (" << array[i]->Insitution << ")" << endl;
+    cout << endl;
     cout << endl;
 
     while (currentShownTotal < 1422) {
@@ -84,20 +84,10 @@ void printArScoreByPagination(UniNode* array[], int size) {
 
         if (sortInput == "Y") {
             for (currentShownLimit += 20; currentShownTotal < currentShownLimit; currentShownTotal++)
-                cout << "[" << currentShownTotal + 1 << "] " << "ArScore: " << array[currentShownTotal]->ArScore << "- (" << array[currentShownTotal]->Insitution << ")" << endl;
-                cout << endl;
+                cout << "[" << currentShownTotal + 1 << "] " << "FsrScore: " << array[currentShownTotal]->FsrScore << "- (" << array[currentShownTotal]->Insitution << ")" << endl;
+            cout << endl;
             cout << endl;
             cout << "Showing " << currentShownLimit << " records" << endl;
         }
-        else if (sortInput == "N") {
-            break;
-        }
     }
-}
-
-void printAllArScore(UniNode* array[], int size) {
-    int i;
-    for (i = 0; i < size; i++)
-        cout << array[i]->ArScore << " ";
-    cout << endl;
 }
