@@ -2,6 +2,8 @@
 
 using namespace std;
 
+
+
 void swap(UniNode* array[], int a, int b) {
     UniNode* temp = array[a];
     array[a] = array[b];
@@ -61,7 +63,7 @@ void printByPagination(UniNode* array[], int size) {
     int counter; // needed?
 
     for (i = 0; i < 20; i++)
-        cout << "[" << i << "] " << array[i]->Insitution << endl;
+        cout << "[" << i+1 << "] " << array[i]->Insitution << endl;
     cout << endl;
 
     while (currentShownTotal < 1422) {
@@ -70,9 +72,9 @@ void printByPagination(UniNode* array[], int size) {
 
         if (sortInput == "Y") {
             for (currentShownLimit += 20; currentShownTotal < currentShownLimit; currentShownTotal++)
-                cout << "[" << currentShownTotal << "] " << array[currentShownTotal]->Insitution << endl;
+                cout << "[" << currentShownTotal+1 << "] " << array[currentShownTotal]->Insitution << endl;
             cout << endl;
-            cout << "Showing" << currentShownLimit << "records" << endl;
+            cout << "Showing " << currentShownLimit << " records" << endl;
         }
     }
 }

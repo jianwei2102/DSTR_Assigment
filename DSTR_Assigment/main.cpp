@@ -10,36 +10,77 @@
 #include "MergeSort.h"
 #include "QuickSort.h"
 #include "BinarySearchTest.h"
+#include "SortingArScore.h"
 
 using namespace std;
 
-int main() {
+void sortingMenu() {
+    int sortingChoiceInput = 0;
     auto start_time = chrono::high_resolution_clock::now();
     auto end_time = chrono::high_resolution_clock::now();
 
+    UniList list = ReadUniFromFile();
 
+    cout << "SORTING MENU" << endl;
+    cout << "[1] Merge Sort" << endl;
+    cout << "[2] Quick Sort" << endl;
+    cout << "[3] Comparison of Algorithm" << endl;
+    cout << "[4] ArScore Sort" << endl;
+    cout << "Enter your choice: " << endl;
+    cin >> sortingChoiceInput;
+
+    if (sortingChoiceInput == 1) {
+        // time taken for merge sort
+        start_time = chrono::high_resolution_clock::now();
+        mergeSort(list.UniArray, 0, 1422 - 1);
+        end_time = chrono::high_resolution_clock::now();
+        cout << "Time consumption of merge sort: " << (end_time - start_time).count() << " ns" << endl;
+        cout << endl;
+        cout << "Instituitions (Ascending) " << endl;
+
+        // print sorted list
+        printByPagination(list.UniArray, 1422 - 1);
+    }
+    else if (sortingChoiceInput == 2) {
+        // time taken for quick sort
+        start_time = chrono::high_resolution_clock::now();
+        quickSort(list.UniArray, 0, 1422 - 1);
+        end_time = chrono::high_resolution_clock::now();
+        cout << "Time consumption of quick sort: " << (end_time - start_time).count() << " ns" << endl;
+        cout << "Instituitions (Ascending) " << endl;
+
+        // print sorted list
+        printByPagination(list.UniArray, 1422 - 1);
+    }else if (sortingChoiceInput == 3) {
+        // time taken for merge sort
+        start_time = chrono::high_resolution_clock::now();
+        mergeSort(list.UniArray, 0, 1422 - 1);
+        end_time = chrono::high_resolution_clock::now();
+        cout << "Time consumption of merge sort: " << (end_time - start_time).count() << " ns" << endl;
+        cout << endl;
+
+        // time taken for quick sort
+        start_time = chrono::high_resolution_clock::now();
+        quickSort(list.UniArray, 0, 1422 - 1);
+        end_time = chrono::high_resolution_clock::now();
+        cout << "Time consumption of quick sort: " << (end_time - start_time).count() << " ns" << endl;
+    }else if (sortingChoiceInput == 4) {
+        mergeSortArScore(list.UniArray, 0, 1422 - 1);
+
+        // print sorted list
+        printArScoreByPagination(list.UniArray, 1422 - 1);
+    }
+
+}
+
+int main() {
     // Display uni
     UniList list = ReadUniFromFile();
     //list.displayUniList();
 
-    cout << "SORTING" << endl;
-    // time taken for merge sort
-    start_time = chrono::high_resolution_clock::now();
-    mergeSort(list.UniArray, 0, 1422 - 1);
-    end_time = chrono::high_resolution_clock::now();
-    cout << "Time consumption of merge sort: " << (end_time - start_time).count() << " ns" << endl;
+    sortingMenu();
 
-    // time taken for quick sort
-    start_time = chrono::high_resolution_clock::now();
-    quickSort(list.UniArray, 0, 1422 - 1);
-    end_time = chrono::high_resolution_clock::now();
-    cout << "Time consumption of quick sort: " << (end_time - start_time).count() << " ns" << endl;
-
-    
-    // sorted list by asc
-    // printAll(list.UniArray, 1422 - 1);
-    printByPagination(list.UniArray, 1422 - 1);
-
+    /*
 
 
     // Create a UserList object
@@ -93,9 +134,10 @@ int main() {
 
 
     cout << endl << endl << "ADMIN HERE" << endl;
-    //Admin admin;
-    /*admin.login("admin", "admin123");
-    admin.viewUserFeedbackList();
+    Admin admin;
+    admin.login("admin", "admin123");
+
+    /*admin.viewUserFeedbackList();
     admin.insertReplyIntoFeedbackNode("26500", "Admin", "This is reply from admin");*/
     //admin.generateReport();
     //admin.displayUserList();
@@ -103,7 +145,7 @@ int main() {
     admin.displayUserList();
     
     admin.viewUserFeedbackList();*/
-    //userList.showOwnFeedback(alice); 
+    //userList.showOwnFeedback(alice); */
 
    
 

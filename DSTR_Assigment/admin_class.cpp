@@ -13,8 +13,9 @@ void Admin::deleteInactiveUser() {
         double secondsSinceLastLogin = difftime(now, lastLoginTime);
         // A month
         if (secondsSinceLastLogin > 2592000) {
+            cout << current->Username << endl;
             // delete the user
-            //AllUserList->deleteUserNode(current->UserID);
+            // AllUserList->displayUserTree;
         }
         //current = current->NextUser;
     }
@@ -23,6 +24,7 @@ void Admin::deleteInactiveUser() {
 bool Admin::login(string Username, string Password) {
     // Check if username and password are correct
     if (Username == "admin" && Password == "admin123") {
+        cout << "logged in" << endl;
         // Delete inactive user after login
         deleteInactiveUser();
         return true;

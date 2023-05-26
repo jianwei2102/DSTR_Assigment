@@ -145,6 +145,7 @@
     <ClInclude Include="QuickSort.h" />
     <ClInclude Include="read_file.hpp" />
     <ClInclude Include="reply_class.hpp" />
+    <ClInclude Include="SortingUser.h" />
     <ClInclude Include="uni_class.hpp" />
     <ClInclude Include="user_class.hpp" />
   </ItemGroup>
