@@ -6,6 +6,8 @@
 #include "feedback_class.hpp"
 #include "reply_class.hpp"
 #include "user_class.hpp"
+#include "user_ui.hpp"
+#include "user_controller.hpp"
 using namespace std;
 
 int main() {
@@ -14,17 +16,24 @@ int main() {
     //list.displayUniList();
 
     // Create a UserList object
-    UserList userList;
+    UserList* userList = new UserList();
+    UserUI* userUI = new UserUI();
+    UserController userController(userList, userUI);
 
-    cout << "TEST AHHH" << endl;
+
+
     // Insert some users into the list
-    userList.insertIntoUserTree("Alice", "alice@gmail.com","Alice123");
-    userList.insertIntoUserTree("Bob", "bob@gmail.com", "qwerty");
-    userList.insertIntoUserTree("C", "ac@gmail.com", "ac");
+    userList->insertIntoUserTree("Alice", "alice@gmail.com","Alice123");
+    userList->insertIntoUserTree("Bob", "bob@gmail.com", "qwerty");
+    userList->insertIntoUserTree("C", "ac@gmail.com", "ac");
+
+
     // Get a user object from the list (in this case, Alice)
-    UserNode* alice = userList.login("Alice", "Alice123");
-    UserNode* bob = userList.login("Bob", "qwerty");
-    UserNode* ac = userList.login("C", "ac");
+    UserNode* alice = userList->login("Alice", "Alice123");
+    UserNode* bob = userList->login("Bob", "qwerty");
+    UserNode* ac = userList->login("C", "ac");
+
+
 
     // Create some feedback from Alice
     //userList.addFeedbackToUser(alice, "This is my feedback");
@@ -43,27 +52,25 @@ int main() {
 
 
     // Create some uni fav from Alice
-    userList.addFavouriteUniToUser(alice, "UNI05");
-    userList.addFavouriteUniToUser(alice, "UNI031");
-    userList.addFavouriteUniToUser(ac, "UNI03");
-    userList.addFavouriteUniToUser(alice, "UNI03");
-    userList.addFavouriteUniToUser(alice, "UNI03");
-    userList.addFavouriteUniToUser(bob, "UNI031");
-    userList.addFavouriteUniToUser(bob, "UNI021");
-    userList.addFavouriteUniToUser(bob, "UNI021");
-    cout << endl << "Show Alice" << endl;
-    userList.showOwnFavoriteUni(alice);
-    cout << endl << "Show Ac" << endl;
-    userList.showOwnFavoriteUni(ac);
-    cout << endl << "Show Bob" << endl;
-    userList.showOwnFavoriteUni(bob);
+    userList->addFavouriteUniToUser(alice, "UNI05");
+    userList->addFavouriteUniToUser(alice, "UNI031");
+    userList->addFavouriteUniToUser(ac, "UNI03");
+    userList->addFavouriteUniToUser(alice, "UNI03");
+    userList->addFavouriteUniToUser(alice, "UNI03");
+    userList->addFavouriteUniToUser(bob, "UNI031");
+    userList->addFavouriteUniToUser(bob, "UNI021");
+    userList->addFavouriteUniToUser(bob, "UNI021");
 
-    //userList.displayUserTree(userList.getRoot(), "", true);
-    userList.inorder(userList.getRoot());
-    cout << "TEST AHHH" << endl;
+    alice == nullptr;
+    bob == nullptr;
+    ac == nullptr;
 
-
-    cout << endl << endl << "ADMIN HERE" << endl;
+    //cout << endl << "Show Alice" << endl;
+    //userList.showOwnFavoriteUni(alice);
+    //cout << endl << "Show Ac" << endl;
+    //userList.showOwnFavoriteUni(ac);
+    //cout << endl << "Show Bob" << endl;
+    //userList.showOwnFavoriteUni(bob);
     //Admin admin;
     /*admin.login("admin", "admin123");
     admin.viewUserFeedbackList();
@@ -75,5 +82,33 @@ int main() {
     
     admin.viewUserFeedbackList();*/
     //userList.showOwnFeedback(alice);
+
+
+
+    string input;
+
+
+    while (true)
+    {
+        cout << endl;
+        cout << "1. Sign in as Admin" << endl << "2. Sign in as User" << endl << "3. Register Account" << endl << "4. Continue as Guest" << endl << "5. Exit" << endl;
+        cout << "Your input:  ";
+        cin >> input;
+        cout << endl;
+        cin.ignore();
+
+        if (input == "2")
+        {       
+            userController.loginHandler();
+        }
+        else if (input == "3")
+        {
+            userController.registerHandler();
+        }
+
+   }
+
+
+
 	return 0;
 }
