@@ -19,6 +19,12 @@
     <Filter Include="Source Files\Functions">
       <UniqueIdentifier>{752b623b-3cb9-48d0-84b0-4e725e4a00cf}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\Controller">
+      <UniqueIdentifier>{635c03ae-42e2-4653-b90f-f50f7bb04533}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\View">
+      <UniqueIdentifier>{4e73bc52-00ec-40f2-9c97-76d3fc2cf347}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -45,6 +51,12 @@
     <ClCompile Include="admin_class.cpp">
       <Filter>Source Files\Classes</Filter>
     </ClCompile>
+    <ClCompile Include="user_ui.cpp">
+      <Filter>Source Files\View</Filter>
+    </ClCompile>
+    <ClCompile Include="user_controller.cpp">
+      <Filter>Source Files\Controller</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="uni_class.hpp">
@@ -67,6 +79,18 @@
     </ClInclude>
     <ClInclude Include="admin_class.hpp">
       <Filter>Source Files\Classes</Filter>
+    </ClInclude>
+    <ClInclude Include="LinkedList.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="stackedLinkedList.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="user_ui.hpp">
+      <Filter>Source Files\View</Filter>
+    </ClInclude>
+    <ClInclude Include="user_controller.hpp">
+      <Filter>Source Files\Controller</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

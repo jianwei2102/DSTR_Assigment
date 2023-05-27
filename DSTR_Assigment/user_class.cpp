@@ -65,7 +65,7 @@ UserNode* UserList::createNewUserNode(string Username, string Email, string Pass
     newUser->LastLogin = time(0);
     newUser->FavouriteUniList = new FavouriteUnilist();
     newUser->FeedbackList = new Feedbacklist();
-    newUser->UserID = to_string(rand());
+    newUser->UserID = "US" + to_string(rand());
 
     return newUser;
 }
@@ -291,7 +291,7 @@ void UserList::deleteNode(string searchKey)
     UserNode* y;
     UserNode* x;
 
-    UserNode* target = searchUser(searchKey);
+    UserNode* target = searchUserByUsername(searchKey);
 
     if (target == this->nullNode)
     {
@@ -416,7 +416,7 @@ void UserList::deleteFixup(UserNode* x)
     x->color = 'B';
 }
 
-UserNode* UserList::searchUser(string searchKey)
+UserNode* UserList::searchUserByUsername(string searchKey)
 {
     UserNode* x = this->root;
 
@@ -446,9 +446,16 @@ UserNode* UserList::getRoot()
 
 UserNode* UserList::login(string Username, string Password) {
     //Traverse the list to find a matching user
-    UserNode* currentUser = searchUser(Username);
+    UserNode* currentUser = searchUserByUsername(Username);
 
-    if (currentUser->Username == Username && currentUser->Password == Password) {
+    if (currentUser == NULL) {
+        cout << "ERROR";
+    }
+
+    if (currentUser->Username.empty()) {
+        return NULL;
+    }
+    else if(currentUser->Username == Username && currentUser->Password == Password) {
         currentUser->LastLogin = time(0); // update last login time
         return currentUser;
     }
@@ -516,7 +523,7 @@ void UserList::addFeedbackToUser(UserNode* User, const string& Feedback) {
 void UserList::showOwnFeedback(UserNode* User) {
 
 
-    UserNode* currentUser = searchUser(User->Username);
+    UserNode* currentUser = searchUserByUsername(User->Username);
 
     if (User->UserID == "") {
         cout << "User not found" << endl;

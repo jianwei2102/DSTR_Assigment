@@ -55,7 +55,7 @@ public:
 
     void deleteFixup(UserNode* x);
 
-    UserNode* searchUser(string searchKey);
+    UserNode* searchUserByUsername(string searchKey);
 
     UserNode* minimum(UserNode* node);
 
