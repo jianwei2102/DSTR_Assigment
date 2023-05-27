@@ -44,42 +44,49 @@ UniNode* createNewUniNode(int Rank, string Insitution, string LocationCode, stri
 	return newUniNode;
 }
 
-void splitDisplay(const vector<UniNode>& universities, int startInd, int batchSize) {
-	int totalCount = universities.size();
-	int endInd = min(startInd + batchSize - 1, totalCount - 1);
-	for (int i = startInd; i <= endInd; i++) {
-		cout << "Rank: " << universities[i].Rank << endl;
-		cout << "Inistitution: " << universities[i].Insitution << endl;
-		cout << "Location Code: " << universities[i].LocationCode << endl;
-		cout << "Location: " << universities[i].Location << endl;
-		cout << "Academic Reputation Score: " << universities[i].ArScore << endl;
-		cout << "Academic Reputation Rank: " << universities[i].ArRank << endl;
-		cout << "Employer Reputation Score: " << universities[i].ErScore << endl;
-		cout << "Employer Reputation Rank: " << universities[i].ErRank << endl;
-		cout << "Faculty/Student Ratio Score: " << universities[i].FsrScore << endl;
-		cout << "Faculty/Student Ratio Rank: " << universities[i].FsrRank << endl;
-		cout << "Citations per Faculty Score: " << universities[i].CpfScore << endl;
-		cout << "Citations per Faculty Rank: " << universities[i].CpfRank << endl;
-		cout << "International Faculty Ratio Score: " << universities[i].IfrScore << endl;
-		cout << "International Faculty Ratio Rank: " << universities[i].IfrRank << endl;
-		cout << "International Student Ratio Score: " << universities[i].IsrScore << endl;
-		cout << "International Student Ratio Rank: " << universities[i].IsrRank << endl;
-		cout << "International Research Network Score: " << universities[i].IrnScore << endl;
-		cout << "International Research Network Rank: " << universities[i].IrnRank << endl;
-		cout << "Employment Outcome Score: " << universities[i].GerScore << endl;
-		cout << "Employment Outcome Rank: " << universities[i].GerRank << endl;
-		cout << "---------------------------------------------" << endl;
+void splitDisplay(UniNode* universities, int startInd, int batchSize) {
+	int totalCount = 0;
+	UniNode* current = universities;
+	while (current != NULL && totalCount < startInd) {
+		current = current->NextAdd;
+		totalCount++;
 	}
-	if (endInd < totalCount - 1) {
+	for (int i = 0; i < batchSize && current != NULL; i++) {
+		cout << "Rank: " << current->Rank << endl;
+		cout << "Inistitution: " << current->Insitution << endl;
+		cout << "Location Code: " << current->LocationCode << endl;
+		cout << "Location: " << current->Location << endl;
+		cout << "Academic Reputation Score: " << current->ArScore << endl;
+		cout << "Academic Reputation Rank: " << current->ArRank << endl;
+		cout << "Employer Reputation Score: " << current->ErScore << endl;
+		cout << "Employer Reputation Rank: " << current->ErRank << endl;
+		cout << "Faculty/Student Ratio Score: " << current->FsrScore << endl;
+		cout << "Faculty/Student Ratio Rank: " << current->FsrRank << endl;
+		cout << "Citations per Faculty Score: " << current->CpfScore << endl;
+		cout << "Citations per Faculty Rank: " << current->CpfRank << endl;
+		cout << "International Faculty Ratio Score: " << current->IfrScore << endl;
+		cout << "International Faculty Ratio Rank: " << current->IfrRank << endl;
+		cout << "International Student Ratio Score: " << current->IsrScore << endl;
+		cout << "International Student Ratio Rank: " << current->IsrRank << endl;
+		cout << "International Research Network Score: " << current->IrnScore << endl;
+		cout << "International Research Network Rank: " << current->IrnRank << endl;
+		cout << "Employment Outcome Score: " << current->GerScore << endl;
+		cout << "Employment Outcome Rank: " << current->GerRank << endl;
+		cout << "---------------------------------------------" << endl;
+
+		current = current->NextAdd;
+		totalCount++;
+	}
+	if (current != NULL) {
 		cout << "---------------------------------------------" << endl;
 
 		char userInput;
 		do {
-			
+
 			cout << "Enter 'n' to continue: ";
 			cin >> userInput;
 			if (userInput == 'n' || userInput == 'N') {
-				splitDisplay(universities, endInd + 1, batchSize);
+				splitDisplay(universities, totalCount, batchSize);
 			}
 			else {
 				cout << "Invalid Input" << endl;
@@ -98,9 +105,11 @@ void displayUniList() {
 	string Insitution, LocationCode, Location, Rank, ArRank, ErRank, FsrRank, CpfRank, IfrRank, IsrRank, IrnRank, GerRank,
 		ArScore, ErScore, FsrScore, CpfScore, IfrScore, IsrScore, IrnScore, GerScore, ScoreScaled;
 	string addon;
-	vector<UniNode> universities;
+	UniNode* universities = NULL;
+	UniNode* lastUniNode = NULL;
+
 	while (file.good()) {
-		UniNode university;
+		UniNode* university = new UniNode;
 		getline(file, Rank, ',');
 		getline(file, Insitution, ',');
 		if (Insitution[0] == '"') {
@@ -205,35 +214,41 @@ void displayUniList() {
 			ScoreScaled = "0";
 		}
 
-		university.Rank = stoi(Rank);
-		university.Insitution = Insitution;
-		university.LocationCode = LocationCode;
-		university.Location = Location;
-		university.ArScore = stod(ArScore);
-		university.ArRank = stoi(ArRank);
-		university.ErScore = stod(ErScore);
-		university.ErRank = stoi(ErScore);
-		university.FsrScore = stod(FsrScore);
-		university.FsrRank = stoi(FsrRank);
-		university.CpfScore = stod(CpfScore);
-		university.CpfRank = stoi(CpfRank);
-		university.IfrScore = stod(IfrScore);
-		university.IfrRank = stoi(IfrRank);
-		university.IsrScore = stod(IsrScore);
-		university.IsrRank = stoi(IsrRank);
-		university.IrnScore = stod(IrnScore);
-		university.IrnRank = stoi(IrnRank);
-		university.GerScore = stod(GerScore);
-		university.GerRank = stoi(GerRank);
-		university.ScoreScaled = stod(ScoreScaled);
-		universities.push_back(university);
+		university->Rank = stoi(Rank);
+		university->Insitution = Insitution;
+		university->LocationCode = LocationCode;
+		university->Location = Location;
+		university->ArScore = stod(ArScore);
+		university->ArRank = stoi(ArRank);
+		university->ErScore = stod(ErScore);
+		university->ErRank = stoi(ErScore);
+		university->FsrScore = stod(FsrScore);
+		university->FsrRank = stoi(FsrRank);
+		university->CpfScore = stod(CpfScore);
+		university->CpfRank = stoi(CpfRank);
+		university->IfrScore = stod(IfrScore);
+		university->IfrRank = stoi(IfrRank);
+		university->IsrScore = stod(IsrScore);
+		university->IsrRank = stoi(IsrRank);
+		university->IrnScore = stod(IrnScore);
+		university->IrnRank = stoi(IrnRank);
+		university->GerScore = stod(GerScore);
+		university->GerRank = stoi(GerRank);
+		university->ScoreScaled = stod(ScoreScaled);
+		university->NextAdd = NULL;
+
+		if (universities == NULL) {
+			universities = university;
+			lastUniNode = university;
+		}
+		else {
+			lastUniNode->NextAdd = university;
+			lastUniNode = university;
+		}
 
 	}
 	file.close();
-	int startInd = 0;
-	int batchSize = 20; //number for displaying by how much
-	splitDisplay(universities, startInd, batchSize);
-
+	splitDisplay(universities, 0, 25);
 }
 
 int main() {
