@@ -1,5 +1,10 @@
-#include "user_controller.hpp"
 #include <iostream>
+#include "user_controller.hpp"
+//#include "MergeSort.h"
+//#include "QuickSort.h"
+//#include "SortingArScore.h"
+//#include "SortingErScore.h"
+
 using namespace std;
 
 void UserController::loginHandler()
@@ -7,8 +12,15 @@ void UserController::loginHandler()
 
 	while (true)
 	{
+		cout << "Leave 1 or more fields blank to exit" << endl << endl;
+
 		string username = this->userUI->displayUsername();
 		string password = this->userUI->displayPassword();
+
+		if (username.empty() || password.empty())
+		{
+			return;
+		}
 
 		UserNode* user = this->userList->login(username, password);
 
@@ -25,8 +37,7 @@ void UserController::loginHandler()
 			continue;
 		}
 	}
-		
-	
+			
 	this->mainMenuHandler();
 
 }
@@ -38,9 +49,12 @@ void UserController::mainMenuHandler()
 
 	while (true)
 	{
+		cout << endl;
 		int input = this->userUI->displayMainMenu();
+		cout << endl;
 
 		if (input == 1) {
+			cout << endl;
 			this->universityHandler();
 		}
 		else if (input == 4)
@@ -97,11 +111,35 @@ void UserController::universityHandler()
 
 	while (true)
 	{
+		cout << endl;
 		input = this->userUI->displayUniMenu();
 
-		if (input == 5)
+
+		if (input == 3)
+		{
+			cin.ignore();
+			string uniID;
+
+			cout << "Please enter the University ID you would like to add:   ";
+			getline(cin, uniID);
+
+			this->userList->addFavouriteUniToUser(this->loginUser, uniID);
+
+		}
+		else if (input == 5)
 		{
 			this->userList->showOwnFavoriteUni(this->loginUser);
+		}
+		else if (input == 6)
+		{
+
+			cin.ignore();
+			string uniID;
+
+			cout << "Please enter the University ID you would like to remove:   ";
+			getline(cin, uniID);
+
+			this->userList->removeFavouriteUniFromUser(this->loginUser, uniID);
 		}
 
 	}

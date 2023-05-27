@@ -448,9 +448,9 @@ UserNode* UserList::login(string Username, string Password) {
     //Traverse the list to find a matching user
     UserNode* currentUser = searchUserByUsername(Username);
 
-    if (currentUser == NULL) {
+   /* if (currentUser == NULL) {
         cout << "ERROR";
-    }
+    }*/
 
     if (currentUser->Username.empty()) {
         return NULL;
@@ -491,6 +491,11 @@ void UserList::addFavouriteUniToUser(UserNode* User, string UniID) {
     User->FavouriteUniList->insertIntoFavouriteUni(User->UserID, UniID, false);
 }
 
+void UserList::removeFavouriteUniFromUser(UserNode* User, string UniID)
+{
+    User->FavouriteUniList->removeFavouriteUni(User->UserID, UniID);
+}
+
 // Add on show uni details
 void UserList::showOwnFavoriteUni(UserNode* User) {
     if (User == NULL) {
@@ -499,16 +504,26 @@ void UserList::showOwnFavoriteUni(UserNode* User) {
     }
 
     UserFavouriteUni* currentUni = User->FavouriteUniList->head;
-    int count = 0;
+    //int count = 0;
+
+    if (!currentUni) {
+        cout << "No favorite uni found for the user" << endl;
+        return;
+    }
+
+    cout << endl << "ID " << "Rank " << "Institution " << "Location " << "ArScore " << "ErScore " << "FsrScore " << endl;
+
     while (currentUni != NULL) {
-        cout << "User ID: " << currentUni->UserID << endl;
-        cout << "Uni ID: " << currentUni->UniID << endl;
-        count++;
+        cout << currentUni->UniID << endl;
+        //count++;
         currentUni = currentUni->NextUni;
     }
+
+    /*
     if (count == 0) {
         cout << "No favourite uni found for the user" << endl;
     }
+    */
 }
 
 void UserList::addFeedbackToUser(UserNode* User, const string& Feedback) {

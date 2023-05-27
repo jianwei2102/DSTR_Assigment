@@ -11,15 +11,39 @@ UserFavouriteUni* FavouriteUnilist::createNewFavouriteUni(string UserID, string 
     newFavouriteUni->UniID = UniID;
     newFavouriteUni->favoriteCount = NULL;
     newFavouriteUni->NextUni = NULL;
-
+    newFavouriteUni->PrevUni = NULL;
+ 
     return newFavouriteUni;
 }
 
 // Check if the favourite uni is added to the list or not? if no, not able to add
-UserFavouriteUni* FavouriteUnilist::getFavouriteUni(string UserID, string UniID) { return 0; }
+UserFavouriteUni* FavouriteUnilist::getFavouriteUni(string UserID, string UniID) 
+{ 
+    UserFavouriteUni* currentUni = head;
+
+    while (currentUni != NULL)
+    {
+        if (currentUni->UserID == UserID && currentUni->UniID == UniID)
+        {
+            return currentUni;
+        }
+        currentUni = currentUni->NextUni;
+    }
+
+    return NULL;
+}
 
 // Check if the node already exists in the list
 void FavouriteUnilist::insertIntoFavouriteUni(string UserID, string UniID, bool isReportList) {
+
+    UserFavouriteUni* exist = getFavouriteUni(UserID, UniID);
+
+    if (exist)
+    {
+        cout << "The university is already in your favorite list" << endl;
+        return;
+    }
+
     // Create a new FeedbackNode
     UserFavouriteUni* newFavouriteUni = createNewFavouriteUni(UserID, UniID);
     UserFavouriteUni* newAllFavouriteUni = createNewFavouriteUni(UserID, UniID);
@@ -78,7 +102,39 @@ void FavouriteUnilist::displayALL() {
 }
 
 // Not yet
-void FavouriteUnilist::removeFavouriteUni(string UserID, string UniID) {}
+void FavouriteUnilist::removeFavouriteUni(string UserID, string UniID) 
+{
+
+    UserFavouriteUni* exist = getFavouriteUni(UserID, UniID);
+
+    if (!exist)
+    {
+        cout << "The university is not in your favorite list" << endl;
+        return;
+    }
+
+    // If the node to be deleted is the head node
+    if (head == exist) {
+        head = exist->NextUni;
+    }
+
+    // If the node to be deleted is the tail node
+    if (tail == exist) {
+        tail = exist->PrevUni;
+    }
+
+    // If the node to be deleted is not the last node, then we need to adjust the 'NextUni' of the next node
+    if (exist->NextUni != NULL) {
+        exist->NextUni->PrevUni = exist->PrevUni;
+    }
+
+    // If the node to be deleted is not the first node, then we need to adjust the 'PrevUni' of the previous node
+    if (exist->PrevUni != NULL) {
+        exist->PrevUni->NextUni = exist->NextUni;
+    }
+
+    delete exist;
+}
 
 FavouriteUnilist* FavouriteUnilist::generateFavouriteUniRecord() {
     // Generate a new list for top favourite uni list

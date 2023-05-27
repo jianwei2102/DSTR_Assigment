@@ -83,6 +83,8 @@ public:
 
     void addFavouriteUniToUser(UserNode* User, string UniID);
 
+    void removeFavouriteUniFromUser(UserNode* User, string UniID);
+
     void showOwnFavoriteUni(UserNode* User);
 
     void addFeedbackToUser(UserNode* User, const string& Feedback);

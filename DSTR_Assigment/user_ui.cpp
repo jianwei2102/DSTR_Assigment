@@ -50,10 +50,11 @@ int UserUI::displayUniMenu() {
 	int input;
 
 	cout << "1. Search Universities" << endl << "2. Sort Universities" << endl << "3. Save Favorite" << endl;
-	cout << "4. Default Order" << endl << "5. Show Favorite" << endl << "Remove Favorite" << endl;
+	cout << "4. Default Order" << endl << "5. Show Favorite" << endl << "6. Remove Favorite" << endl;
 
 	cout << "Please enter your choice: ";
 	cin >> input;
+	cout << endl;
 
 	return input;
 }

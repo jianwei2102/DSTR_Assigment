@@ -18,6 +18,7 @@
 #include "user_controller.hpp"
 using namespace std;
 
+/*
 void sortingUserMenu() {
     int sortingChoiceInput = 0;
 
@@ -112,16 +113,20 @@ void sortingMenu() {
     }
 
 }
+*/
+
 
 int main() {
     // Display uni
     UniList list = ReadUniFromFile();
+
+    cout << sizeof(list.UniArray);
+
     //list.displayUniList();
 
     //sortingMenu();
-    sortingUserMenu();
+    //sortingUserMenu();
 
-    /*
 
 
     // Create a UserList object
@@ -165,19 +170,21 @@ int main() {
     userList->addFavouriteUniToUser(alice, "UNI031");
     userList->addFavouriteUniToUser(ac, "UNI03");
     userList->addFavouriteUniToUser(alice, "UNI03");
-    userList->addFavouriteUniToUser(alice, "UNI03");
+    //userList->removeFavouriteUniFromUser(alice, "UNI031");
+    //userList->addFavouriteUniToUser(alice, "UNI03");
+
     userList->addFavouriteUniToUser(bob, "UNI031");
     userList->addFavouriteUniToUser(bob, "UNI021");
-    userList->addFavouriteUniToUser(bob, "UNI021");
+    //userList->addFavouriteUniToUser(bob, "UNI021");
 
     alice == nullptr;
     bob == nullptr;
     ac == nullptr;
 
     //cout << endl << "Show Alice" << endl;
-    //userList.showOwnFavoriteUni(alice);
+    //userList->showOwnFavoriteUni(alice);
     //cout << endl << "Show Ac" << endl;
-    //userList.showOwnFavoriteUni(ac);
+    //userList->showOwnFavoriteUni(ac);
     //cout << endl << "Show Bob" << endl;
     //userList.showOwnFavoriteUni(bob);
     //Admin admin;
@@ -193,7 +200,7 @@ int main() {
     //userList.showOwnFeedback(alice);
 
 
-
+ 
     string input;
 
 
@@ -216,8 +223,6 @@ int main() {
         }
 
    }
-
-
 
 	return 0;
 }
