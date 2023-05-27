@@ -1,4 +1,5 @@
 #include <iostream>
+#include <chrono>
 #include "read_file.hpp"
 #include "uni_class.hpp"
 #include "admin_class.hpp"
@@ -6,14 +7,122 @@
 #include "feedback_class.hpp"
 #include "reply_class.hpp"
 #include "user_class.hpp"
+#include "MergeSort.h"
+#include "QuickSort.h"
+#include "BinarySearchTest.h"
+#include "SortingArScore.h"
+#include "SortingFsrScore.h"
+#include "SortingErScore.h"
+
 #include "user_ui.hpp"
 #include "user_controller.hpp"
 using namespace std;
+
+void sortingUserMenu() {
+    int sortingChoiceInput = 0;
+
+    UniList list = ReadUniFromFile();
+
+    cout << "SORTING MENU - University Information" << endl;
+    cout << "[1] Sort by Academic Reputation Score" << endl;
+    cout << "[2] Sort by Faculty/Student Ratio Score" << endl;
+    cout << "[3] Sort by Employer Reputation Score" << endl;
+    cout << "[0] Back" << endl;
+    cout << "Enter your choice: " << endl;
+    cin >> sortingChoiceInput;
+
+    if (sortingChoiceInput == 1) {
+        mergeSortArScore(list.UniArray, 0, 1422 - 1);
+
+        // print sorted list
+        printArScoreByPagination(list.UniArray, 1422 - 1);
+    }
+    else if (sortingChoiceInput == 2) {
+        mergeSortFsrScore(list.UniArray, 0, 1422 - 1);
+
+        // print sorted list
+        printFsrScoreByPagination(list.UniArray, 1422 - 1);
+    }
+    else if (sortingChoiceInput == 3) {
+        mergeSortErScore(list.UniArray, 0, 1422 - 1);
+
+        // print sorted list
+        printErScoreByPagination(list.UniArray, 1422 - 1);
+    }
+    else if (sortingChoiceInput == 0) {
+        sortingUserMenu();
+    }
+
+}
+
+void sortingMenu() {
+    int sortingChoiceInput = 0;
+    auto start_time = chrono::high_resolution_clock::now();
+    auto end_time = chrono::high_resolution_clock::now();
+
+    UniList list = ReadUniFromFile();
+
+    cout << "SORTING MENU" << endl;
+    cout << "[1] Merge Sort" << endl;
+    cout << "[2] Quick Sort" << endl;
+    cout << "[3] Comparison of Algorithm" << endl;
+    cout << "[0] Back" << endl;
+    cout << "Enter your choice: " << endl;
+    cin >> sortingChoiceInput;
+
+    if (sortingChoiceInput == 1) {
+        // time taken for merge sort
+        start_time = chrono::high_resolution_clock::now();
+        mergeSort(list.UniArray, 0, 1422 - 1);
+        end_time = chrono::high_resolution_clock::now();
+        cout << "Time consumption of merge sort: " << (end_time - start_time).count() << " ns" << endl;
+        cout << endl;
+        cout << "Instituitions (Ascending) " << endl;
+
+        // print sorted list
+        printByPagination(list.UniArray, 1422 - 1);
+    }
+    else if (sortingChoiceInput == 2) {
+        // time taken for quick sort
+        start_time = chrono::high_resolution_clock::now();
+        quickSort(list.UniArray, 0, 1422 - 1);
+        end_time = chrono::high_resolution_clock::now();
+        cout << "Time consumption of quick sort: " << (end_time - start_time).count() << " ns" << endl;
+        cout << "Instituitions (Ascending) " << endl;
+
+        // print sorted list
+        printByPagination(list.UniArray, 1422 - 1);
+    }
+    else if (sortingChoiceInput == 3) {
+        // time taken for merge sort
+        start_time = chrono::high_resolution_clock::now();
+        mergeSort(list.UniArray, 0, 1422 - 1);
+        end_time = chrono::high_resolution_clock::now();
+        cout << "Time consumption of merge sort: " << (end_time - start_time).count() << " ns" << endl;
+        cout << endl;
+
+        // time taken for quick sort
+        start_time = chrono::high_resolution_clock::now();
+        quickSort(list.UniArray, 0, 1422 - 1);
+        end_time = chrono::high_resolution_clock::now();
+        cout << "Time consumption of quick sort: " << (end_time - start_time).count() << " ns" << endl;
+    }
+    else if (sortingChoiceInput == 0) {
+        sortingMenu();
+    }
+
+}
 
 int main() {
     // Display uni
     UniList list = ReadUniFromFile();
     //list.displayUniList();
+
+    //sortingMenu();
+    sortingUserMenu();
+
+    /*
+
 
     // Create a UserList object
     UserList* userList = new UserList();
