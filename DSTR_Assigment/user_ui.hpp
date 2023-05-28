@@ -18,4 +18,6 @@ public:
 	string displayEmail();
 
 	int displayUniMenu();
+
+	int displayInboxMenu();
 };

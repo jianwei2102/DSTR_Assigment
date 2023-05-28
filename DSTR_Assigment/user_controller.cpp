@@ -9,7 +9,6 @@ using namespace std;
 
 void UserController::loginHandler()
 {
-
 	while (true)
 	{
 		cout << "Leave 1 or more fields blank to exit" << endl << endl;
@@ -57,6 +56,11 @@ void UserController::mainMenuHandler()
 			cout << endl;
 			this->universityHandler();
 		}
+		else if (input == 2)
+		{
+			cout << endl;
+			this->inboxHandler();
+		}
 		else if (input == 4)
 		{
 			this->loginUser == nullptr;
@@ -64,7 +68,6 @@ void UserController::mainMenuHandler()
 		}
 	}
 }
-
 
 void UserController::registerHandler()
 {
@@ -106,7 +109,6 @@ void UserController::registerHandler()
 
 void UserController::universityHandler() 
 {
-
 	int input;
 
 	while (true)
@@ -143,8 +145,34 @@ void UserController::universityHandler()
 		}
 
 	}
-
-
 }
 
+void UserController::inboxHandler()
+{
+	int input;
+
+	while (true)
+	{
+		cout << endl;
+		input = this->userUI->displayInboxMenu();
+		cin.ignore();
+
+		if (input == 1)
+		{
+			this->userList->showOwnFeedback(this->loginUser);
+
+		}
+		else if (input == 2)	
+		{
+			//this->userList->showOwnFeedback(this->loginUser);
+		}
+		else if (input == 3)
+		{
+
+			cin.ignore();
+			
+		}
+
+	}
+}
 

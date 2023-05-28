@@ -535,10 +535,74 @@ void UserList::addFeedbackToUser(UserNode* User, const string& Feedback) {
     User->FeedbackList->insertIntoFeedbackList(User, Feedback);
 }
 
+
+void UserList::showOwnFeedback(UserNode* User)
+{
+    if (User == NULL) {
+        cout << "User not found" << endl;
+        return;
+    }
+
+    FeedbackNode* currentFeedback = User->FeedbackList->head;
+
+    if (!currentFeedback)
+    {
+        cout << "No feedback found for the user" << endl;
+        return;
+    }
+
+
+   /* while (currentFeedback != NULL)
+    {
+        cout << currentFeedback->FeedbackID << " " << currentFeedback->Feedback << endl;
+        currentFeedback = currentFeedback->NextFeedback;
+    }*/
+
+    string input;
+
+    while (true)
+    {
+        cout << endl << "FeedbackID " << "Description" << endl;
+        cout << currentFeedback->FeedbackID << " " << currentFeedback->Feedback << endl << endl;
+        cout << "Navigate: (N)ext, (P)revious, (Q)uit : ";
+
+        cin >> input;
+
+        if (input == "n" || input == "N")
+        {
+            if (currentFeedback->NextFeedback != NULL) {
+                currentFeedback = currentFeedback->NextFeedback;
+            }
+            else {
+                cout << "(No more feedbacks.)" << endl;
+            }
+        }
+        else if (input == "p" || input == "P")
+        {
+            if (currentFeedback->PrevFeedback != NULL) {
+                currentFeedback = currentFeedback->PrevFeedback;
+            }
+            else {
+                cout << "This is the first feedback." << endl;
+            }
+        }
+        else if (input == "q" || input == "Q")
+        {
+            return;
+        }
+        else
+        {
+            cout << "Invalid input. Please enter N for next, P for previous, or Q to quit." << endl;
+
+        }
+    }
+}
+
+/*
 void UserList::showOwnFeedback(UserNode* User) {
 
 
-    UserNode* currentUser = searchUserByUsername(User->Username);
+    //UserNode* currentUser = searchUserByUsername(User->Username);
 
     if (User->UserID == "") {
         cout << "User not found" << endl;
@@ -580,6 +644,8 @@ void UserList::showOwnFeedback(UserNode* User) {
         cout << "User not found" << endl;
     }
 }
+*/
+
 
 void UserList::insertReplyIntoFeedbackNode(string FeedbackID, UserNode* User, const string& Reply) {
     // Get feedback node for both all feedback list and user feedback list

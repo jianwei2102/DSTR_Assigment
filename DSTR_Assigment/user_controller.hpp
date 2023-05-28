@@ -31,4 +31,6 @@ public:
 	void registerHandler();
 
 	void universityHandler();
+
+	void inboxHandler();
 };

@@ -19,6 +19,13 @@ UserFavouriteUni* FavouriteUnilist::createNewFavouriteUni(string UserID, string 
 // Check if the favourite uni is added to the list or not? if no, not able to add
 UserFavouriteUni* FavouriteUnilist::getFavouriteUni(string UserID, string UniID) 
 { 
+
+        
+    if (AllFavouriteUnilist == NULL)
+    {
+        return NULL;
+    }
+
     UserFavouriteUni* currentUni = head;
 
     while (currentUni != NULL)

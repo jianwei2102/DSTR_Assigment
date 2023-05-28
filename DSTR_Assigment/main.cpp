@@ -150,9 +150,9 @@ int main() {
 
 
     // Create some feedback from Alice
-    //userList.addFeedbackToUser(alice, "This is my feedback");
+    userList->addFeedbackToUser(alice, "This is my feedback");
     //userList.addFeedbackToUser(bob, "Test");
-    //userList.addFeedbackToUser(alice, "This is my second feedback");
+    userList->addFeedbackToUser(alice, "This is my second feedback");
    
    
     //userList.addFeedbackToUser(bob, "Test 2");
