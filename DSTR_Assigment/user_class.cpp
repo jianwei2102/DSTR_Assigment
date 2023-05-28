@@ -513,12 +513,50 @@ void UserList::showOwnFavoriteUni(UserNode* User) {
 
     cout << endl << "ID " << "Rank " << "Institution " << "Location " << "ArScore " << "ErScore " << "FsrScore " << endl;
 
-    while (currentUni != NULL) {
-        cout << currentUni->UniID << endl;
-        //count++;
-        currentUni = currentUni->NextUni;
-    }
+    //while (currentUni != NULL) {
+    //    cout << currentUni->UniID << endl;
+    //    //count++;
+    //    currentUni = currentUni->NextUni;
+    //}
 
+    string input;
+
+    while (true)
+    {
+        cout << endl << "University ID " << endl;
+        cout << currentUni->UniID << endl << endl;
+        cout << "Navigate: (N)ext, (P)revious, (Q)uit : " << endl;
+
+        cin >> input;
+
+        if (input == "n" || input == "N")
+        {
+            if (currentUni->NextUni != NULL) {
+                currentUni = currentUni->NextUni;
+            }
+            else {
+                cout << "(No more record.)" << endl;
+            }
+        }
+        else if (input == "p" || input == "P")
+        {
+            if (currentUni->PrevUni != NULL) {
+                currentUni = currentUni->PrevUni;
+            }
+            else {
+                cout << "(This is the first record)." << endl;
+            }
+        }
+        else if (input == "q" || input == "Q")
+        {
+            return;
+        }
+        else
+        {
+            cout << "Invalid input. Please enter N for next, P for previous, or Q to quit." << endl;
+
+        }
+    }
     /*
     if (count == 0) {
         cout << "No favourite uni found for the user" << endl;

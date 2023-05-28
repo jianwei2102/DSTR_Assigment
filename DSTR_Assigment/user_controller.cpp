@@ -149,13 +149,17 @@ void UserController::universityHandler()
 
 void UserController::inboxHandler()
 {
-	int input;
+	//int input;
 
 	while (true)
 	{
+		//cin.ignore();
+
+		int input;
 		cout << endl;
 		input = this->userUI->displayInboxMenu();
-		cin.ignore();
+		cin.ignore(); // ignore any '\n' left in the input buffer
+
 
 		if (input == 1)
 		{
@@ -164,12 +168,32 @@ void UserController::inboxHandler()
 		}
 		else if (input == 2)	
 		{
-			//this->userList->showOwnFeedback(this->loginUser);
+			string feedback;
+
+			while (true)
+			{
+				cout << "Please enter your feedback message (Type 'q' to quit): " << endl;
+
+				std::getline(std::cin, feedback);
+
+				if (!feedback.empty() || feedback == "q" || feedback == "Q")
+					break;
+
+				cout << "Blank feedback aren't allowed" << endl;
+
+			}
+			
+			cout << feedback << endl;
+			
+			if (feedback == "q" || feedback == "Q")
+				continue;
+
+			this->userList->addFeedbackToUser(this->loginUser, feedback);
 		}
 		else if (input == 3)
 		{
 
-			cin.ignore();
+			//cin.ignore();
 			
 		}
 
