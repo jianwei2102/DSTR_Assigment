@@ -181,10 +181,7 @@ void UserController::inboxHandler()
 
 				cout << "Blank feedback aren't allowed" << endl;
 
-			}
-			
-			cout << feedback << endl;
-			
+			}					
 			if (feedback == "q" || feedback == "Q")
 				continue;
 

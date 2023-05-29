@@ -120,7 +120,7 @@ int main() {
     // Display uni
     UniList list = ReadUniFromFile();
 
-    cout << sizeof(list.UniArray);
+    //cout << sizeof(list.UniArray);
 
     //list.displayUniList();
 
@@ -175,6 +175,16 @@ int main() {
 
     userList->addFavouriteUniToUser(bob, "UNI031");
     userList->addFavouriteUniToUser(bob, "UNI021");
+    userList->displayUserTree(userList->getRoot(), "", true);
+
+    userList->deleteNode("Alice");
+    alice->Username = "D";
+
+    userList->testModify(alice);
+
+    userList->displayUserTree(userList->getRoot(), "", true);
+
+    
     //userList->addFavouriteUniToUser(bob, "UNI021");
 
     alice == nullptr;
@@ -200,7 +210,7 @@ int main() {
     //userList.showOwnFeedback(alice);
 
 
- 
+    /*
     string input;
 
 
@@ -223,6 +233,7 @@ int main() {
         }
 
    }
+   */
 
 	return 0;
 }

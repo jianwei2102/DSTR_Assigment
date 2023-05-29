@@ -390,7 +390,7 @@ void UserList::deleteFixup(UserNode* x)
                 s = x->parent->leftUser;
             }
 
-            if (s->rightUser->color == 'B' && s->rightUser->color == 'B') {
+            if (s->rightUser->color == 'B' && s->leftUser->color == 'B') {
                 // case 3.2
                 s->color = 'R';
                 x = x->parent;
@@ -489,6 +489,51 @@ void UserList::addFavouriteUniToUser(UserNode* User, string UniID) {
     }
 
     User->FavouriteUniList->insertIntoFavouriteUni(User->UserID, UniID, false);
+}
+
+void UserList::testModify(UserNode* newUser) {
+    UserNode* y = nullptr;
+    UserNode* x = this->root;
+
+    while (x != this->nullNode)
+    {
+        y = x;
+
+        if (newUser->Username.compare(x->Username) < 0)
+        {
+            x = x->leftUser;
+        }
+        else
+            x = x->rightUser;
+    }
+
+    newUser->parent = y;
+
+    if (y == nullptr)
+    {
+        this->root = newUser;
+    }
+    else if (newUser->Username.compare(y->Username) < 0)
+        y->leftUser = newUser;
+    else
+        y->rightUser = newUser;
+
+
+    if (newUser->parent == nullptr) {
+        newUser->color = 'B';
+        return;
+    }
+
+    // if the grandparent is null, simply return
+    if (newUser->parent->parent == nullptr) {
+        return;
+    }
+
+    //newUser->leftUser = this->nullNode;
+    //newUser->rightUser = this->nullNode;
+    //newUser->color = 'R';
+
+    insertFixup(newUser);
 }
 
 void UserList::removeFavouriteUniFromUser(UserNode* User, string UniID)
