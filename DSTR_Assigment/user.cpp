@@ -126,9 +126,61 @@ void UserList::insertIntoUserTree(string Username, string Email, string Password
     //newUser->leftUser = this->nullNode;
     //newUser->rightUser = this->nullNode;
     //newUser->color = 'R';
+    //newUser->color = 'R';
+    insertFixup(newUser);
+}
+
+
+void UserList::insertIntoUserTree(UserNode* newUser) {
+    newUser->leftUser = this->nullNode;
+    newUser->rightUser = this->nullNode;
+    newUser->parent = nullptr;
+    newUser->color = 'R';
+
+    UserNode* y = nullptr;
+    UserNode* x = this->root;
+
+    while (x != this->nullNode)
+    {
+        y = x;
+
+        if (newUser->Username.compare(x->Username) < 0)
+        {
+            x = x->leftUser;
+        }
+        else
+            x = x->rightUser;
+    }
+
+    newUser->parent = y;
+
+    if (y == nullptr)
+    {
+        this->root = newUser;
+    }
+    else if (newUser->Username.compare(y->Username) < 0)
+        y->leftUser = newUser;
+    else
+        y->rightUser = newUser;
+
+
+    if (newUser->parent == nullptr) {
+        newUser->color = 'B';
+        return;
+    }
+
+    // if the grandparent is null, simply return
+    if (newUser->parent->parent == nullptr) {
+        return;
+    }
+
+    //newUser->leftUser = this->nullNode;
+    //newUser->rightUser = this->nullNode;
+    //newUser->color = 'R';
 
     insertFixup(newUser);
 }
+
 
 void UserList::insertFixup(UserNode* node)
 {
@@ -243,6 +295,13 @@ void UserList::deleteNode(string searchKey)
 
     UserNode* target = searchUser(searchKey);
 
+    if (!target) {
+        cout << "ERROR" << endl;
+        return;
+    }
+       
+
+
     if (target == this->nullNode)
     {
         cout << "User does not exist";
@@ -290,6 +349,7 @@ void UserList::deleteNode(string searchKey)
         deleteFixup(x);
     }
 
+    cout << target->Username;
     cout << "User has been deleted" << endl;
 }
 

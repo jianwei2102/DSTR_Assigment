@@ -35,6 +35,7 @@ public:
     void leftRotate(UserNode* node);
     void rightRotate(UserNode* node);
     void insertIntoUserTree(string Username, string Email, string Password);
+    void insertIntoUserTree(UserNode* newUser);
     void insertFixup(UserNode* node);
     void transplant(UserNode* u, UserNode* v);
     void displayUserTree(UserNode* root, string indent, bool last);

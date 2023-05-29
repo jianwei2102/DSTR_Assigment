@@ -121,8 +121,12 @@ struct adminMenu {
          switch (modifyOption)
          {
          case 1:
+             r->AllUserList->displayUserTree(r->AllUserList->getRoot(), "", true);
              changes = adminMenuUI::modifyUserChanges_UI();
+             r->AllUserList->deleteNode(currentUser->Username);
              currentUser->Username = changes;
+             r->AllUserList->insertIntoUserTree(currentUser);
+
              break;
          case 2:
              changes = adminMenuUI::modifyUserChanges_UI();
