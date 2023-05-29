@@ -60,7 +60,7 @@ struct userMenu {
             switch (choice)
             {
             case 1:
-                r->AllUniList->displayUniList();
+                //r->AllUniList->displayUniList();
                 break;
             case 2:
                 r->AllUserList->displayUserList();

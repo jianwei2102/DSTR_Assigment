@@ -16,15 +16,40 @@ struct adminMenuUI {
 		cout << "  --------------------------------- " << endl;
 		cout << " |              Admin              |" << endl;
 		cout << " |  1 - View List of Universities  |" << endl;
-		cout << " |  2 - View Users                 |" << endl;
-		cout << " |  3 - View Feedback              |" << endl;
-		cout << " |  4 - Log Out                    |" << endl;
+		cout << " |  2 - Sort Universitise          |" << endl;
+		cout << " |  3 - View Users                 |" << endl;
+		cout << " |  4 - View Feedback              |" << endl;
+		cout << " |  5 - Log Out                    |" << endl;
 		cout << "  ---------------------------------" << endl;
 		
 		int input = 0;
 		cout << "Select an Operation Number: ";
 		cin >> input;
 
+		return input;
+	}
+
+	static int uniSort_UI() {
+		cout << "SORTING MENU" << endl;
+		cout << "[1] Merge Sort" << endl;
+		cout << "[2] Quick Sort" << endl;
+		cout << "[3] Comparison of Algorithm" << endl;
+		cout << "[0] Back" << endl;
+		cout << "Enter your choice: ";
+		int input = 0;
+		cin >> input;
+		return input;
+	}
+
+	static int uniSortValue_UI() {
+		cout << "SORTING MENU - University Information" << endl;
+		cout << "[1] Sort by Academic Reputation Score" << endl;
+		cout << "[2] Sort by Faculty/Student Ratio Score" << endl;
+		cout << "[3] Sort by Employer Reputation Score" << endl;
+		cout << "[0] Back" << endl;
+		cout << "Enter your choice: ";
+		int input = 0;
+		cin >> input;
 		return input;
 	}
 

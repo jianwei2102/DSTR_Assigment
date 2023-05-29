@@ -2,15 +2,17 @@
 
 #include <iostream>
 
+
 #include "adminMenuUI.h"
 #include "repository.h"
+#include "quickSort.h"
 
 struct adminMenu {
     static void adminLogin() {
         
         while (true)
         {
-            //system("cls");
+            system("cls");
             adminMenuUI::loginMenu_UI();
 
             string username, password;
@@ -48,7 +50,7 @@ struct adminMenu {
     }
 
 	 static void mainMenu() {
-         Repository* r = Repository::getInstance();
+        Repository* r = Repository::getInstance();
          
         while (true)
         {
@@ -58,28 +60,77 @@ struct adminMenu {
             switch (choice)
             {
             case 1:
+                
                 r->AllUniList->displayUniList();
                 break;
             case 2:
+                uniSortMenu();
+                break;
+                
+            case 3:
                 r->AllUserList->displayUserList();
                 userMenu();
-            case 3:
+            case 4:
                 // feedback
                 break;
-            case 4:
+            case 5:
                 return;
             default:
                 mainMenu();
                 break;
             }
         }
-	}
+	 }
      
+     static void uniSortMenu() {
+         
+         int choice = adminMenuUI::uniSort_UI();
+
+         switch (choice)
+         {
+         case 1:
+             break;
+         case 2:
+             quickSortMenu();
+             break;
+         case 3:
+             break;
+         case 0:
+             return;
+         default:
+             return;
+         }
+     }
+
+
+     static void quickSortMenu() {
+         Repository* r = Repository::getInstance();
+         int choice = adminMenuUI::uniSortValue_UI();
+
+         switch (choice)
+         {
+         case 1:
+             QuickSort::quickSort(r->AllUniList->UniArray, 0, 1421, "Ar");
+             return;
+         case 2:
+             QuickSort::quickSort(r->AllUniList->UniArray, 0, 1421, "Fsr");
+             return;
+         case 3:
+             QuickSort::quickSort(r->AllUniList->UniArray, 0, 1421, "Er");
+             return;
+         case 0:
+             return;
+         default:
+             return;
+         }
+     }
+ 
+
      static void userMenu() {
          
-         int choice_2 = adminMenuUI::userlist_UI();
+         int choice = adminMenuUI::userlist_UI();
 
-         switch (choice_2)
+         switch (choice)
          {
          case 1:
              system("cls");
@@ -101,6 +152,8 @@ struct adminMenu {
      }
 
 
+     
+
 
 
      // ----- USER ------
@@ -110,7 +163,7 @@ struct adminMenu {
 
          string username = adminMenuUI::modifyUser_UI();
          UserNode* currentUser = r->AllUserList->searchUser(username);
-         cout << currentUser->UserID;
+
          if (currentUser->Username != username) {
              adminMenuUI::invalidUser_UI();
              return;
@@ -121,7 +174,6 @@ struct adminMenu {
          switch (modifyOption)
          {
          case 1:
-             r->AllUserList->displayUserTree(r->AllUserList->getRoot(), "", true);
              changes = adminMenuUI::modifyUserChanges_UI();
              r->AllUserList->deleteNode(currentUser->Username);
              currentUser->Username = changes;

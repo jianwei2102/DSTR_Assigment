@@ -1,6 +1,8 @@
 #pragma once
+
 #include <iostream>
 #include <string>
+#include <iomanip>
 using namespace std;
 
 struct UniNode {
@@ -24,7 +26,9 @@ public:
 
     void binarySearching(string SearchType, string SearchData);
 
+    void quickSort(UniNode* array[], string sortType);
     void displayUniList();
+    void displayUni();
 
     UniNode* getUniNode(string UniID);
 };

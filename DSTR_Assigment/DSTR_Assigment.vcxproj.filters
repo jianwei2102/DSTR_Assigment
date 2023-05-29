@@ -101,5 +101,8 @@
     <ClInclude Include="adminMenu.h">
       <Filter>Source Files\UI\Input</Filter>
     </ClInclude>
+    <ClInclude Include="quickSort.h">
+      <Filter>Source Files\Algorithms</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

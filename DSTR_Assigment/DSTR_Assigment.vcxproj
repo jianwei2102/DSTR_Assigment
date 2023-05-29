@@ -148,6 +148,7 @@
     <ClInclude Include="predefinedData.h" />
     <ClInclude Include="reply.hpp" />
     <ClInclude Include="repository.h" />
+    <ClInclude Include="quickSort.h" />
     <ClInclude Include="uni.hpp" />
     <ClInclude Include="user.hpp" />
     <ClInclude Include="userMenu.h" />
