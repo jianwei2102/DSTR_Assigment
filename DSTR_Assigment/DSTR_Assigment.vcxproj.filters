@@ -16,75 +16,90 @@
     <Filter Include="Source Files\Classes">
       <UniqueIdentifier>{0db8e71c-727e-4277-a959-55d52a82e022}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Source Files\Functions">
-      <UniqueIdentifier>{752b623b-3cb9-48d0-84b0-4e725e4a00cf}</UniqueIdentifier>
+    <Filter Include="Source Files\Repository">
+      <UniqueIdentifier>{efdd2edf-48b5-4d45-ba63-4a804aa6d03b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Algorithms">
+      <UniqueIdentifier>{a2648ca6-7103-478d-b1ee-8b6aaaecda0d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\UI">
+      <UniqueIdentifier>{e8abcec2-770f-4b35-8399-07623d8706b1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\UI\Input">
+      <UniqueIdentifier>{402f64e4-d28b-4d13-ab6b-bfa392862a7e}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="uni_class.cpp">
+    <ClCompile Include="user.cpp">
       <Filter>Source Files\Classes</Filter>
     </ClCompile>
-    <ClCompile Include="reply_class.cpp">
+    <ClCompile Include="uni.cpp">
       <Filter>Source Files\Classes</Filter>
     </ClCompile>
-    <ClCompile Include="read_file.cpp">
-      <Filter>Source Files\Functions</Filter>
-    </ClCompile>
-    <ClCompile Include="feedback_class.cpp">
+    <ClCompile Include="admin.cpp">
       <Filter>Source Files\Classes</Filter>
     </ClCompile>
-    <ClCompile Include="user_class.cpp">
+    <ClCompile Include="favUni.cpp">
       <Filter>Source Files\Classes</Filter>
     </ClCompile>
-    <ClCompile Include="favouriteUni_class.cpp">
+    <ClCompile Include="feedback.cpp">
       <Filter>Source Files\Classes</Filter>
     </ClCompile>
-    <ClCompile Include="admin_class.cpp">
+    <ClCompile Include="reply.cpp">
       <Filter>Source Files\Classes</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="uni_class.hpp">
+    <ClInclude Include="repository.h">
+      <Filter>Source Files\Repository</Filter>
+    </ClInclude>
+    <ClInclude Include="user.hpp">
       <Filter>Source Files\Classes</Filter>
     </ClInclude>
-    <ClInclude Include="reply_class.hpp">
+    <ClInclude Include="uni.hpp">
       <Filter>Source Files\Classes</Filter>
     </ClInclude>
-    <ClInclude Include="read_file.hpp">
-      <Filter>Source Files\Functions</Filter>
+    <ClInclude Include="predefinedData.h">
+      <Filter>Source Files\Repository</Filter>
     </ClInclude>
-    <ClInclude Include="feedback_class.hpp">
+    <ClInclude Include="loadUniCSV.h">
+      <Filter>Source Files\Repository</Filter>
+    </ClInclude>
+    <ClInclude Include="admin.hpp">
       <Filter>Source Files\Classes</Filter>
     </ClInclude>
-    <ClInclude Include="user_class.hpp">
+    <ClInclude Include="favUni.hpp">
       <Filter>Source Files\Classes</Filter>
     </ClInclude>
-    <ClInclude Include="favouriteUni_class.hpp">
+    <ClInclude Include="feedback.hpp">
       <Filter>Source Files\Classes</Filter>
     </ClInclude>
-    <ClInclude Include="admin_class.hpp">
+    <ClInclude Include="reply.hpp">
       <Filter>Source Files\Classes</Filter>
     </ClInclude>
-    <ClInclude Include="MergeSort.h">
-      <Filter>Header Files</Filter>
+    <ClInclude Include="adminMenuUI.h">
+      <Filter>Source Files\UI</Filter>
     </ClInclude>
-    <ClInclude Include="QuickSort.h">
-      <Filter>Header Files</Filter>
+    <ClInclude Include="addUser.h">
+      <Filter>Source Files\Repository</Filter>
     </ClInclude>
-    <ClInclude Include="BinarySearchTest.h">
-      <Filter>Header Files</Filter>
+    <ClInclude Include="mainMenuUI.h">
+      <Filter>Source Files\UI</Filter>
     </ClInclude>
-    <ClInclude Include="SortingArScore.h">
-      <Filter>Header Files</Filter>
+    <ClInclude Include="mainMenu.h">
+      <Filter>Source Files\UI\Input</Filter>
     </ClInclude>
-    <ClInclude Include="SortingFsrScore.h">
-      <Filter>Header Files</Filter>
+    <ClInclude Include="userMenu.h">
+      <Filter>Source Files\UI\Input</Filter>
     </ClInclude>
-    <ClInclude Include="SortingErScore.h">
-      <Filter>Header Files</Filter>
+    <ClInclude Include="userMenuUI.h">
+      <Filter>Source Files\UI</Filter>
+    </ClInclude>
+    <ClInclude Include="adminMenu.h">
+      <Filter>Source Files\UI\Input</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

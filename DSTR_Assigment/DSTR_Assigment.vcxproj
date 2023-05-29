@@ -127,29 +127,31 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="admin_class.cpp" />
-    <ClCompile Include="favouriteUni_class.cpp" />
-    <ClCompile Include="feedback_class.cpp" />
+    <ClCompile Include="admin.cpp" />
+    <ClCompile Include="favUni.cpp" />
+    <ClCompile Include="feedback.cpp" />
     <ClCompile Include="main.cpp" />
-    <ClCompile Include="read_file.cpp" />
-    <ClCompile Include="reply_class.cpp" />
-    <ClCompile Include="uni_class.cpp" />
-    <ClCompile Include="user_class.cpp" />
+    <ClCompile Include="reply.cpp" />
+    <ClCompile Include="uni.cpp" />
+    <ClCompile Include="user.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="admin_class.hpp" />
-    <ClInclude Include="BinarySearchTest.h" />
-    <ClInclude Include="favouriteUni_class.hpp" />
-    <ClInclude Include="feedback_class.hpp" />
-    <ClInclude Include="MergeSort.h" />
-    <ClInclude Include="QuickSort.h" />
-    <ClInclude Include="read_file.hpp" />
-    <ClInclude Include="reply_class.hpp" />
-    <ClInclude Include="SortingArScore.h" />
-    <ClInclude Include="SortingErScore.h" />
-    <ClInclude Include="SortingFsrScore.h" />
-    <ClInclude Include="uni_class.hpp" />
-    <ClInclude Include="user_class.hpp" />
+    <ClInclude Include="addUser.h" />
+    <ClInclude Include="admin.hpp" />
+    <ClInclude Include="adminMenu.h" />
+    <ClInclude Include="favUni.hpp" />
+    <ClInclude Include="feedback.hpp" />
+    <ClInclude Include="adminMenuUI.h" />
+    <ClInclude Include="loadUniCSV.h" />
+    <ClInclude Include="mainMenuUI.h" />
+    <ClInclude Include="mainMenu.h" />
+    <ClInclude Include="predefinedData.h" />
+    <ClInclude Include="reply.hpp" />
+    <ClInclude Include="repository.h" />
+    <ClInclude Include="uni.hpp" />
+    <ClInclude Include="user.hpp" />
+    <ClInclude Include="userMenu.h" />
+    <ClInclude Include="userMenuUI.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
