@@ -23,6 +23,7 @@ struct userMenu {
 
             UserNode* currentUser = r->AllUserList->searchUser(username);
             if (currentUser->Username == username && currentUser->Password == password) {
+                r->loginUser = currentUser;
                 mainMenu();
                 return;
             }

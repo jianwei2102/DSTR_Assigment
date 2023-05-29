@@ -23,10 +23,8 @@ public:
         double IsrScore, int IsrRank, double IrnScore, int IrnRank, double GerScore, int GerRank, double ScoreScaled);
 
     void linearSearching(string SearchType, string SearchData);
-
     void binarySearching(string SearchType, string SearchData);
 
-    void quickSort(UniNode* array[], string sortType);
     void displayUniList();
     void displayUni();
 

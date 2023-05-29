@@ -7,6 +7,8 @@ class Repository {
 private:
     static Repository * objPtr;
 public:
+    UserNode* loginUser;
+
     UserList* AllUserList;
     UniList* AllUniList;
 

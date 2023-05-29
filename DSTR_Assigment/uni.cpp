@@ -48,10 +48,6 @@ void UniList::linearSearching(string SearchType, string SearchData) {}
 
 void UniList::binarySearching(string SearchType, string SearchData) {}
 
-void UniList::quickSort(UniNode* array[], string sortType) {
-    
-}
-
 void UniList::displayUniList() {
     int arraySize = size(UniArray);
     int section = 20;
