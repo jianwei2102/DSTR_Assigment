@@ -21,6 +21,7 @@ struct QuickSort {
         // compare them with the pivot
         for (int j = low; j < high; j++) {
             double uniValue, pivotValue;
+            string uniValueIns, pivotValueIns;
             if (sortType == "Ar") {
                 uniValue = array[j]->ArScore;
                 pivotValue = pivot->ArScore;
@@ -32,6 +33,10 @@ struct QuickSort {
             else if (sortType == "Fsr") {
                 uniValue = array[j]->FsrScore;
                 pivotValue = pivot->FsrScore;
+            }
+            else if (sortType == "Institution") {
+                uniValueIns = array[j]->Insitution;
+                pivotValueIns = pivot->Insitution;
             }
 
             if (uniValue <= pivotValue) {

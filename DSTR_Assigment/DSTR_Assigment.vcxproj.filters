@@ -104,5 +104,8 @@
     <ClInclude Include="quickSort.h">
       <Filter>Source Files\Algorithms</Filter>
     </ClInclude>
+    <ClInclude Include="mergeSort.h">
+      <Filter>Source Files\Algorithms</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

@@ -145,6 +145,7 @@
     <ClInclude Include="loadUniCSV.h" />
     <ClInclude Include="mainMenuUI.h" />
     <ClInclude Include="mainMenu.h" />
+    <ClInclude Include="mergeSort.h" />
     <ClInclude Include="predefinedData.h" />
     <ClInclude Include="reply.hpp" />
     <ClInclude Include="repository.h" />
