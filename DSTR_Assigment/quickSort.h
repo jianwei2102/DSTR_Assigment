@@ -3,6 +3,7 @@
 #include "uni.hpp"
 
 struct QuickSort {
+
     static void swap(UniNode* array[], int a, int b) {
         UniNode* temp = array[a];
         array[a] = array[b];
@@ -19,30 +20,66 @@ struct QuickSort {
         // traverse each element of the array
         // compare them with the pivot
         for (int j = low; j < high; j++) {
-            // obtain sort value based on sort type
             double uniValue, pivotValue;
+            string uniValueIns, pivotValueIns;
             if (sortType == "Ar") {
                 uniValue = array[j]->ArScore;
                 pivotValue = pivot->ArScore;
+
+                if (uniValue >= pivotValue) {
+
+                    // if element smaller than pivot is found
+                    // swap it with the greater element pointed by i
+                    i++;
+
+                    // swap element at i with element at j
+                    swap(array, i, j);
+                }
             }
             else if (sortType == "Er") {
                 uniValue = array[j]->ErScore;
                 pivotValue = pivot->ErScore;
+
+                if (uniValue >= pivotValue) {
+
+                    // if element smaller than pivot is found
+                    // swap it with the greater element pointed by i
+                    i++;
+
+                    // swap element at i with element at j
+                    swap(array, i, j);
+                }
             }
             else if (sortType == "Fsr") {
                 uniValue = array[j]->FsrScore;
                 pivotValue = pivot->FsrScore;
+
+                if (uniValue >= pivotValue) {
+
+                    // if element smaller than pivot is found
+                    // swap it with the greater element pointed by i
+                    i++;
+
+                    // swap element at i with element at j
+                    swap(array, i, j);
+                }
+            }
+            else if (sortType == "Institution") {
+                uniValueIns = array[j]->Insitution;
+                pivotValueIns = pivot->Insitution;
+
+                if (uniValueIns <= pivotValueIns) {
+
+                    // if element smaller than pivot is found
+                    // swap it with the greater element pointed by i
+                    i++;
+
+                    // swap element at i with element at j
+                    swap(array, i, j);
+                }
             }
 
-            if (uniValue <= pivotValue) {
 
-                // if element smaller than pivot is found
-                // swap it with the greater element pointed by i
-                i++;
-
-                // swap element at i with element at j
-                swap(array, i, j);
-            }
         }
 
         // swap pivot with the greater element at i
@@ -64,6 +101,68 @@ struct QuickSort {
 
             // recursive call on the right of pivot
             quickSort(array, pi + 1, high, sortType);
+        }
+    }
+
+    // function to print the array
+    static void printByPagination(UniNode* array[], string sortType) {
+        int i;
+        int currentShownTotal = 20;
+        int currentShownLimit = 20;
+        string sortInput;
+
+        int counter; // needed?
+        cout << left << setw(5) << "No.";
+        cout << left << setw(90) << "Insitution";
+        cout << left << setw(8) << sortType << endl;
+        for (i = 0; i < 20; i++)
+            if (sortType == "Ar") {
+                cout << left << setw(5) << i + 1;
+                cout << left << setw(90) << array[i]->Insitution;
+                cout << left << setw(8) << array[i]->ArScore << endl;
+            }
+            else if (sortType == "Er") {
+                cout << left << setw(5) << i + 1;
+                cout << left << setw(90) << array[i]->Insitution;
+                cout << left << setw(8) << array[i]->ErScore << endl;
+            }
+            else if (sortType == "Fsr") {
+                cout << left << setw(5) << i + 1;
+                cout << left << setw(90) << array[i]->Insitution;
+                cout << left << setw(8) << array[i]->FsrScore << endl;
+            }
+            else if (sortType == "Institution") {
+                cout << left << setw(5) << i + 1;
+                cout << left << setw(90) << array[i]->Insitution << endl;
+            }
+        //cout << "[" << i + 1 << "] " << array[i]->Insitution << endl;
+        cout << endl;
+
+        while (currentShownTotal < 1421) {
+            cout << "Enter [Y] to view another 20 records or [N] to exit: " << endl;
+            cin >> sortInput;
+
+            if (sortInput == "Y") {
+                for (currentShownLimit += 20; currentShownTotal < currentShownLimit; currentShownTotal++)
+                    if (sortType == "Ar") {
+                        cout << "[" << currentShownTotal + 1 << "] " << array[currentShownTotal]->ArScore << endl;
+                    }
+                    else if (sortType == "Er") {
+                        cout << "[" << currentShownTotal + 1 << "] " << array[currentShownTotal]->ErScore << endl;
+                    }
+                    else if (sortType == "Fsr") {
+                        cout << "[" << currentShownTotal + 1 << "] " << array[currentShownTotal]->FsrScore << endl;
+                    }
+                    else if (sortType == "Institution") {
+                        cout << "[" << currentShownTotal + 1 << "] " << array[currentShownTotal]->Insitution << endl;
+                    }
+                //cout << "[" << currentShownTotal + 1 << "] " << array[currentShownTotal]->Insitution << endl;
+                cout << endl;
+                cout << "Showing " << currentShownLimit << " records" << endl;
+            }
+            else if (sortInput == "N") {
+                return;
+            }
         }
     }
 };

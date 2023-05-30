@@ -1,11 +1,13 @@
 #pragma once
 
 #include <iostream>
+#include <chrono>
 
 #include "admin.hpp"
 #include "adminMenuUI.h"
 #include "repository.h"
 #include "quickSort.h"
+#include "mergeSort.h"
 
 struct adminMenu {
      static void adminLogin() {
@@ -16,8 +18,6 @@ struct adminMenu {
             bool loginStatus = Admin::login(); // Input username and password
 
             if (loginStatus) {
-                // Delete inactive user after login
-                // deleteInactiveUser();
                 mainMenu();
             }
             else {
@@ -79,18 +79,21 @@ struct adminMenu {
         }
 	 }
      
+     //sorting
      static void uniSortMenu() {
-         
+
          int choice = adminMenuUI::uniSort_UI();
 
          switch (choice)
          {
          case 1:
+             mergeSortMenu();
              break;
          case 2:
              quickSortMenu();
              break;
          case 3:
+             sortingComparision();
              break;
          case 0:
              return;
@@ -98,7 +101,6 @@ struct adminMenu {
              return;
          }
      }
-
 
      static void quickSortMenu() {
          Repository* r = Repository::getInstance();
@@ -121,6 +123,62 @@ struct adminMenu {
              return;
          }
      }
+
+     static void mergeSortMenu() {
+         Repository* r = Repository::getInstance();
+         int choice = adminMenuUI::uniSortValue_UI();
+
+         switch (choice)
+         {
+         case 1:
+             QuickSort::quickSort(r->AllUniList->UniArray, 0, 1421, "Ar");
+             return;
+         case 2:
+             QuickSort::quickSort(r->AllUniList->UniArray, 0, 1421, "Fsr");
+             return;
+         case 3:
+             QuickSort::quickSort(r->AllUniList->UniArray, 0, 1421, "Er");
+             return;
+         case 0:
+             return;
+         default:
+             return;
+         }
+     }
+
+     static void sortingComparision() {
+         Repository* r = Repository::getInstance();
+
+         //quick sort
+         auto startQuickSortTimer = chrono::high_resolution_clock::now();
+         QuickSort::quickSort(r->AllUniList->UniArray, 0, 1421, "Ar");
+         auto stopQuickSortTimer = chrono::high_resolution_clock::now();
+
+         //TODO:: merge sort
+         auto startMergeSortTimer = chrono::high_resolution_clock::now();
+         MergeSort::mergeSort(r->AllUniList->UniArray, 0, 1421);
+         auto stopMergeSortTimer = chrono::high_resolution_clock::now();
+
+         //calculate quick sort duration
+         auto quickSortDuration = chrono::duration_cast<chrono::microseconds>(stopQuickSortTimer - startQuickSortTimer);
+
+         //calculate merge sort duration
+         auto mergeSortDuration = chrono::duration_cast<chrono::microseconds>(stopMergeSortTimer - startMergeSortTimer);
+
+         while (true) {
+             cout << endl;
+             cout << "Time consumption of quick sort: " << quickSortDuration.count() << " ms" << endl;
+             cout << "Time consumption of merge sort: " << mergeSortDuration.count() << " ms" << endl;
+             cout << endl;
+
+             string input;
+             cout << "Enter any other key to exit: ";
+             cin >> input;
+
+             break;
+         }
+         return;
+     }
  
 
      static void userMenu() {
@@ -137,10 +195,9 @@ struct adminMenu {
                  deleteUser();
                  break;
              case 3:
-                 // search
+                 // search - pending
                  break;
              case 4:
-                 // delete inactive
                  deleteInactiveUser();
                  break;
              case 5:

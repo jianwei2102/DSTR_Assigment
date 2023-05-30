@@ -110,5 +110,17 @@
     <ClInclude Include="predefinedData.h">
       <Filter>Source Files\Repository</Filter>
     </ClInclude>
+    <ClInclude Include="mergeSort.h">
+      <Filter>Source Files\Algorithms</Filter>
+    </ClInclude>
+    <ClInclude Include="binarySearch.h">
+      <Filter>Source Files\Algorithms</Filter>
+    </ClInclude>
+    <ClInclude Include="guestMenu.h">
+      <Filter>Source Files\UI\Input</Filter>
+    </ClInclude>
+    <ClInclude Include="guestMenuUI.h">
+      <Filter>Source Files\UI</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

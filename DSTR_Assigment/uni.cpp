@@ -149,6 +149,7 @@ void UniList::displayUni() {
 
     string input;
     cout << "Enter any other key to exit: ";
+    cin.ignore();
     getline(cin, input);
 }
 

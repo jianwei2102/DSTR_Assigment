@@ -62,16 +62,20 @@ struct userMenu {
                 r->AllUniList->displayUniList();
                 break;
             case 2:
-                favUniManage();
+                // return sorting menu for ar, fsr and er
+                scoreSortingMenu();
                 break;
             case 3:
-                showOwnFeedback();
+                favUniManage();
                 break;
             case 4:
+                showOwnFeedback();
+                break;
+            case 5:
                 // profile
                 
                 break;
-            case 5:
+            case 6:
                 // Log out
                 r->loginUser = NULL;
                 return;
@@ -82,6 +86,220 @@ struct userMenu {
         }
     }
 
+    //sorting
+    static void scoreSortingMenu() {
+        Repository* r = Repository::getInstance();
+
+        system("cls");
+        int choice = userMenuUI::uniSortValue_UI();
+
+        switch (choice)
+        {
+        case 1:
+            QuickSort::quickSort(r->AllUniList->UniArray, 0, 1421, "Ar");
+            QuickSort::printByPagination(r->AllUniList->UniArray, "Ar");
+            return;
+        case 2:
+            QuickSort::quickSort(r->AllUniList->UniArray, 0, 1421, "Fsr");
+            QuickSort::printByPagination(r->AllUniList->UniArray, "Fsr");
+            return;
+        case 3:
+            QuickSort::quickSort(r->AllUniList->UniArray, 0, 1421, "Er");
+            QuickSort::printByPagination(r->AllUniList->UniArray, "Er");
+            return;
+        case 4:
+            return;
+        default:
+            return;
+        }
+    }
+
+    static void modifyProfile() {
+        Repository* r = Repository::getInstance();
+        UserNode* loginUser = r->loginUser;
+        while (true)
+        {
+            system("cls");
+            string changes;
+            UserNode* check;
+            int choice = userMenuUI::modifyProfileMenu_UI();
+
+            switch (choice) {
+            case 1: // Username
+                modifyUsername();
+                break;
+
+            case 2: // Email
+                modifyEmail();
+                break;
+
+            case 3: // Password
+            {
+                modifyPassword();
+                break;
+            }
+
+            case 4: // Return to previous menu
+                return;
+
+            default: // Invalid input, loop again (breaks out of switch)
+                break;
+            }
+        }
+
+    }
+
+    static void modifyUsername() {
+
+        string changes;
+        UserNode* check;
+        Repository* r = Repository::getInstance();
+        UserNode* loginUser = r->loginUser;
+
+        while (true)
+        {
+            changes = userMenuUI::modifyChanges_UI();
+
+            check = r->AllUserList->searchUser(changes);
+
+            if (changes.empty())
+                return;
+
+            if (check->Username.empty() || loginUser->Username == changes) // Check username has not been taken
+            {
+                r->AllUserList->deleteNode(loginUser->Username);
+                loginUser->Username = changes;
+                r->AllUserList->insertIntoUserTree(loginUser);
+                userMenuUI::userSuccess_UI();
+                return;
+            }
+
+
+            cout << "Username has been taken" << endl << endl;
+            int choice = userMenuUI::retry_UI();
+
+            if (choice == 1)
+                continue;
+
+            return;
+        }
+    }
+
+    static void modifyEmail() {
+        string changes;
+        UserNode* check;
+        Repository* r = Repository::getInstance();
+        UserNode* loginUser = r->loginUser;
+
+        while (true)
+        {
+            changes = userMenuUI::modifyChanges_UI();
+
+            if (changes.empty())
+                return;
+
+            check = r->AllUserList->searchUserByEmail(changes);
+
+            if (check->Username.empty() || loginUser->Email == changes) // Check email has not been taken
+            {
+                r->AllUserList->deleteNode(loginUser->Username); // Remove node from tree, object is not deleted
+                loginUser->Email = changes; // Update email
+                r->AllUserList->insertIntoUserTree(loginUser); // Reinsert node
+                userMenuUI::userSuccess_UI();
+                return;
+            }
+
+            cout << "Email has been taken" << endl << endl;
+            int choice = userMenuUI::retry_UI();
+
+            if (choice == 1)
+                continue;
+
+            return;
+        }
+
+    }
+
+    static void modifyPassword()
+    {
+        string changes;
+        UserNode* check;
+        Repository* r = Repository::getInstance();
+        UserNode* loginUser = r->loginUser;
+        string oldPassword;
+        int choice;
+
+        while (true)
+        {
+            cout << "Enter your old password: "; // Get new password
+            cin.ignore();
+            getline(cin, oldPassword);
+
+            if (oldPassword.empty())
+                return;
+
+            else if (oldPassword == loginUser->Password)
+                break;
+
+            cout << "Invalid Password" << endl << endl; // Not equal, display error, loop again
+            choice = userMenuUI::retry_UI();
+
+            if (choice == 1)
+                continue;
+
+            return;
+        }
+
+        while (true)
+        {
+            cout << "Enter the new password (more than 8 characters): "; // Get new password
+            cin.ignore();
+            getline(cin, changes);
+
+            if (changes.empty())
+                return;
+
+            else if (changes.length() > 8)
+                break;
+
+            cout << "Invalid Password" << endl << endl;
+            choice = userMenuUI::retry_UI();
+
+            if (choice == 1)
+                continue;
+
+            return;
+        }
+
+        r->AllUserList->deleteNode(loginUser->Username);
+        loginUser->Password = changes;
+        r->AllUserList->insertIntoUserTree(loginUser);
+        userMenuUI::userSuccess_UI(); // Display success
+        return; // Go back
+    }
+
+
+    static void userProfile() {
+
+        while (true)
+        {
+            Repository* r = Repository::getInstance();
+            system("cls");
+            r->AllUserList->displayLoginUser(r->loginUser);
+
+            int choice = userMenuUI::profileMenu_UI();
+
+            switch (choice) {
+            case 1:
+                modifyProfile();
+                break;
+            case 2:
+                return; // Return to previous menu, auto break out of the loop
+            default:
+                break; // Loop again
+            }
+        }
+    }
 
     // ----- Fav Uni -----
     static void favUniManage() {
@@ -199,6 +417,7 @@ struct userMenu {
         return;
     }
 
+    // ----- Fav Uni -----
     static void viewFavUni(){
         cout << endl << " VIEW UNI's DETAILS" << endl;
         // Prompt uni ID input
