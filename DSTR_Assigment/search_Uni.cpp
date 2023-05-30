@@ -453,7 +453,7 @@ void searchUni() {
 		if (choice == 1) {
 			cout << "\nInstitution Name: ";
 			getline(cin, searchTerm);
-			cout << "\nWhich searching algorithm would you like to perform?\n1. Binary Search\n2. LinearSearch" << endl;
+			cout << "\nWhich searching algorithm would you like to perform?\n1. Binary Search\n2. Linear Search" << endl;
 			do {
 				cout << "\nAlgorithm No.: ";
 				cin >> choice2;
@@ -476,7 +476,7 @@ void searchUni() {
 		else if (choice == 2) {
 			cout << "\nLocation: ";
 			getline(cin, searchTerm);
-			cout << "\nWhich searching algorithm would you like to perform?\n1. Binary Search\n2. LinearSearch" << endl;
+			cout << "\nWhich searching algorithm would you like to perform?\n1. Binary Search\n2. Linear Search" << endl;
 			do {
 				cout << "\nAlgorithm No.: ";
 				cin >> choice2;
