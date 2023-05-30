@@ -49,8 +49,8 @@ struct userMenu {
                         //userLogin();
                         break;
                     }
-                }
             }
+            
         }
     }
 
