@@ -83,16 +83,6 @@ struct userMenuUI {
 		return input;
 	}
 
-	static void userExist_UI() {
-		cout << "Failed to update information. User already exist" << endl;
-		cout << "Enter any key to return." << endl;
-		string input;
-		cin.ignore();
-		getline(cin, input);
-
-		return;
-	}
-
 	static void userSuccess_UI() {
 		cout << "Your information has been updated successfully" << endl;
 		cout << "Enter any key to return." << endl;
@@ -103,22 +93,14 @@ struct userMenuUI {
 		return;
 	}
 
-	static string userPassword_UI() {
-		cout << "Please enter your old password: ";
-		string input;
-		cin.ignore();
-		getline(cin, input);
+	static int retry_UI() {
+		cout << "1 - Retry" << endl;
+		cout << "2 - Return to Previous Menu" << endl;
 
-		return input;
+		int choice = 0;
+		cout << "Select an Operation Number: ";
+		cin >> choice;
+		cout << endl;
+		return choice;
 	}
-
-	static void invalidPassword_UI() {
-		cout << "Invalid Password.";
-		string input;
-		cin.ignore();
-		getline(cin, input);
-
-		return;
-	}
-
 };

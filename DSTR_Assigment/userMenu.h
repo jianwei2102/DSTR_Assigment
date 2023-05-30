@@ -148,65 +148,157 @@ struct userMenu {
             int choice = userMenuUI::modifyProfileMenu_UI();
 
             switch (choice) {
-            case 1: // Username
-                changes = userMenuUI::modifyChanges_UI();
-                check = r->AllUserList->searchUser(changes);
-                if (check->Username.empty() || loginUser->Username == changes) // Check username has not been taken
+                case 1: // Username
+                    modifyUsername();
+                    break;
+
+                case 2: // Email
+                    modifyEmail();
+                    break;
+
+                case 3: // Password
                 {
-                    r->AllUserList->deleteNode(loginUser->Username);
-                    loginUser->Username = changes;
-                    r->AllUserList->insertIntoUserTree(loginUser);
-                    userMenuUI::userSuccess_UI();
-                }
-                else 
-                {
-                    userMenuUI::userExist_UI();
+                    modifyPassword();
                     break;
                 }
-                return;
 
-            case 2: // Email
-                changes = userMenuUI::modifyChanges_UI();
-                check = r->AllUserList->searchUserByEmail(changes);
-                if (check->Username.empty() || loginUser->Email == changes) // Check email has not been taken
-                {
-                    r->AllUserList->deleteNode(loginUser->Username); // Remove node from tree, object is not deleted
-                    loginUser->Email = changes; // Update email
-                    r->AllUserList->insertIntoUserTree(loginUser); // Reinsert node
-                    userMenuUI::userSuccess_UI();
-                }
-                else
-                {
-                    userMenuUI::userExist_UI();
+                case 4: // Return to previous menu
+                    return;
+
+                default: // Invalid input, loop again (breaks out of switch)
                     break;
                 }
-                return;
-
-            case 3: // Password
-            {
-                    string oldPassword = userMenuUI::userPassword_UI(); // Check input = old password
-                    if (oldPassword != loginUser->Password) // Not equal, display error, loop again
-                    {
-                        userMenuUI::invalidPassword_UI();
-                        break;
-                    }
-                    cout << "Enter the new value: "; // Get new password
-                    getline(cin, changes);
-                    r->AllUserList->deleteNode(loginUser->Username);
-                    cout << loginUser->Password << endl;
-                    loginUser->Password = changes;
-                    r->AllUserList->insertIntoUserTree(loginUser);
-                    userMenuUI::userSuccess_UI(); // Display success
-                    return; // Go back
-            }
-            case 4: // Return to previous menu
-                return;
-
-            default: // Invalid input, loop again
-                break;
-            }
         }
         
+    }
+
+    static void modifyUsername() {
+
+        string changes;
+        UserNode* check;
+        Repository* r = Repository::getInstance();
+        UserNode* loginUser = r->loginUser;
+
+        while (true)
+        {
+            changes = userMenuUI::modifyChanges_UI();
+
+            check = r->AllUserList->searchUser(changes);
+
+            if (changes.empty())
+                return;
+
+            if (check->Username.empty() || loginUser->Username == changes) // Check username has not been taken
+            {
+                r->AllUserList->deleteNode(loginUser->Username);
+                loginUser->Username = changes;
+                r->AllUserList->insertIntoUserTree(loginUser);
+                userMenuUI::userSuccess_UI();
+                return;
+            } 
+
+
+            cout << "Username has been taken" << endl << endl;
+            int choice = userMenuUI::retry_UI();
+
+            if(choice == 1)
+                continue;
+            
+            return;
+        }
+    }
+
+    static void modifyEmail() {
+        string changes;
+        UserNode* check;
+        Repository* r = Repository::getInstance();
+        UserNode* loginUser = r->loginUser;
+        
+        while (true)
+        {
+            changes = userMenuUI::modifyChanges_UI();
+
+            if (changes.empty())
+                return;
+
+            check = r->AllUserList->searchUserByEmail(changes);
+
+            if (check->Username.empty() || loginUser->Email == changes) // Check email has not been taken
+            {
+                r->AllUserList->deleteNode(loginUser->Username); // Remove node from tree, object is not deleted
+                loginUser->Email = changes; // Update email
+                r->AllUserList->insertIntoUserTree(loginUser); // Reinsert node
+                userMenuUI::userSuccess_UI();
+                return;
+            }
+
+            cout << "Email has been taken" << endl << endl;
+            int choice = userMenuUI::retry_UI();
+
+            if (choice == 1)
+                continue;
+
+            return;
+        }
+
+    }
+
+    static void modifyPassword()
+    {
+        string changes;
+        UserNode* check;
+        Repository* r = Repository::getInstance();
+        UserNode* loginUser = r->loginUser;
+        string oldPassword;
+        int choice;
+
+        while (true)
+        {
+            cout << "Enter your old password: "; // Get new password
+            cin.ignore();
+            getline(cin, oldPassword);
+
+            if (oldPassword.empty())
+                return;
+
+            else if (oldPassword == loginUser->Password)
+                break;
+
+            cout << "Invalid Password" << endl << endl; // Not equal, display error, loop again
+            choice = userMenuUI::retry_UI();
+
+            if (choice == 1)
+                continue;
+
+            return;
+        }
+
+        while (true)
+        {
+            cout << "Enter the new password (more than 8 characters): "; // Get new password
+            cin.ignore();
+            getline(cin, changes);
+
+            if (changes.empty())
+                return;
+
+            else if (changes.length() > 8)
+                break;
+ 
+            cout << "Invalid Password" << endl << endl;
+            choice = userMenuUI::retry_UI();
+
+            if (choice == 1)
+                continue;
+
+            return;
+        }
+
+        r->AllUserList->deleteNode(loginUser->Username);
+        loginUser->Password = changes;
+        r->AllUserList->insertIntoUserTree(loginUser);
+        userMenuUI::userSuccess_UI(); // Display success
+        return; // Go back
     }
 };
 

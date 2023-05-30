@@ -195,7 +195,7 @@ struct guestMenu
 
             if (r->AllUserList->searchUserByEmail(email)->Username.empty())
                 break;
-            else if (!r->AllUserList->searchUser(email)->Username.empty())
+            else if (!r->AllUserList->searchUserByEmail(email)->Username.empty())
                 cout << "Email has been taken" << endl;
         }
 
