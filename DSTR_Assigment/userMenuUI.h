@@ -19,12 +19,25 @@ struct userMenuUI {
 		cout << " |  2 - View Inbox                 |" << endl;
 		cout << " |  3 - View Profile               |" << endl;
 		cout << " |  4 - Log Out                    |" << endl;
+		cout << " |  5 - Sort University            |" << endl;
 		cout << "  ---------------------------------" << endl;
 
 		int input = 0;
 		cout << "Select an Operation Number: ";
 		cin >> input;
 
+		return input;
+	}
+
+	static int uniSortValue_UI() {
+		cout << "SORTING MENU - University Information" << endl;
+		cout << "[1] Sort by Academic Reputation Score" << endl;
+		cout << "[2] Sort by Faculty/Student Ratio Score" << endl;
+		cout << "[3] Sort by Employer Reputation Score" << endl;
+		cout << "[0] Back" << endl;
+		cout << "Enter your choice: ";
+		int input = 0;
+		cin >> input;
 		return input;
 	}
 };

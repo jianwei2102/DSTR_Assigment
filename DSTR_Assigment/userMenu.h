@@ -70,10 +70,37 @@ struct userMenu {
                 break;
             case 4:
                 return;
+            case 5:
+                // return sorting menu for ar, fsr and er
+                scoreSortingMenu();
+                return;
             default:
                 mainMenu();
                 break;
             }
+        }
+    }
+
+    //sorting
+    static void scoreSortingMenu() {
+        Repository* r = Repository::getInstance();
+        int choice = userMenuUI::uniSortValue_UI();
+
+        switch (choice)
+        {
+        case 1:
+            QuickSort::quickSort(r->AllUniList->UniArray, 0, 1421, "Ar");
+            return;
+        case 2:
+            QuickSort::quickSort(r->AllUniList->UniArray, 0, 1421, "Fsr");
+            return;
+        case 3:
+            QuickSort::quickSort(r->AllUniList->UniArray, 0, 1421, "Er");
+            return;
+        case 0:
+            return;
+        default:
+            return;
         }
     }
 };

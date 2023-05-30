@@ -62,11 +62,9 @@ struct adminMenu {
             switch (choice)
             {
             case 1:
-                
                 r->AllUniList->displayUniList();
                 break;
             case 2:
-                uniSortMenu();
                 break;
                 
             case 3:
@@ -83,7 +81,9 @@ struct adminMenu {
             }
         }
 	 }
-     
+
+     /*
+     //sorting
      static void uniSortMenu() {
          
          int choice = adminMenuUI::uniSort_UI();
@@ -105,9 +105,6 @@ struct adminMenu {
              return;
          }
      }
-
-
-     //sorting 
 
      static void quickSortMenu() {
          Repository* r = Repository::getInstance();
@@ -187,7 +184,7 @@ struct adminMenu {
         return;
          
 
-     }
+     } */
 
 
  
