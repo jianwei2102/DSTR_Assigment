@@ -11,7 +11,7 @@ struct userMenu {
         {
             system("cls");
             userMenuUI::loginMenu_UI();
-            
+
             string username, password;
             cout << "Please enter user's username: ";
             cin.ignore();
@@ -35,19 +35,20 @@ struct userMenu {
                 cout << "1 - Retry login" << endl;
                 cout << "2 - Return to Main Menu" << endl;
 
-                int choice = 0;
-                cout << "Select an Operation Number: ";
-                cin >> choice;
-                switch (choice)
-                {
-                case 1:
-                    //userLogin();
-                    break;
-                case 2:
-                    return;
-                default:
-                    //userLogin();
-                    break;
+                    int choice = 0;
+                    cout << "Select an Operation Number: ";
+                    cin >> choice;
+                    switch (choice)
+                    {
+                    case 1:
+                        //userLogin();
+                        break;
+                    case 2:
+                        return;
+                    default:
+                        //userLogin();
+                        break;
+                    }
                 }
             }
         }

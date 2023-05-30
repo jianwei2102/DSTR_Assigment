@@ -139,6 +139,7 @@
     <ClInclude Include="addUser.h" />
     <ClInclude Include="admin.hpp" />
     <ClInclude Include="adminMenu.h" />
+    <ClInclude Include="binarySearch.h" />
     <ClInclude Include="favUni.hpp" />
     <ClInclude Include="feedback.hpp" />
     <ClInclude Include="adminMenuUI.h" />

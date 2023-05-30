@@ -22,6 +22,7 @@ struct guestMenu
                     uniSortMenu();
 					break;
 				case 3:
+                    uniSearchMenu();
 					break;
 				case 4:
                     registerMenu();
@@ -57,6 +58,32 @@ struct guestMenu
 			return;
 		}
 	}
+
+    static void uniSearchMenu() {
+        system("cls");
+        int choice = guestMenuUI::uniSearch_UI();
+
+        switch (choice)
+        {
+        case 1:
+            binarySearchMenu();
+            break;
+        case 2:
+            break;
+        case 3:
+            // change to search
+            sortingComparision();
+            break;
+        case 4:
+            return;
+        default:
+            return;
+        }
+    }
+
+    static void binarySearchMenu() {
+
+    }
 
     static void quickSortMenu() {
         Repository* r = Repository::getInstance();
