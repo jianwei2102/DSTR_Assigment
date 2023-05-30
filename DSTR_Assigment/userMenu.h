@@ -73,7 +73,7 @@ struct userMenu {
                 break;
             case 5:
                 // profile
-                
+                userProfile();
                 break;
             case 6:
                 // Log out
@@ -120,6 +120,7 @@ struct userMenu {
         while (true)
         {
             system("cls");
+            r->AllUserList->displayLoginUser(r->loginUser);
             string changes;
             UserNode* check;
             int choice = userMenuUI::modifyProfileMenu_UI();
@@ -129,17 +130,13 @@ struct userMenu {
                 modifyUsername();
                 break;
 
-            case 2: // Email
-                modifyEmail();
-                break;
-
-            case 3: // Password
+            case 2: // Password
             {
                 modifyPassword();
                 break;
             }
 
-            case 4: // Return to previous menu
+            case 3: // Return to previous menu
                 return;
 
             default: // Invalid input, loop again (breaks out of switch)
@@ -173,8 +170,6 @@ struct userMenu {
                 userMenuUI::userSuccess_UI();
                 return;
             }
-
-
             cout << "Username has been taken" << endl << endl;
             int choice = userMenuUI::retry_UI();
 
@@ -183,41 +178,6 @@ struct userMenu {
 
             return;
         }
-    }
-
-    static void modifyEmail() {
-        string changes;
-        UserNode* check;
-        Repository* r = Repository::getInstance();
-        UserNode* loginUser = r->loginUser;
-
-        while (true)
-        {
-            changes = userMenuUI::modifyChanges_UI();
-
-            if (changes.empty())
-                return;
-
-            check = r->AllUserList->searchUserByEmail(changes);
-
-            if (check->Username.empty() || loginUser->Email == changes) // Check email has not been taken
-            {
-                r->AllUserList->deleteNode(loginUser->Username); // Remove node from tree, object is not deleted
-                loginUser->Email = changes; // Update email
-                r->AllUserList->insertIntoUserTree(loginUser); // Reinsert node
-                userMenuUI::userSuccess_UI();
-                return;
-            }
-
-            cout << "Email has been taken" << endl << endl;
-            int choice = userMenuUI::retry_UI();
-
-            if (choice == 1)
-                continue;
-
-            return;
-        }
-
     }
 
     static void modifyPassword()
@@ -253,7 +213,6 @@ struct userMenu {
         while (true)
         {
             cout << "Enter the new password (more than 8 characters): "; // Get new password
-            cin.ignore();
             getline(cin, changes);
 
             if (changes.empty())
@@ -266,6 +225,7 @@ struct userMenu {
             choice = userMenuUI::retry_UI();
 
             if (choice == 1)
+                cin.ignore();
                 continue;
 
             return;

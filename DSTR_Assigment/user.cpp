@@ -438,34 +438,6 @@ UserNode* UserList::searchUser(string searchKey)
     return x;
 }
 
-UserNode* UserList::searchUserByEmail(string searchKey)
-{
-    UserNode* x = this->root;
-
-    while (x != this->nullNode && searchKey != x->Email)
-    {
-        if (searchKey.compare(x->Email) < 0)
-            x = x->leftUser;
-        else
-            x = x->rightUser;
-    }
-    return x;
-}
-
-UserNode* UserList::searchUserByEmail(string searchKey)
-{
-    UserNode* x = this->root;
-
-    while (x != this->nullNode && searchKey != x->Email)
-    {
-        if (searchKey.compare(x->Email) < 0)
-            x = x->leftUser;
-        else
-            x = x->rightUser;
-    }
-    return x;
-}
-
 UserNode* UserList::minimum(UserNode* node)
 {
     while (node->leftUser != this->nullNode)

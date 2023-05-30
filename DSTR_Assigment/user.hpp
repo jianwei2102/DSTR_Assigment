@@ -53,9 +53,6 @@ public:
     void deleteFixup(UserNode* x);
 
     UserNode* searchUser(string searchKey);
-    UserNode* searchUserByEmail(string searchKey);
-    UserNode* searchUserByPassword(string searchKey);
-
     UserNode* minimum(UserNode* node);
     UserNode* getRoot();
 
