@@ -17,6 +17,7 @@ struct addPredefinedUser {
 		list->insertIntoUserTree("Alice", "alice@gmail.com", "Alice123");
 		list->insertIntoUserTree("Bob", "bob@gmail.com", "qwerty");
 		list->insertIntoUserTree("C", "ac@gmail.com", "ac");
+		list->insertIntoUserTree("Inacti", "jianwei@gmail.com", "Inacti12");
 
 		// Login alice
 		UserNode* alice = list->login("Alice", "Alice123");
@@ -29,15 +30,6 @@ struct addPredefinedUser {
 		list->addFavouriteUniToUser(alice, "UNI0008");
 		list->addFavouriteUniToUser(alice, "UNI0016");
 		list->addFavouriteUniToUser(alice, "UNI0212");
-		list->addFavouriteUniToUser(alice, "UNI0208");
-		list->addFavouriteUniToUser(alice, "UNI0216");
-		list->addFavouriteUniToUser(alice, "UNI0312");
-		list->addFavouriteUniToUser(alice, "UNI0408");
-		list->addFavouriteUniToUser(alice, "UNI0416");
-		list->addFavouriteUniToUser(alice, "UNI0412");
-		list->addFavouriteUniToUser(alice, "UNI0508");
-		list->addFavouriteUniToUser(alice, "UNI0616");
-		list->addFavouriteUniToUser(alice, "UNI0712");
 		list->removeFavouriteUniFromUser(alice, "UNI0008");
 
 		// Logout alice
@@ -59,7 +51,15 @@ struct addPredefinedUser {
 
 		// login jian but set login time to a month ago
 		UserNode* jian = list->login("Jian", "jw1234");
+		list->addFavouriteUniToUser(jian, "UNI0878");
+		list->addFeedbackToUser(jian, "jian to delete");
 		jian->LastLogin = jian->LastLogin - 2692000;
+		// Logout jian
+		r->loginUser = NULL;
+
+		// login jian but set login time to a month ago
+		UserNode* Inacti = list->login("Inacti", "Inacti12");
+		Inacti->LastLogin = Inacti->LastLogin - 2892000;
 		// Logout jian
 		r->loginUser = NULL;
 

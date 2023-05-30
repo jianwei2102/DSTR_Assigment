@@ -136,3 +136,81 @@ void Feedbacklist::sortFeedbackList() {
         tail = current;
     } while (swapped);
 }
+
+void Feedbacklist::deleteFeedbackNode(string feedbackID) {
+    FeedbackNode* feedbackNode = getFeedbackNode(feedbackID);
+    // Delete the associated reply list
+    if (feedbackNode->ReplyList != nullptr) {
+        ReplyNode* currentReply = feedbackNode->ReplyList->head;
+        while (currentReply != nullptr) {
+            ReplyNode* nextReply = currentReply->NextReply;
+            delete currentReply;
+            currentReply = nextReply;
+        }
+        delete feedbackNode->ReplyList;
+        feedbackNode->ReplyList = nullptr;
+    }
+
+    // Remove the feedback node from the list
+    if (feedbackNode == head) {
+        head = feedbackNode->NextFeedback;
+        if (head != nullptr) {
+            head->PrevFeedback = nullptr;
+        }
+    }
+    else {
+        feedbackNode->PrevFeedback->NextFeedback = feedbackNode->NextFeedback;
+        if (feedbackNode->NextFeedback != nullptr) {
+            feedbackNode->NextFeedback->PrevFeedback = feedbackNode->PrevFeedback;
+        }
+    }
+
+    if (feedbackNode == tail) {
+        tail = feedbackNode->PrevFeedback;
+        if (tail != nullptr) {
+            tail->NextFeedback = nullptr;
+        }
+    }
+
+    // Delete the feedback node
+    delete feedbackNode;
+    deleteAllFeedbackNode(feedbackID);
+}
+
+void Feedbacklist::deleteAllFeedbackNode(string feedbackID) {
+    Repository* r = Repository::getInstance();
+    FeedbackNode* feedbackNode = r->AllFeedbackLists->getFeedbackNode(feedbackID);
+    // Delete the associated reply list
+    if (feedbackNode->ReplyList != nullptr) {
+        ReplyNode* currentReply = feedbackNode->ReplyList->head;
+        while (currentReply != nullptr) {
+            ReplyNode* nextReply = currentReply->NextReply;
+            delete currentReply;
+            currentReply = nextReply;
+        }
+        delete feedbackNode->ReplyList;
+        feedbackNode->ReplyList = nullptr;
+    }
+    // Remove the feedback node from the list
+    if (feedbackNode == head) {
+        head = feedbackNode->NextFeedback;
+        if (head != nullptr) {
+            head->PrevFeedback = nullptr;
+        }
+    }
+    else {
+        feedbackNode->PrevFeedback->NextFeedback = feedbackNode->NextFeedback;
+        if (feedbackNode->NextFeedback != nullptr) {
+            feedbackNode->NextFeedback->PrevFeedback = feedbackNode->PrevFeedback;
+        }
+    }
+    if (feedbackNode == tail) {
+        tail = feedbackNode->PrevFeedback;
+        if (tail != nullptr) {
+            tail->NextFeedback = nullptr;
+        }
+    }
+    // Delete the feedback node
+    delete feedbackNode;
+
+}

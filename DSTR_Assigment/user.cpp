@@ -1,4 +1,5 @@
 #include "user.hpp"
+#include "favUni.hpp"
 #include "userMenuUI.h"
 #include "repository.h"
 
@@ -636,15 +637,37 @@ void UserList::deleteInactiveUserLoop(UserNode* root) {
         time_t now = time(0);
         time_t lastLoginTime = root->LastLogin;
         double secondsSinceLastLogin = difftime(now, lastLoginTime);
-        // if user active a month ago
-        if (secondsSinceLastLogin > 2592000) {
-            cout << root->Username << endl;
-            r->AllUserList->deleteNode(root->Username);
-        }
 
         // Recursively display left and right subtrees
         deleteInactiveUserLoop(root->leftUser);
         deleteInactiveUserLoop(root->rightUser);
+
+        // if user active a month ago
+        if (secondsSinceLastLogin > 2592000) {
+            clearLists(root);
+            r->AllUserList->deleteNode(root->Username);
+        }
     }
+}
+
+void UserList::clearLists(UserNode* user) {
+    Repository* r = Repository::getInstance();
+    r->loginUser = user;
+    UserFavouriteUni* currentFav = user->FavouriteUniList->head;
+    while (currentFav != NULL) {
+        string uniID = currentFav->UniID;
+        currentFav = currentFav->NextUni;
+        user->FavouriteUniList->removeFavouriteUni(user->UserID, uniID);
+    }
+
+    FeedbackNode* currentFeedback = user->FeedbackList->head;
+    while (currentFeedback != NULL) {
+        cout << currentFeedback->Feedback << endl;
+        FeedbackNode* nextFeedback = currentFeedback->NextFeedback;
+        user->FeedbackList->deleteFeedbackNode(currentFeedback->FeedbackID);
+        currentFeedback = nextFeedback;
+    }
+
+    r->loginUser = NULL;
 }
 

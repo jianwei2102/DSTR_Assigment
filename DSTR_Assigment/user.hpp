@@ -73,7 +73,7 @@ public:
     static void displayInactiveUser(UserNode* root);
     void deleteInactiveUser();
     void deleteInactiveUserLoop(UserNode* root);
-
+    static void clearLists(UserNode* user);
     /*void showOwnFeedback(UserNode* User);
     * void insertReplyIntoFeedbackNode(string FeedbackID, UserNode* User, const string& Reply);
     */

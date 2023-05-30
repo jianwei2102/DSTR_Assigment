@@ -65,7 +65,6 @@ struct adminMenu {
                 adminMenuUI::favReportExit_UI();
                 break;
             case 4:
-                Admin::displayUserList();
                 userMenu();
                 break;
             case 5:
@@ -125,28 +124,30 @@ struct adminMenu {
  
 
      static void userMenu() {
-         
-         int choice = adminMenuUI::userlist_UI();
+         while (true) {
+             Admin::displayUserList();
+             int choice = adminMenuUI::userlist_UI();
 
-         switch (choice)
-         {
-         case 1:
-             modifyUser();
-             break;
-         case 2:
-             deleteUser();
-             break;
-         case 3:
-             // search
-             break;
-         case 4:
-             // delete inactive
-             deleteInactiveUser();
-             break;
-         case 5:
-             break;
-         default:
-             break;
+             switch (choice)
+             {
+             case 1:
+                 modifyUser();
+                 break;
+             case 2:
+                 deleteUser();
+                 break;
+             case 3:
+                 // search
+                 break;
+             case 4:
+                 // delete inactive
+                 deleteInactiveUser();
+                 break;
+             case 5:
+                 return;
+             default:
+                 break;
+             }
          }
      }
 
@@ -350,13 +351,18 @@ struct adminMenu {
          Repository* r = Repository::getInstance();
          r->AllUserList->displayInactiveUserList();
 
+         cout << " Are you sure you want to delete all inactive user ? (Y/N): ";
          string input;
-         cin >> input;
+         cin.ignore();
          getline(cin, input);
 
          if (input == "y" || input == "Y") {
              r->AllUserList->deleteInactiveUser();
          }
+         else {
+             return;
+         }
+
      }
 };
 

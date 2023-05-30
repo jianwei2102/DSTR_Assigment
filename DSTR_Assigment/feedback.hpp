@@ -35,4 +35,8 @@ public:
     void insertIntoAllFeedbackList(FeedbackNode* NewFeedback);
     
     void sortFeedbackList();
+
+    void deleteFeedbackNode(string feedbackID);
+
+    void deleteAllFeedbackNode(string feedbackID);
 };

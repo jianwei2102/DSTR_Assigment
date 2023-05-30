@@ -68,7 +68,6 @@ void FavouriteUnilist::insertIntoAllFavouriteList(UserFavouriteUni* newFavourite
 
 void FavouriteUnilist::removeFavouriteUni(string UserID, string UniID) {
     UserFavouriteUni* exist = getFavouriteUni(UserID, UniID);
-
     if (!exist)
     {
         cout << "The university is not in your favorite list" << endl;
