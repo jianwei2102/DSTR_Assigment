@@ -38,4 +38,5 @@ struct guestMenuUI
 		cin >> input;
 		return input;
 	}
+
 };

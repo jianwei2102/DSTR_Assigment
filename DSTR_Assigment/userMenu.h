@@ -23,13 +23,9 @@ struct userMenu {
 
             UserNode* currentUser = r->AllUserList->searchUser(username);
             // Take Note !!!
-            if (currentUser->Username != username && currentUser->Password != password) {
-                r->loginUser = currentUser;
-
             if (currentUser->Username == username && currentUser->Password == password) {
-                r->AllUserList->setLoginUser(currentUser);
-                r->AllUserList->getLoginUser()->LastLogin = time(0);
-              // Take Note ^^^
+                r->loginUser = currentUser;
+                r->loginUser->LastLogin = time(0);
 
                 mainMenu();
                 return;
@@ -68,7 +64,7 @@ struct userMenu {
             switch (choice)
             {
             case 1:
-                //r->AllUniList->displayUniList();
+                r->AllUniList->displayUniList();
                 break;
             case 2:
                 r->AllUserList->displayUserList();
@@ -80,7 +76,7 @@ struct userMenu {
             case 5:
                 // return sorting menu for ar, fsr and er
                 scoreSortingMenu();
-                return;
+                break;
             default:
                 mainMenu();
                 break;
@@ -116,7 +112,7 @@ struct userMenu {
             return;
         }
     }
-};
+
 
     static void userProfile() {
 
@@ -124,7 +120,7 @@ struct userMenu {
         {
             Repository* r = Repository::getInstance();  
             system("cls");
-            r->AllUserList->displayLoginUser(r->AllUserList->getLoginUser());
+            r->AllUserList->displayLoginUser(r->loginUser);
 
             int choice = userMenuUI::profileMenu_UI();
 
@@ -142,7 +138,7 @@ struct userMenu {
 
     static void modifyProfile() {
         Repository* r = Repository::getInstance();
-        UserNode* loginUser = r->AllUserList->getLoginUser();
+        UserNode* loginUser = r->loginUser;
         while (true)
         {
             system("cls");

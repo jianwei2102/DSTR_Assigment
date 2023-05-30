@@ -15,7 +15,7 @@ UserNode* UserList::createNewUserNode(string Username, string Email, string Pass
     newUser->LastLogin = time(0);
     newUser->FavouriteUniList = new FavouriteUnilist();
     newUser->FeedbackList = new Feedbacklist();
-    newUser->UserID = "US"+to_string(rand());
+    newUser->UserID = to_string(rand());
 
     return newUser;
 }

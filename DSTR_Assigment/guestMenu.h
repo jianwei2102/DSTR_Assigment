@@ -24,6 +24,7 @@ struct guestMenu
 				case 3:
 					break;
 				case 4:
+                    registerMenu();
 					break;
                 case 5:
                     return;
@@ -128,4 +129,68 @@ struct guestMenu
 
 
     }
+
+    static void registerMenu() {
+        cin.ignore();
+        system("cls");
+        Repository* r = Repository::getInstance();
+        string username;
+        string password;
+        string email;
+        cout << "Leave fields blank to exit anytime" << endl;
+        
+        // Get username
+        while (true) 
+        {
+            cout << "Enter username: ";
+            getline(cin, username);
+
+            // This part might be kind of hacky, since this if statement must be before the searchUser
+            // as they 1 will cancel the other out
+            if (username.empty())
+                return;
+
+            if (r->AllUserList->searchUser(username)->Username.empty())
+                break;
+            else if (!r->AllUserList->searchUser(username)->Username.empty())
+                cout << "Username has been taken" << endl;
+        }
+
+
+        // Get email
+        while (true) 
+        {
+            cout << "Enter email: ";
+            getline(cin, email);
+
+            if (email.empty())
+                return;
+
+            if (r->AllUserList->searchUserByEmail(email)->Username.empty())
+                break;
+            else if (!r->AllUserList->searchUser(email)->Username.empty())
+                cout << "Email has been taken" << endl;
+        }
+
+
+        // Get password
+        while (true)
+        {
+            cout << "Enter password: ";
+            getline(cin, password);
+
+            if (password.length() == 0)
+                return;
+
+            if (password.length() > 8)
+                break;
+
+            cout << "Password must be 8 or more characters" << endl;
+        }
+
+        r->AllUserList->insertIntoUserTree(username, email, password);       
+        cout << "Your account has been successfully created" << endl;
+        return;
+    }
+
 };

@@ -25,6 +25,7 @@ static void mainMenu() {
             break;
         case 3:
             // register
+            guestMenu::registerMenu();
             break;
         case 4:
             // guest
