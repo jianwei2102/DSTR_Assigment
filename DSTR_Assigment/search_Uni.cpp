@@ -203,7 +203,6 @@ void displayInfoByLoc(UniNode* uniArr, int size, const string& searchTerm) {
 }
 
 void linearSearchInst(UniNode* uniArr, int size, const string& searchTerm) {
-	cout << "Size: " << size << endl;
 	auto start = high_resolution_clock::now();
 	bool found = false;
 	for (int i = 0; i < size; i++) {
