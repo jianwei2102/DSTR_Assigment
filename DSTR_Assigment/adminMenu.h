@@ -16,6 +16,8 @@ struct adminMenu {
             bool loginStatus = Admin::login(); // Input username and password
 
             if (loginStatus) {
+                // Delete inactive user after login
+                // deleteInactiveUser();
                 mainMenu();
             }
             else {
@@ -135,12 +137,15 @@ struct adminMenu {
              deleteUser();
              break;
          case 3:
-
+             // search
              break;
          case 4:
+             // delete inactive
+             deleteInactiveUser();
+             break;
+         case 5:
              break;
          default:
-             mainMenu();
              break;
          }
      }
@@ -335,6 +340,22 @@ struct adminMenu {
          }
          else {
              return;
+         }
+     }
+
+     static void deleteInactiveUser() {
+         system("cls");
+
+         // Display all user list
+         Repository* r = Repository::getInstance();
+         r->AllUserList->displayInactiveUserList();
+
+         string input;
+         cin >> input;
+         getline(cin, input);
+
+         if (input == "y" || input == "Y") {
+             r->AllUserList->deleteInactiveUser();
          }
      }
 };

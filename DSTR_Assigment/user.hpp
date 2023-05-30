@@ -67,7 +67,12 @@ public:
     void addFeedbackToUser(UserNode* User, const string& Feedback);
     
     static void displayUserList();
-    static void displayUser(UserNode* root, string indent);
+    static void displayUser(UserNode* root);
+
+    static void displayInactiveUserList();
+    static void displayInactiveUser(UserNode* root);
+    void deleteInactiveUser();
+    void deleteInactiveUserLoop(UserNode* root);
 
     /*void showOwnFeedback(UserNode* User);
     * void insertReplyIntoFeedbackNode(string FeedbackID, UserNode* User, const string& Reply);

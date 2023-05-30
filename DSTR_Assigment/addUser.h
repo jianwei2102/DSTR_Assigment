@@ -57,6 +57,12 @@ struct addPredefinedUser {
 		// Logout bob
 		r->loginUser = NULL;
 
+		// login jian but set login time to a month ago
+		UserNode* jian = list->login("Jian", "jw1234");
+		jian->LastLogin = jian->LastLogin - 2692000;
+		// Logout jian
+		r->loginUser = NULL;
+
 		return list;
 	}
 };

@@ -547,7 +547,7 @@ void UserList::addFeedbackToUser(UserNode* User, const string& Feedback) {
 void UserList::displayUserList() {
     // Print user list table header
     system("cls");
-    cout << "User List" << endl;
+    cout << " User List" << endl;
     cout << "---------------------------------------------------------------------------------------------" << endl;
     cout << left << setw(17) << "| UserID";
     cout << left << setw(20) << "Username";
@@ -555,11 +555,11 @@ void UserList::displayUserList() {
     cout << left << setw(25) << "Last Login" << right << "|" << endl;
     cout << "---------------------------------------------------------------------------------------------" << endl;
     // Call helper function to recursively display user tree
-    displayUser(root, "");
+    displayUser(root);
     cout << "---------------------------------------------------------------------------------------------" << endl;
 }
 
-void UserList::displayUser(UserNode* root, string indent) {
+void UserList::displayUser(UserNode* root) {
     
     if (root != nullptr && root != nullNode)
     {
@@ -577,7 +577,74 @@ void UserList::displayUser(UserNode* root, string indent) {
         cout << left << setw(15) << buffer << " |" << endl;
 
         // Recursively display left and right subtrees
-        displayUser(root->leftUser, indent + "  |");
-        displayUser(root->rightUser, indent + "  ");
+        displayUser(root->leftUser);
+        displayUser(root->rightUser);
     }
 }
+
+void UserList::displayInactiveUserList() {
+    // Print user list table header
+    system("cls");
+    cout << " Inactive User List" << endl;
+    cout << "---------------------------------------------------------------------------------------------" << endl;
+    cout << left << setw(17) << "| UserID";
+    cout << left << setw(20) << "Username";
+    cout << left << setw(30) << "Email";
+    cout << left << setw(25) << "Last Login" << right << "|" << endl;
+    cout << "---------------------------------------------------------------------------------------------" << endl;
+    // Call helper function to recursively display user tree
+    displayInactiveUser(root);
+    cout << "---------------------------------------------------------------------------------------------" << endl;
+}
+
+void UserList::displayInactiveUser(UserNode* root) {
+
+    if (root != nullptr && root != nullNode)
+    {
+        time_t now = time(0);
+        time_t lastLoginTime = root->LastLogin;
+        double secondsSinceLastLogin = difftime(now, lastLoginTime);
+        // if user active a month ago
+        if (secondsSinceLastLogin > 2592000) {
+            // Print current user node
+            cout << "| ";
+            cout << left << setw(15) << root->UserID;
+            cout << left << setw(20) << root->Username;
+            cout << left << setw(30) << root->Email;
+
+            // Print last login time
+            time_t lastLoginTime = root->LastLogin;
+            char buffer[26];
+            ctime_s(buffer, sizeof(buffer), &lastLoginTime);
+            buffer[24] = '\0';  // Remove the newline character from the output
+            cout << left << setw(15) << buffer << " |" << endl;
+        }
+
+        // Recursively display left and right subtrees
+        displayInactiveUser(root->leftUser);
+        displayInactiveUser(root->rightUser);
+    }
+}
+void UserList::deleteInactiveUser() {
+    deleteInactiveUserLoop(root);
+}
+
+void UserList::deleteInactiveUserLoop(UserNode* root) {
+    Repository* r = Repository::getInstance();
+    if (root != nullptr && root != nullNode)
+    {
+        time_t now = time(0);
+        time_t lastLoginTime = root->LastLogin;
+        double secondsSinceLastLogin = difftime(now, lastLoginTime);
+        // if user active a month ago
+        if (secondsSinceLastLogin > 2592000) {
+            cout << root->Username << endl;
+            r->AllUserList->deleteNode(root->Username);
+        }
+
+        // Recursively display left and right subtrees
+        deleteInactiveUserLoop(root->leftUser);
+        deleteInactiveUserLoop(root->rightUser);
+    }
+}
+

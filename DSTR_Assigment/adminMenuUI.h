@@ -56,10 +56,11 @@ struct adminMenuUI {
 
 	static int userlist_UI() {
 		cout << "USER MENU" << endl;
-		cout << " [1] Modify User         " << endl;
-		cout << " [2] Delete User         " << endl;
-		cout << " [3] Search              " << endl;
-		cout << " [4] Back                " << endl;
+		cout << " [1] Modify User           " << endl;
+		cout << " [2] Delete User           " << endl;
+		cout << " [3] Search                " << endl;
+		cout << " [4] Delete Inavtive User  " << endl;
+		cout << " [5] Back                  " << endl;
 		int input = 0;
 		cout << "Select an Operation Number: ";
 		cin >> input;
