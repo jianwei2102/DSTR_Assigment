@@ -22,7 +22,7 @@ struct userMenu {
             Repository* r = Repository::getInstance();
 
             UserNode* currentUser = r->AllUserList->searchUser(username);
-            if (currentUser->Username == username && currentUser->Password == password) {
+            if (currentUser->Username != username && currentUser->Password != password) {
                 r->loginUser = currentUser;
                 mainMenu();
                 return;
@@ -84,20 +84,25 @@ struct userMenu {
     //sorting
     static void scoreSortingMenu() {
         Repository* r = Repository::getInstance();
+
+        system("cls");
         int choice = userMenuUI::uniSortValue_UI();
 
         switch (choice)
         {
         case 1:
             QuickSort::quickSort(r->AllUniList->UniArray, 0, 1421, "Ar");
+            QuickSort::printByPagination(r->AllUniList->UniArray, "Ar");
             return;
         case 2:
             QuickSort::quickSort(r->AllUniList->UniArray, 0, 1421, "Fsr");
+            QuickSort::printByPagination(r->AllUniList->UniArray, "Fsr");
             return;
         case 3:
             QuickSort::quickSort(r->AllUniList->UniArray, 0, 1421, "Er");
+            QuickSort::printByPagination(r->AllUniList->UniArray, "Er");
             return;
-        case 0:
+        case 4:
             return;
         default:
             return;

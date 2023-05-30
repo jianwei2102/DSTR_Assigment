@@ -50,7 +50,7 @@ struct guestMenu
 		case 3:
 			sortingComparision();
 			break;
-		case 0:
+		case 4:
 			return;
 		default:
 			return;
@@ -62,7 +62,8 @@ struct guestMenu
 
         while (true) {
             cout << endl;
-            QuickSort::quickSort(r->AllUniList->UniArray, 0, 1421, "Ar");
+            QuickSort::quickSort(r->AllUniList->UniArray, 0, 1421, "Institution");
+            QuickSort::printByPagination(r->AllUniList->UniArray, "Institution");
             cout << endl;
 
             string input;
@@ -79,7 +80,8 @@ struct guestMenu
 
         while (true) {
             cout << endl;
-            QuickSort::quickSort(r->AllUniList->UniArray, 0, 1421, "Ar");
+            MergeSort::mergeSort(r->AllUniList->UniArray, 0, 1421);
+            MergeSort::printByPagination(r->AllUniList->UniArray);
             cout << endl;
 
             string input;

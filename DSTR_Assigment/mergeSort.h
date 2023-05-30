@@ -66,4 +66,36 @@ struct MergeSort {
 
     }
 
+    // function to print the array
+    static void printByPagination(UniNode* array[]) {
+        int i;
+        int currentShownTotal = 20;
+        int currentShownLimit = 20;
+        string sortInput;
+
+        int counter; // needed?
+
+        cout << left << setw(5) << "No.";
+        cout << left << setw(90) << "Insitution" << endl;
+
+        for (i = 0; i < 20; i++)
+            cout << left << setw(5) << i + 1 << setw(90) << array[i]->Insitution << endl;
+        cout << endl;
+
+        while (currentShownTotal < 1422) {
+            cout << "Enter [Y] to view another 20 records or [N] to exit: " << endl;
+            cin >> sortInput;
+
+            if (sortInput == "Y") {
+                for (currentShownLimit += 20; currentShownTotal < currentShownLimit; currentShownTotal++)
+                    cout << left << setw(5) << i + 1 << setw(90) << array[currentShownTotal]->Insitution << endl;
+
+                cout << endl;
+                cout << "Showing " << currentShownLimit << " records" << endl;
+            }
+            else if (sortInput == "N") {
+                return;
+            }
+        }
+    }
 };

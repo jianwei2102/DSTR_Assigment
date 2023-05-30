@@ -30,11 +30,14 @@ struct userMenuUI {
 	}
 
 	static int uniSortValue_UI() {
-		cout << "SORTING MENU - University Information" << endl;
-		cout << "[1] Sort by Academic Reputation Score" << endl;
-		cout << "[2] Sort by Faculty/Student Ratio Score" << endl;
-		cout << "[3] Sort by Employer Reputation Score" << endl;
-		cout << "[0] Back" << endl;
+		cout << "  -------------------------------------------" << endl;
+		cout << " |                Sorting                    |" << endl;
+		cout << " |  1 - Sort by Academic Reputation Score    |" << endl;
+		cout << " |  2 - Sort by Faculty/Student Ratio Score  |" << endl;
+		cout << " |  3 - Sort by Employer Reputation Score    |" << endl;
+		cout << " |  4 - Back                                 |" << endl;
+		cout << "  -------------------------------------------" << endl;
+
 		cout << "Enter your choice: ";
 		int input = 0;
 		cin >> input;
