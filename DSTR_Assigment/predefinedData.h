@@ -12,5 +12,9 @@ struct predefinedData
 		Repository* repository = repository->getInstance();
 		repository->AllUniList = loadUniCSV::ReadUniFromFile();
 		repository->AllUserList = addPredefinedUser::addUser();
+		HashMap FavUniCount = repository->FavUniCount;
+
+        cout << "Sorted Unis:" << endl;
+        FavUniCount.displaySortedUnis();
 	}
 };

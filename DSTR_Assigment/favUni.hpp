@@ -11,8 +11,6 @@ struct UserFavouriteUni {
     UserFavouriteUni* NextUni;
 };
 
-class FavouriteUnilist;
-extern FavouriteUnilist* AllFavouriteUnilist;
 class FavouriteUnilist {
 public:
     UserFavouriteUni* head = NULL;

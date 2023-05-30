@@ -1,5 +1,6 @@
 #include "user.hpp"
-
+#include "userMenuUI.h"
+#include "repository.h"
 
 UserNode* UserList::createNewUserNode(string Username, string Email, string Password)
 {
@@ -457,6 +458,8 @@ UserNode* UserList::login(string Username, string Password) {
     }
     else if (currentUser->Username == Username && currentUser->Password == Password) {
         currentUser->LastLogin = time(0); // update last login time
+        Repository* r = Repository::getInstance();
+        r->loginUser = currentUser;
         return currentUser;
     }   
 }
@@ -545,30 +548,38 @@ void UserList::addFeedbackToUser(UserNode* User, const string& Feedback) {
         return;
     }
 
-    User->FeedbackList->insertIntoFeedbackList(User, Feedback);
+    User->FeedbackList->insertIntoFeedbackList(User, Feedback); 
+    
+    Repository* r = Repository::getInstance();
+    Feedbacklist* AllFeedbackLists = r->AllFeedbackLists;
+    AllFeedbackLists->sortFeedbackList();
+    User->FeedbackList->sortFeedbackList();
 }
 
+// Unused
 void UserList::showOwnFeedback(UserNode* User) {
-    
-    if (User == NULL) {
-        cout << "User not found" << endl;
-        return;
-    }
-
-    FeedbackNode* currentFeedback = User->FeedbackList->head;
-
+    /*FeedbackNode* currentFeedback = User->FeedbackList->head;
     if (!currentFeedback)
     {
-        cout << "No feedback found for the user" << endl;
+        cout << "No feedback found for the user" << endl << endl;;
+        string choice;
+        cout << "Navigate: (A)dd, (Q)uit : ";
+        cin >> choice;
+
+        if (choice == "A" || choice == "a") {
+
+        }
         return;
     }
-
+       
     string input;
-
+    system("cls");
     while (true)
     {
-        cout << endl << "FeedbackID " << "Description" << endl;
-        cout << currentFeedback->FeedbackID << " " << currentFeedback->Feedback << endl << endl;
+        userMenuUI::feedback_UI();
+        cout << "   FeedbackID:  " << currentFeedback->FeedbackID << endl;
+        cout << "   Description: " << currentFeedback->Feedback << endl;
+
         cout << "Navigate: (N)ext, (P)revious, (Q)uit : ";
 
         cin >> input;
@@ -577,17 +588,21 @@ void UserList::showOwnFeedback(UserNode* User) {
         {
             if (currentFeedback->NextFeedback != NULL) {
                 currentFeedback = currentFeedback->NextFeedback;
+                system("cls");
             }
             else {
-                cout << "(No more feedbacks.)" << endl;
+                system("cls");
+                cout << "This is the last feedback." << endl;
             }
         }
         else if (input == "p" || input == "P")
         {
             if (currentFeedback->PrevFeedback != NULL) {
                 currentFeedback = currentFeedback->PrevFeedback;
+                system("cls");
             }
             else {
+                system("cls");
                 cout << "This is the first feedback." << endl;
             }
         }
@@ -600,7 +615,7 @@ void UserList::showOwnFeedback(UserNode* User) {
             cout << "Invalid input. Please enter N for next, P for previous, or Q to quit." << endl;
 
         }
-    }
+    }*/
 
     //UserNode* currentUser = searchUser(User->Username);
 
@@ -635,7 +650,11 @@ void UserList::showOwnFeedback(UserNode* User) {
     //}
 }
 
+
 void UserList::insertReplyIntoFeedbackNode(string FeedbackID, UserNode* User, const string& Reply) {
+    Repository* r = Repository::getInstance();
+    Feedbacklist* AllFeedbackLists = r->AllFeedbackLists;
+
     // Get feedback node for both all feedback list and user feedback list
     FeedbackNode* currentAllFeedback = AllFeedbackLists->getFeedbackNode(FeedbackID);
     FeedbackNode* currentFeedback = User->FeedbackList->getFeedbackNode(FeedbackID);

@@ -132,6 +132,7 @@
     <ClCompile Include="feedback.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="reply.cpp" />
+    <ClCompile Include="repository.cpp" />
     <ClCompile Include="uni.cpp" />
     <ClCompile Include="user.cpp" />
   </ItemGroup>
@@ -140,6 +141,7 @@
     <ClInclude Include="admin.hpp" />
     <ClInclude Include="adminMenu.h" />
     <ClInclude Include="favUni.hpp" />
+    <ClInclude Include="favUniCount.h" />
     <ClInclude Include="feedback.hpp" />
     <ClInclude Include="adminMenuUI.h" />
     <ClInclude Include="loadUniCSV.h" />

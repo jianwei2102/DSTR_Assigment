@@ -6,6 +6,6 @@ using namespace std;
 int main() {
 	predefinedData::loadData();
 	
-	mainMenu();
+	//mainMenu();
 	return 0;
 }

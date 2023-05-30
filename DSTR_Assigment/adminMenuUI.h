@@ -111,4 +111,10 @@ struct adminMenuUI {
 
 		return input;
 	}
+
+	static void feedback_UI() {
+		cout << "  ------------------------------------------- " << endl;
+		cout << " |              User feedback                |" << endl;
+		cout << "  ------------------------------------------- " << endl;
+	}
 };

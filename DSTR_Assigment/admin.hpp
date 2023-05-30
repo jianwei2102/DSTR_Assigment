@@ -16,11 +16,11 @@ public:
     void modifyUserDetail(string UserID, string UpdateType, string UpdateData);
 
 
-    /*
-    void viewUserFeedbackList();
+    
+    static void viewUserFeedbackList();
 
-    void insertReplyIntoFeedbackNode(string FeedbackID, string Username, string Reply);
+    static void insertReplyIntoFeedbackNode(string FeedbackID, string Username, string Reply);
 
-    void generateReport();
+    /*void generateReport();
     */
 };

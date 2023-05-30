@@ -51,6 +51,9 @@
     <ClCompile Include="reply.cpp">
       <Filter>Source Files\Classes</Filter>
     </ClCompile>
+    <ClCompile Include="repository.cpp">
+      <Filter>Source Files\Repository</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="repository.h">
@@ -103,6 +106,9 @@
     </ClInclude>
     <ClInclude Include="quickSort.h">
       <Filter>Source Files\Algorithms</Filter>
+    </ClInclude>
+    <ClInclude Include="favUniCount.h">
+      <Filter>Source Files\Classes</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

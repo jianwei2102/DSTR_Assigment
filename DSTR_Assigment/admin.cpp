@@ -1,5 +1,6 @@
 #include "admin.hpp"
 #include "user.hpp"
+#include "repository.h"
 
 void Admin::deleteInactiveUser() {
     // Get current time
@@ -70,17 +71,21 @@ void Admin::modifyUserDetail(string UserID, string UpdateType, string UpdateData
     }
 }
 
-/*
+
 // Task 3
 void Admin::viewUserFeedbackList() {
+    Repository* r = Repository::getInstance();
+    Feedbacklist* AllFeedbackLists = r->AllFeedbackLists;
     if (AllFeedbackLists == NULL) {
+        cout << "There is no feedback yet" << endl;
         return;
     }
 
+
     FeedbackNode* currentFeedback = AllFeedbackLists->head;
     while (currentFeedback != NULL) {
-        cout << AllUserList->getUserNode(currentFeedback->UserID)->Username << ": " << currentFeedback->Feedback << endl;
-
+        //cout << r->AllFeedbackLists->getUserNode(currentFeedback->UserID)->Username << ": " << currentFeedback->Feedback << endl;
+        cout << currentFeedback->UserID << ": " << currentFeedback->Feedback << endl;
         ReplyNode* currentReply = currentFeedback->ReplyList->head;
         if (currentReply == NULL) {
             cout << "There is no reply yet" << endl;
@@ -93,14 +98,18 @@ void Admin::viewUserFeedbackList() {
         }
         currentFeedback = currentFeedback->NextFeedback;
     }
+    string test;
+    cin >> test;
 }
-*/
 
-/*
+
+
 void Admin::insertReplyIntoFeedbackNode(string FeedbackID, string Username, string Reply) {
     // Get feedback node for both all feedback list and user feedback list
+    Repository* r = Repository::getInstance();
+    Feedbacklist* AllFeedbackLists = r->AllFeedbackLists;
     FeedbackNode* currentAllFeedback = AllFeedbackLists->getFeedbackNode(FeedbackID);
-    FeedbackNode* currentFeedback = AllUserList->getUserNode(currentAllFeedback->UserID)->FeedbackList->getFeedbackNode(FeedbackID);
+    FeedbackNode* currentFeedback = r->AllUserList->searchUser(currentAllFeedback->UserName)->FeedbackList->getFeedbackNode(FeedbackID);
     // Validation on the feedback node
     if (currentFeedback == NULL || currentAllFeedback == NULL ) {
         cout << "Error: Feedback not found" << endl;
@@ -110,7 +119,7 @@ void Admin::insertReplyIntoFeedbackNode(string FeedbackID, string Username, stri
     currentAllFeedback->ReplyList->insertReplyIntoFeedback(Username, Reply);
     currentFeedback->ReplyList->insertReplyIntoFeedback(Username, Reply);
 }
-
+/*
 // Task 4
 void Admin::generateReport() {
     FavouriteUnilist* TopFavouriteList = AllFavouriteUnilist->generateFavouriteUniRecord();

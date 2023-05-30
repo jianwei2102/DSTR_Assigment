@@ -15,6 +15,21 @@ struct addPredefinedUser {
 		list->insertIntoUserTree("Bob", "bob@gmail.com", "qwerty");
 		list->insertIntoUserTree("C", "ac@gmail.com", "ac");
 
+		UserNode* alice = list->login("Alice", "Alice123");
+		
+		// Create some feedback from Alice
+		list->addFeedbackToUser(alice, "This is my feedback");
+		
+		list->addFeedbackToUser(alice, "This is my second feedback");
+
+		// Favourite uni
+		list->addFavouriteUniToUser(alice, "UNI0008");
+		list->addFavouriteUniToUser(alice, "UNI0016");
+		list->removeFavouriteUniFromUser(alice, "UNI0008");
+		// LOGOUT
+
+		//UserNode* bob = list->login("Bob", "qwerty");
+		//list->addFeedbackToUser(bob, "Test");
 		return list;
 	}
 };
