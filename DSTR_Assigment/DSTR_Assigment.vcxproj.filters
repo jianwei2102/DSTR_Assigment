@@ -113,5 +113,8 @@
     <ClInclude Include="guestMenu.h">
       <Filter>Source Files\UI\Input</Filter>
     </ClInclude>
+    <ClInclude Include="binarySearch.h">
+      <Filter>Source Files\Algorithms</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

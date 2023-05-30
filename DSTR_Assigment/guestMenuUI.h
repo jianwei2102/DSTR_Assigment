@@ -38,4 +38,19 @@ struct guestMenuUI
 		cin >> input;
 		return input;
 	}
+
+	static int uniSearch_UI() {
+		cout << "  --------------------------------- " << endl;
+		cout << " |         Searching Menu          |" << endl;
+		cout << " |  1 - Binary Search              |" << endl;
+		cout << " |  2 - Linear Search              |" << endl;
+		cout << " |  3 - Comparison of Algorithm    |" << endl;
+		cout << " |  4 - Back                       |" << endl;
+		cout << "  ---------------------------------" << endl;
+
+		cout << "Enter your choice: ";
+		int input = 0;
+		cin >> input;
+		return input;
+	}
 };
