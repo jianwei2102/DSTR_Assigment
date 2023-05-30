@@ -142,12 +142,16 @@
     <ClInclude Include="favUni.hpp" />
     <ClInclude Include="feedback.hpp" />
     <ClInclude Include="adminMenuUI.h" />
+    <ClInclude Include="guestMenu.h" />
+    <ClInclude Include="guestMenuUI.h" />
     <ClInclude Include="loadUniCSV.h" />
     <ClInclude Include="mainMenuUI.h" />
     <ClInclude Include="mainMenu.h" />
+    <ClInclude Include="mergeSort.h" />
     <ClInclude Include="predefinedData.h" />
     <ClInclude Include="reply.hpp" />
     <ClInclude Include="repository.h" />
+    <ClInclude Include="quickSort.h" />
     <ClInclude Include="uni.hpp" />
     <ClInclude Include="user.hpp" />
     <ClInclude Include="userMenu.h" />

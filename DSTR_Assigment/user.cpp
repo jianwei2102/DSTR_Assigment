@@ -13,9 +13,9 @@ UserNode* UserList::createNewUserNode(string Username, string Email, string Pass
     newUser->Password = Password;
     newUser->color = 'R';
     newUser->LastLogin = time(0);
-    /*newUser->FavouriteUniList = new FavouriteUnilist();
-    newUser->FeedbackList = new Feedbacklist();*/
-    newUser->UserID = to_string(rand());
+    newUser->FavouriteUniList = new FavouriteUnilist();
+    newUser->FeedbackList = new Feedbacklist();
+    newUser->UserID = "US"+to_string(rand());
 
     return newUser;
 }
@@ -78,10 +78,6 @@ void UserList::inorder(UserNode* root) {
 void UserList::insertIntoUserTree(string Username, string Email, string Password)
 {
 
-    //if (AllUserList == NULL) {
-    //    AllUserList = new UserList;
-    //}
-
     UserNode* newUser = createNewUserNode(Username, Email, Password);
     newUser->leftUser = this->nullNode;
     newUser->rightUser = this->nullNode;
@@ -129,7 +125,6 @@ void UserList::insertIntoUserTree(string Username, string Email, string Password
     //newUser->color = 'R';
     insertFixup(newUser);
 }
-
 
 void UserList::insertIntoUserTree(UserNode* newUser) {
     newUser->leftUser = this->nullNode;
@@ -180,7 +175,6 @@ void UserList::insertIntoUserTree(UserNode* newUser) {
 
     insertFixup(newUser);
 }
-
 
 void UserList::insertFixup(UserNode* node)
 {
@@ -463,111 +457,202 @@ UserNode* UserList::login(string Username, string Password) {
     // Traverse the list to find a matching user
     UserNode* currentUser = searchUser(Username);
 
-    if (currentUser->Username == Username && currentUser->Password == Password) {
+    if (currentUser->Username.empty()) {
+        return NULL;  // If no matching user is found, return NULL
+    }
+    else if (currentUser->Username == Username && currentUser->Password == Password) {
         currentUser->LastLogin = time(0); // update last login time
         return currentUser;
-    }
-    // If no matching user is found, return NULL
-    return NULL;
+    }   
 }
 
-//void UserList::addFavouriteUniToUser(UserNode* User, string UniID) {
-//    if (!User) {
-//        cout << "Error: User node is null." << endl;
-//        return;
-//    }
-//
-//    User->FavouriteUniList->insertIntoFavouriteUni(User->UserID, UniID, false);
-//}
+void UserList::addFavouriteUniToUser(UserNode* User, string UniID) {
+    if (!User) {
+        cout << "Error: User node is null." << endl;
+        return;
+    }
 
-//// Add on show uni details
-//void UserList::showOwnFavoriteUni(UserNode* User) {
-//    if (User == NULL) {
-//        cout << "User not found" << endl;
-//        return;
-//    }
-//
-//    UserFavouriteUni* currentUni = User->FavouriteUniList->head;
-//    int count = 0;
-//    while (currentUni != NULL) {
-//        cout << "User ID: " << currentUni->UserID << endl;
-//        cout << "Uni ID: " << currentUni->UniID << endl;
-//        count++;
-//        currentUni = currentUni->NextUni;
-//    }
-//    if (count == 0) {
-//        cout << "No favourite uni found for the user" << endl;
-//    }
-//}
+    User->FavouriteUniList->insertIntoFavouriteUni(User->UserID, UniID, false);
+}
 
-//void UserList::addFeedbackToUser(UserNode* User, const string& Feedback) {
-//    if (!User) {
-//        cout << "Error: User node is null." << endl;
-//        return;
-//    }
-//
-//    User->FeedbackList->insertIntoFeedbackList(User, Feedback);
-//}
+void UserList::removeFavouriteUniFromUser(UserNode* User, string UniID)
+{
+    User->FavouriteUniList->removeFavouriteUni(User->UserID, UniID);
+}
 
-//void UserList::showOwnFeedback(UserNode* User) {
-//
-//
-//    UserNode* currentUser = searchUser(User->Username);
-//
-//    if (User->UserID == "") {
-//        cout << "User not found" << endl;
-//        return;
-//    }
-//
-//    //UserNode* currentUser = AllUserList->head;
-//    if (currentUser->UserID == User->UserID) {
-//        FeedbackNode* currentFeedback = currentUser->FeedbackList->head;
-//        int count = 0;
-//        while (currentFeedback != NULL) {
-//            if (currentFeedback->UserID == User->UserID) {
-//                cout << "Feedback ID: " << currentFeedback->FeedbackID << endl;
-//                cout << "Feedback: " << currentFeedback->Feedback << endl;
-//                ReplyNode* currentReply = currentFeedback->ReplyList->head;
-//
-//                if (currentReply == NULL) {
-//                    cout << "There is no reply yet" << endl;
-//                }
-//                else {
-//                    while (currentReply != NULL) {
-//                        cout << "Replied by " << currentReply->Username << ": " << currentReply->Reply << endl;
-//                        currentReply = currentReply->NextReply;
-//                    }
-//                }
-//
-//
-//                //cout << "Create Time: " << ctime(&currentFeedback->CreateTime);
-//                count++;
-//            }
-//            currentFeedback = currentFeedback->NextFeedback;
-//        }
-//        if (count == 0) {
-//            cout << "No feedback found for the user" << endl;
-//        }
-//    }
-//
-//    if (currentUser == NULL) {
-//        cout << "User not found" << endl;
-//    }
-//}
+// Add on show uni details
+void UserList::showOwnFavoriteUni(UserNode* User) {
+    if (User == NULL) {
+        cout << "User not found" << endl;
+        return;
+    }
 
-//void UserList::insertReplyIntoFeedbackNode(string FeedbackID, UserNode* User, const string& Reply) {
-//    // Get feedback node for both all feedback list and user feedback list
-//    FeedbackNode* currentAllFeedback = AllFeedbackLists->getFeedbackNode(FeedbackID);
-//    FeedbackNode* currentFeedback = User->FeedbackList->getFeedbackNode(FeedbackID);
-//    // Validation on the feedback node
-//    if (currentFeedback == NULL || currentAllFeedback == NULL) {
-//        cout << "Error: Feedback not found" << endl;
-//        return;
-//    }
-//    // Insert to both feedback node
-//    currentAllFeedback->ReplyList->insertReplyIntoFeedback(User->Username, Reply);
-//    currentFeedback->ReplyList->insertReplyIntoFeedback(User->Username, Reply);
-//}
+    UserFavouriteUni* currentUni = User->FavouriteUniList->head;
+
+    if (!currentUni) {
+        cout << "No favorite uni found for the user" << endl;
+        return;
+    }
+
+    cout << endl << "ID " << "Rank " << "Institution " << "Location " << "ArScore " << "ErScore " << "FsrScore " << endl;
+
+    /*while (currentUni != NULL) {
+        cout << "User ID: " << currentUni->UserID << endl;
+        cout << "Uni ID: " << currentUni->UniID << endl;
+       
+        currentUni = currentUni->NextUni;
+    }*/
+
+    string input;
+
+    while (true)
+    {
+        cout << endl << "University ID " << endl;
+        cout << currentUni->UniID << endl << endl;
+        cout << "Navigate: (N)ext, (P)revious, (Q)uit : " << endl;
+
+        cin >> input;
+
+        if (input == "n" || input == "N")
+        {
+            if (currentUni->NextUni != NULL) {
+                currentUni = currentUni->NextUni;
+            }
+            else {
+                cout << "(No more record.)" << endl;
+            }
+        }
+        else if (input == "p" || input == "P")
+        {
+            if (currentUni->PrevUni != NULL) {
+                currentUni = currentUni->PrevUni;
+            }
+            else {
+                cout << "(This is the first record)." << endl;
+            }
+        }
+        else if (input == "q" || input == "Q")
+        {
+            return;
+        }
+        else
+        {
+            cout << "Invalid input. Please enter N for next, P for previous, or Q to quit." << endl;
+
+        }
+    }
+   
+}
+
+void UserList::addFeedbackToUser(UserNode* User, const string& Feedback) {
+    if (!User) {
+        cout << "Error: User node is null." << endl;
+        return;
+    }
+
+    User->FeedbackList->insertIntoFeedbackList(User, Feedback);
+}
+
+void UserList::showOwnFeedback(UserNode* User) {
+    
+    if (User == NULL) {
+        cout << "User not found" << endl;
+        return;
+    }
+
+    FeedbackNode* currentFeedback = User->FeedbackList->head;
+
+    if (!currentFeedback)
+    {
+        cout << "No feedback found for the user" << endl;
+        return;
+    }
+
+    string input;
+
+    while (true)
+    {
+        cout << endl << "FeedbackID " << "Description" << endl;
+        cout << currentFeedback->FeedbackID << " " << currentFeedback->Feedback << endl << endl;
+        cout << "Navigate: (N)ext, (P)revious, (Q)uit : ";
+
+        cin >> input;
+
+        if (input == "n" || input == "N")
+        {
+            if (currentFeedback->NextFeedback != NULL) {
+                currentFeedback = currentFeedback->NextFeedback;
+            }
+            else {
+                cout << "(No more feedbacks.)" << endl;
+            }
+        }
+        else if (input == "p" || input == "P")
+        {
+            if (currentFeedback->PrevFeedback != NULL) {
+                currentFeedback = currentFeedback->PrevFeedback;
+            }
+            else {
+                cout << "This is the first feedback." << endl;
+            }
+        }
+        else if (input == "q" || input == "Q")
+        {
+            return;
+        }
+        else
+        {
+            cout << "Invalid input. Please enter N for next, P for previous, or Q to quit." << endl;
+
+        }
+    }
+
+    //UserNode* currentUser = searchUser(User->Username);
+
+    ////UserNode* currentUser = AllUserList->head;
+    //if (currentUser->UserID == User->UserID) {
+    //    FeedbackNode* currentFeedback = currentUser->FeedbackList->head;
+    //    int count = 0;
+    //    while (currentFeedback != NULL) {
+    //        if (currentFeedback->UserID == User->UserID) {
+    //            cout << "Feedback ID: " << currentFeedback->FeedbackID << endl;
+    //            cout << "Feedback: " << currentFeedback->Feedback << endl;
+    //            ReplyNode* currentReply = currentFeedback->ReplyList->head;
+
+    //            if (currentReply == NULL) {
+    //                cout << "There is no reply yet" << endl;
+    //            }
+    //            else {
+    //                while (currentReply != NULL) {
+    //                    cout << "Replied by " << currentReply->Username << ": " << currentReply->Reply << endl;
+    //                    currentReply = currentReply->NextReply;
+    //                }
+    //            }
+
+    //            //cout << "Create Time: " << ctime(&currentFeedback->CreateTime);
+    //            count++;
+    //        }
+    //        currentFeedback = currentFeedback->NextFeedback;
+    //    }
+    //    if (count == 0) {
+    //        cout << "No feedback found for the user" << endl;
+    //    }
+    //}
+}
+
+void UserList::insertReplyIntoFeedbackNode(string FeedbackID, UserNode* User, const string& Reply) {
+    // Get feedback node for both all feedback list and user feedback list
+    FeedbackNode* currentAllFeedback = AllFeedbackLists->getFeedbackNode(FeedbackID);
+    FeedbackNode* currentFeedback = User->FeedbackList->getFeedbackNode(FeedbackID);
+    // Validation on the feedback node
+    if (currentFeedback == NULL || currentAllFeedback == NULL) {
+        cout << "Error: Feedback not found" << endl;
+        return;
+    }
+    // Insert to both feedback node
+    currentAllFeedback->ReplyList->insertReplyIntoFeedback(User->Username, Reply);
+    currentFeedback->ReplyList->insertReplyIntoFeedback(User->Username, Reply);
+}
 
 void UserList::displayUserList() {
     // Print table header
@@ -583,6 +668,7 @@ void UserList::displayUserList() {
     displayUser(root, "");
     cout << "---------------------------------------------------------------------------------------------" << endl;
 }
+
 void UserList::displayUser(UserNode* root, string indent) {
     if (root != nullptr && root != nullNode)
     {
@@ -604,6 +690,7 @@ void UserList::displayUser(UserNode* root, string indent) {
         displayUser(root->rightUser, indent + "  ");
     }
 }
+
 
 void UserList::displayLoginUser(UserNode* user) {
 
@@ -638,3 +725,4 @@ UserNode* UserList::getLoginUser() {
 void UserList::setLoginUser(UserNode* loginUser) {
     this->loginUser = loginUser;
 }
+

@@ -4,11 +4,19 @@
 #include <string>
 #include <iomanip>
 
+#include "feedback.hpp"
+#include "favUni.hpp"
+
 using namespace std;
+
+class FavouriteUnilist; // forward declaration
+class Feedbacklist; // forward declaration
 
 struct UserNode {
     string UserID, Username, Email, Password;
     time_t LastLogin;
+    FavouriteUnilist* FavouriteUniList;
+    Feedbacklist* FeedbackList;
     UserNode* leftUser;
     UserNode* rightUser;
     UserNode* parent;
@@ -56,15 +64,15 @@ public:
     UserNode* login(string Username, string Password);
 
     void addFavouriteUniToUser(UserNode* User, string UniID);
+    void removeFavouriteUniFromUser(UserNode* User, string UniID);
     void showOwnFavoriteUni(UserNode* User);
 
     void addFeedbackToUser(UserNode* User, const string& Feedback);
     void showOwnFeedback(UserNode* User);
-
     void insertReplyIntoFeedbackNode(string FeedbackID, UserNode* User, const string& Reply);
 
     void displayUserList();
-    void displayUser(UserNode* root, std::string indent);
+    void displayUser(UserNode* root, string indent);
 
     void displayLoginUser(UserNode* user);
 

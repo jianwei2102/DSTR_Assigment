@@ -22,9 +22,15 @@ struct userMenu {
             Repository* r = Repository::getInstance();
 
             UserNode* currentUser = r->AllUserList->searchUser(username);
+            // Take Note !!!
+            if (currentUser->Username != username && currentUser->Password != password) {
+                r->loginUser = currentUser;
+
             if (currentUser->Username == username && currentUser->Password == password) {
                 r->AllUserList->setLoginUser(currentUser);
                 r->AllUserList->getLoginUser()->LastLogin = time(0);
+              // Take Note ^^^
+
                 mainMenu();
                 return;
             }
@@ -62,7 +68,7 @@ struct userMenu {
             switch (choice)
             {
             case 1:
-                r->AllUniList->displayUniList();
+                //r->AllUniList->displayUniList();
                 break;
             case 2:
                 r->AllUserList->displayUserList();
@@ -71,12 +77,46 @@ struct userMenu {
                 break;
             case 4:
                 return;
+            case 5:
+                // return sorting menu for ar, fsr and er
+                scoreSortingMenu();
+                return;
             default:
                 mainMenu();
                 break;
             }
         }
     }
+
+
+    //sorting
+    static void scoreSortingMenu() {
+        Repository* r = Repository::getInstance();
+
+        system("cls");
+        int choice = userMenuUI::uniSortValue_UI();
+
+        switch (choice)
+        {
+        case 1:
+            QuickSort::quickSort(r->AllUniList->UniArray, 0, 1421, "Ar");
+            QuickSort::printByPagination(r->AllUniList->UniArray, "Ar");
+            return;
+        case 2:
+            QuickSort::quickSort(r->AllUniList->UniArray, 0, 1421, "Fsr");
+            QuickSort::printByPagination(r->AllUniList->UniArray, "Fsr");
+            return;
+        case 3:
+            QuickSort::quickSort(r->AllUniList->UniArray, 0, 1421, "Er");
+            QuickSort::printByPagination(r->AllUniList->UniArray, "Er");
+            return;
+        case 4:
+            return;
+        default:
+            return;
+        }
+    }
+};
 
     static void userProfile() {
 
@@ -172,3 +212,4 @@ struct userMenu {
         
     }
 };
+

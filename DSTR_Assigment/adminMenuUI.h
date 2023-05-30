@@ -16,9 +16,10 @@ struct adminMenuUI {
 		cout << "  --------------------------------- " << endl;
 		cout << " |              Admin              |" << endl;
 		cout << " |  1 - View List of Universities  |" << endl;
-		cout << " |  2 - View Users                 |" << endl;
-		cout << " |  3 - View Feedback              |" << endl;
-		cout << " |  4 - Log Out                    |" << endl;
+		cout << " |  2 - Sort Universitise (remove) |" << endl;
+		cout << " |  3 - View Users                 |" << endl;
+		cout << " |  4 - View Feedback              |" << endl;
+		cout << " |  5 - Log Out                    |" << endl;
 		cout << "  ---------------------------------" << endl;
 		
 		int input = 0;
@@ -27,6 +28,8 @@ struct adminMenuUI {
 
 		return input;
 	}
+
+	
 
 	static int userlist_UI() {
 		cout << " 1 - Modify User         " << endl;

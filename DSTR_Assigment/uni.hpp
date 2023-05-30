@@ -1,6 +1,8 @@
 #pragma once
+
 #include <iostream>
 #include <string>
+#include <iomanip>
 using namespace std;
 
 struct UniNode {
@@ -21,10 +23,10 @@ public:
         double IsrScore, int IsrRank, double IrnScore, int IrnRank, double GerScore, int GerRank, double ScoreScaled);
 
     void linearSearching(string SearchType, string SearchData);
-
     void binarySearching(string SearchType, string SearchData);
 
     void displayUniList();
+    void displayUni();
 
     UniNode* getUniNode(string UniID);
 };
