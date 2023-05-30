@@ -25,6 +25,11 @@ struct guestMenu
 					break;
 				case 4:
 					break;
+                case 5:
+                    return;
+                default:
+                    mainMenu();
+                    break;
 			}
 			
 		}
