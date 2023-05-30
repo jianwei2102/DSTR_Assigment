@@ -136,7 +136,8 @@ struct adminMenuUI {
 		cout << "  ---------------------------------------------- " << endl;
 		cout << " |             Favourite Uni Report             |" << endl;
 		cout << "  ---------------------------------------------- " << endl;
-		
+		cout << left << setw(17) << " | UniID";
+		cout << left << setw(31) << "Favourite Count" << right << "|" << endl;
 		return;
 	}
 

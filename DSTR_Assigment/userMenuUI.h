@@ -66,12 +66,11 @@ struct userMenuUI {
 
 	static void favUniList_UI() {
 		// Display table header
-		system("cls");
-		cout << "  ---------------------------------------------- " << endl;
-		cout << " |              Favourite Uni List              |" << endl;
-		cout << "  ---------------------------------------------- " << endl;
+		cout << "  -------------------------------------------------------- " << endl;
+		cout << " |                   Favourite Uni List                   |" << endl;
+		cout << "  -------------------------------------------------------- " << endl;
 		cout << left << setw(12) << " | UniID";
-		cout << left << setw(36) << "Insitution" << right << "|" << endl;
+		cout << left << setw(46) << "Insitution" << right << "|" << endl;
 		return;
 	}
 };

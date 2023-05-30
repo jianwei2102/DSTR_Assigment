@@ -89,6 +89,7 @@ struct userMenu {
         Repository* r = Repository::getInstance();        
         string input;
 
+        system("cls");
         while (true)
         {
             userMenuUI::favUniList_UI();
@@ -115,28 +116,116 @@ struct userMenu {
             }
             else
             {
+                system("cls");
                 cout << "Invalid input. Please enter N for next, P for previous, or Q to quit." << endl;
 
             }
         }
     }
 
-    static void addFavUni(){}
-
-    static void removeFavUni(){}
-
-    static void viewFavUni(){
+    static void addFavUni(){
+        cout << endl << " FAV UNI - Add new record" << endl;
         // Prompt uni ID input
         string id;
         cout << " Enter the uni ID: ";
         cin.ignore();
         getline(cin, id);
 
-        // From id get index
-        Repository* r = Repository::getInstance();
-        UniNode** UniArray = r->AllUniList->UniArray;
+        // Check valid uni ID
+        if (id.length() < 4) {
+            system("cls");
+            cout << " Invalid Uni ID! " << endl;
+            return;
+        }
+        string uniID_s = id.substr(3, 4);
+        int uniID_i = stoi(uniID_s);
+        uniID_s = id.substr(0, 3);
+        
+        if (uniID_s == "UNI" && (0 < uniID_i < 1423)) {
+            system("cls");
+            Repository* r = Repository::getInstance();
+
+            // Validating id
+            string newID = to_string(uniID_i);
+            while (newID.length() < 4) {
+                newID = "0" + newID;
+            }
+            newID = "UNI" + newID;
+
+            r->AllUserList->addFavouriteUniToUser(r->loginUser, newID);
+        }
+        else {
+            system("cls");
+            cout << " Invalid Uni ID! " << endl;
+        }
+
+        return;
+    }
+
+    static void removeFavUni(){
+        cout << endl << " FAV UNI - Remove fav uni" << endl;
+        // Prompt uni ID input
+        string id;
+        cout << " Enter the uni ID: ";
+        cin.ignore();
+        getline(cin, id);
+
+        // Check valid uni ID
+        if (id.length() < 4) {
+            system("cls");
+            cout << " Invalid Uni ID! " << endl;
+            return;
+        }
+        string uniID_s = id.substr(3, 4);
+        int uniID_i = stoi(uniID_s);
+        uniID_s = id.substr(0, 3);
+
+        if (uniID_s == "UNI" && (0 < uniID_i < 1423)) {
+            system("cls");
+            Repository* r = Repository::getInstance();
+            // Validating id
+            string newID = to_string(uniID_i);
+            while (newID.length() < 4) {
+                newID = "0" + newID;
+            }
+            newID = "UNI" + newID;
+            r->AllUserList->removeFavouriteUniFromUser(r->loginUser, newID);
+        }
+        else {
+            system("cls");
+            cout << " Invalid Uni ID! " << endl;
+        }
+
+        return;
+    }
+
+    static void viewFavUni(){
+        cout << endl << " VIEW UNI's DETAILS" << endl;
+        // Prompt uni ID input
+        string id;
+        cout << " Enter the uni ID: ";
+        cin.ignore();
+        getline(cin, id);
+
+        // Check valid uni ID
+        if (id.length() < 4) {
+            system("cls");
+            cout << " Invalid Uni ID! " << endl;
+            return;
+        }
+
         string uniID_s = id.substr(3, 4);
         int uniID_i = stoi(uniID_s) - 1;
+        uniID_s = id.substr(0, 3);
+        if (!(uniID_s == "UNI" && (0 < uniID_i < 1423))) {
+            system("cls");
+            cout << " Invalid Uni ID! " << endl;
+            return;
+        }
+
+        // Else if valid
+        Repository* r = Repository::getInstance();
+        UniNode** UniArray = r->AllUniList->UniArray;
 
         system("cls");
         cout << "  ------------------------------------------------- " << endl;
@@ -169,6 +258,8 @@ struct userMenu {
         string input;
         cout << "Enter any other key to exit: ";
         getline(cin, input);
+
+        return;
     }
 
     // ----- Feedback -----

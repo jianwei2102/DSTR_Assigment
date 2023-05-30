@@ -481,6 +481,7 @@ void UserList::addFavouriteUniToUser(UserNode* User, string UniID) {
         return;
     }
 
+
     User->FavouriteUniList->insertIntoFavouriteUni(User->UserID, UniID);
 }
 
@@ -500,7 +501,8 @@ void UserList::showOwnFavoriteUni(UserNode* User) {
     UserFavouriteUni* currentUni = User->FavouriteUniList->head;
 
     if (!currentUni) {
-        cout << "No favorite uni found for the user" << endl;
+        cout << " | No favorite uni found for the user                     |" << endl;
+        cout << "  -------------------------------------------------------- " << endl;
         return;
     }
 
@@ -514,11 +516,11 @@ void UserList::showOwnFavoriteUni(UserNode* User) {
         string insitution = r->AllUniList->UniArray[uniID_i]->Insitution;
 
         cout << " | " << left << setw(9) << currentUni->UniID;
-        cout << left << setw(36) << insitution << right << "|" << endl;
+        cout << left << setw(46) << insitution << right << "|" << endl;
        
         currentUni = currentUni->NextUni;
     }
-    cout << "  ---------------------------------------------- " << endl;
+    cout << "  -------------------------------------------------------- " << endl;
 
 }
 
