@@ -11,7 +11,7 @@ struct userMenu {
         {
             system("cls");
             userMenuUI::loginMenu_UI();
-            
+
             string username, password;
             cout << "Please enter user's username: ";
             cin.ignore();
@@ -26,32 +26,32 @@ struct userMenu {
             if (currentUser->Username != username && currentUser->Password != password) {
                 r->loginUser = currentUser;
 
-            if (currentUser->Username == username && currentUser->Password == password) {
-                r->AllUserList->setLoginUser(currentUser);
-                r->AllUserList->getLoginUser()->LastLogin = time(0);
-              // Take Note ^^^
+                if (currentUser->Username == username && currentUser->Password == password) {
+                    r->AllUserList->setLoginUser(currentUser);
+                    r->AllUserList->getLoginUser()->LastLogin = time(0);
 
-                mainMenu();
-                return;
-            }
-            else {
-                cout << endl << "Invalid username and password!" << endl;
-                cout << "1 - Retry login" << endl;
-                cout << "2 - Return to Main Menu" << endl;
-
-                int choice = 0;
-                cout << "Select an Operation Number: ";
-                cin >> choice;
-                switch (choice)
-                {
-                case 1:
-                    //userLogin();
-                    break;
-                case 2:
+                    mainMenu();
                     return;
-                default:
-                    //userLogin();
-                    break;
+                }
+                else {
+                    cout << endl << "Invalid username and password!" << endl;
+                    cout << "1 - Retry login" << endl;
+                    cout << "2 - Return to Main Menu" << endl;
+
+                    int choice = 0;
+                    cout << "Select an Operation Number: ";
+                    cin >> choice;
+                    switch (choice)
+                    {
+                    case 1:
+                        //userLogin();
+                        break;
+                    case 2:
+                        return;
+                    default:
+                        //userLogin();
+                        break;
+                    }
                 }
             }
         }
@@ -116,7 +116,6 @@ struct userMenu {
             return;
         }
     }
-};
 
     static void userProfile() {
 
