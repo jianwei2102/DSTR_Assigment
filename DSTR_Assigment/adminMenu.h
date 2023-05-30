@@ -8,22 +8,14 @@
 #include "quickSort.h"
 
 struct adminMenu {
-    static void adminLogin() {
-        
+     static void adminLogin() {
         while (true)
         {
             system("cls");
             adminMenuUI::loginMenu_UI();
+            bool loginStatus = Admin::login(); // Input username and password
 
-            string username, password;
-            cout << "Please enter admin username: ";
-            cin.ignore();
-            getline(cin, username);
-            cout << "Please enter admin password: ";
-            getline(cin, password);
-            
-
-            if (username == "a" && password == "q") {
+            if (loginStatus) {
                 mainMenu();
             }
             else {
@@ -60,16 +52,15 @@ struct adminMenu {
             switch (choice)
             {
             case 1:
-                
                 r->AllUniList->displayUniList();
                 break;
             case 2:
                 uniSortMenu();
                 break;
-                
             case 3:
-                r->AllUserList->displayUserList();
+                Admin::displayUserList();
                 userMenu();
+                break;
             case 4:
                 viewUserFeedbackList();
                 break;
@@ -133,11 +124,9 @@ struct adminMenu {
          switch (choice)
          {
          case 1:
-             system("cls");
              modifyUser();
              break;
          case 2:
-             system("cls");
              deleteUser();
              break;
          case 3:
@@ -154,40 +143,50 @@ struct adminMenu {
 
      // ----- Feedback -----
      static void viewUserFeedbackList() {
+         // Obtain all feedbacklist from repo
          Repository* r = Repository::getInstance();
-         Feedbacklist* AllFeedbackLists = r->AllFeedbackLists;
-         if (AllFeedbackLists == NULL) {
-             cout << "There is no feedback yet" << endl;
+         FeedbackNode* currentFeedback = r->AllFeedbackLists->head;
+
+         // If there is no feedback made by user
+         if (currentFeedback == NULL) {
+             cout << "There is no feedback from user yet." << endl;
              return;
          }
 
-         FeedbackNode* currentFeedback = r->AllFeedbackLists->head;
+         // Display feedback one by one
          string input;
          system("cls");
          while (true)
          {
+             // Display feedback details
              adminMenuUI::feedback_UI();
 
+             cout << "   FeedbackID      : " << currentFeedback->FeedbackID << endl;
+             cout << "   Created by      : " << currentFeedback->UserName << endl;
+
+             // Display update time
              time_t lastUpdateTime = currentFeedback->UpdateTime;
              char buffer[26];
              ctime_s(buffer, sizeof(buffer), &lastUpdateTime);
              buffer[24] = '\0';  // Remove the newline character from the output
-
-             cout << "   Update Time: " << buffer << endl;
-
+             cout << "   Updated Time    : " << buffer << endl;
+             
+             // Display create time
              time_t createTime = currentFeedback->CreateTime;
              char buffer1[26];
-             ctime_s(buffer, sizeof(buffer), &createTime);
-             buffer[24] = '\0';  // Remove the newline character from the output
+             ctime_s(buffer1, sizeof(buffer1), &createTime);
+             buffer1[24] = '\0'; 
+             cout << "   Created Time    : " << buffer1 << endl;
+             
+             cout << "   Description     : " << currentFeedback->Feedback << endl;
 
-             cout << "   Create Time: " << buffer << endl;
-             cout << "   FeedbackID:  " << currentFeedback->FeedbackID << endl;
-             cout << "   Description: " << currentFeedback->Feedback << endl;
-
+             // Display reply details
              ReplyNode* currentReply = currentFeedback->ReplyList->head;
+             // If there is no reply yet
              if (currentReply == NULL) {
-                 cout << "   There is no reply yet" << endl;
+                 cout << "   There is no reply yet. Enter (R) to add reply to this feedback." << endl;
              }
+             // Travesal all reply details
              else {
                  while (currentReply != NULL) {
                      cout << "   Replied by " << currentReply->Username << ": " << currentReply->Reply << endl;
@@ -195,86 +194,105 @@ struct adminMenu {
                  }
              }
 
-             cout << "Navigate: (N)ext, (P)revious, (R)eply, (Q)uit : ";
-
+             // Prompt navigation
+             cout << endl << " Navigate: (N)ext, (P)revious, (R)eply, (Q)uit : ";
              cin >> input;
 
+             // Move to next feedback
              if (input == "n" || input == "N")
              {
+                 system("cls");
                  if (currentFeedback->NextFeedback != NULL) {
                      currentFeedback = currentFeedback->NextFeedback;
-                     system("cls");
                  }
                  else {
-                     system("cls");
                      cout << "This is the last feedback." << endl;
                  }
              }
+             // Move to previous feedback
              else if (input == "p" || input == "P")
              {
+                 system("cls");
                  if (currentFeedback->PrevFeedback != NULL) {
                      currentFeedback = currentFeedback->PrevFeedback;
-                     system("cls");
                  }
                  else {
-                     system("cls");
                      cout << "This is the first feedback." << endl;
                  }
              }
+             // Add reply to current feedback
              else if (input == "R" || input == "r") {
                  addReply(currentFeedback);
+                 system("cls");
              }
+             // Quit feedback page
              else if (input == "q" || input == "Q")
              {
                  return;
              }
+             // Invalid input
              else
              {
-                 cout << "Invalid input. Please enter N for next, P for previous, or Q to quit." << endl;
+                system("cls");
+;               cout << "Invalid input. Please enter N for next, P for previous, R for reply, or Q to quit." << endl;
 
              }
          }
      }
 
-     static void addReply(FeedbackNode* feedback) {
+     static void addReply(FeedbackNode* currentAllFeedback) {
+         // Prompt for reply input
+         string reply = adminMenuUI::addReply_UI();
+
          Repository* r = Repository::getInstance();
-         string reply;
-         cout << "Enter your new reply: ";
-         cin.ignore();
-         getline(cin, reply);
-         feedback->UpdateTime = time(0);
+
+         // Update the feedbackNode's updatetime in allfeedbacklist and sort the list based on update time
+         currentAllFeedback->UpdateTime = time(0);
          r->AllFeedbackLists->sortFeedbackList();
-         r->AllUserList->searchUser(feedback->UserName)->FeedbackList->getFeedbackNode(feedback->FeedbackID)->UpdateTime = time(0);
-         r->AllUserList->searchUser(feedback->UserName)->FeedbackList->sortFeedbackList();
-         Admin::insertReplyIntoFeedbackNode(feedback->FeedbackID, "Admin", reply);
+
+         // Update the feedbackNode's updatetime in userNode and sort the list based on update time
+         Feedbacklist* currentUserFeedback = r->AllUserList->searchUser(currentAllFeedback->UserName)->FeedbackList;
+         currentUserFeedback->getFeedbackNode(currentAllFeedback->FeedbackID)->UpdateTime = time(0);
+         currentUserFeedback->sortFeedbackList();
+
+         // Insert reply into feedbackNode
+         currentAllFeedback->ReplyList->insertReplyIntoFeedback("Admin", reply);
+         currentUserFeedback->getFeedbackNode(currentAllFeedback->FeedbackID)->ReplyList->insertReplyIntoFeedback("Admin", reply);
          return;
      }
 
      // ----- USER ------
      static void modifyUser() {
+         system("cls");
+
+         // Display all user list
          Repository* r = Repository::getInstance();
          r->AllUserList->displayUserList();
 
+         // Prompt username and search for user node
          string username = adminMenuUI::modifyUser_UI();
          UserNode* currentUser = r->AllUserList->searchUser(username);
 
+         // If the username input is not in userlist
          if (currentUser->Username != username) {
              adminMenuUI::invalidUser_UI();
              return;
          }
+
+         // Prompt modify attributes
          int modifyOption = adminMenuUI::modifyUserOption_UI();
          string changes;
-
          switch (modifyOption)
          {
          case 1:
+             // Username require to reinsert the node for it to be sorted
              changes = adminMenuUI::modifyUserChanges_UI();
              r->AllUserList->deleteNode(currentUser->Username);
              currentUser->Username = changes;
              r->AllUserList->insertIntoUserTree(currentUser);
-
              break;
          case 2:
+             // Email direct change from the node
              changes = adminMenuUI::modifyUserChanges_UI();
              currentUser->Email = changes;
              break;
@@ -285,27 +303,33 @@ struct adminMenu {
      }
 
      static void deleteUser() {
+         system("cls");
+
+         // Display all user list
          Repository* r = Repository::getInstance();
          r->AllUserList->displayUserList();
 
+         // Prompt username and search for user node
          string username = adminMenuUI::deleteUser_UI();
          UserNode* currentUser = r->AllUserList->searchUser(username);
+
+         // If the username input is not in userlist
          if (currentUser->Username != username) {
              adminMenuUI::invalidUser_UI();
              return;
          }
 
+         // Prompt modify attributes on deletion
          cout << " Are you sure you want to delete user " << username << "? (Y/N): ";
          string confirmation;
          getline(cin, confirmation);
+         // Delete user node if Y being entered
          if (confirmation == "Y" || confirmation == "y") {
              r->AllUserList->deleteNode(username);
          }
          else {
              return;
          }
-         
-
      }
 };
 

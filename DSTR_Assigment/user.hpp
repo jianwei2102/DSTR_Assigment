@@ -26,8 +26,9 @@ struct UserNode {
 class UserList {
 
 private:
-    UserNode* root;
-    UserNode* nullNode = new UserNode;
+    static UserNode* root;
+    static UserNode* nullNode;
+    static int size;
 
 public:
     UserList()
@@ -38,7 +39,7 @@ public:
         root = nullNode;
     }
 
-    UserNode* createNewUserNode(string Username, string Email, string Password);
+    UserNode* createNewUserNode(string Username, string Email, string Password, int id);
 
     void leftRotate(UserNode* node);
     void rightRotate(UserNode* node);
@@ -64,10 +65,12 @@ public:
     void showOwnFavoriteUni(UserNode* User);
 
     void addFeedbackToUser(UserNode* User, const string& Feedback);
-    void showOwnFeedback(UserNode* User);
-    void insertReplyIntoFeedbackNode(string FeedbackID, UserNode* User, const string& Reply);
+    
+    static void displayUserList();
+    static void displayUser(UserNode* root, string indent);
 
-    void displayUserList();
-    void displayUser(UserNode* root, string indent);
+    /*void showOwnFeedback(UserNode* User);
+    * void insertReplyIntoFeedbackNode(string FeedbackID, UserNode* User, const string& Reply);
+    */
 
 };

@@ -54,10 +54,11 @@ struct adminMenuUI {
 	}
 
 	static int userlist_UI() {
-		cout << " 1 - Modify User         " << endl;
-		cout << " 2 - Delete User         " << endl;
-		cout << " 3 - Search              " << endl;
-		cout << " 4 - Back                " << endl;
+		cout << "USER MENU" << endl;
+		cout << " [1] Modify User         " << endl;
+		cout << " [2] Delete User         " << endl;
+		cout << " [3] Search              " << endl;
+		cout << " [4] Back                " << endl;
 		int input = 0;
 		cout << "Select an Operation Number: ";
 		cin >> input;
@@ -84,10 +85,11 @@ struct adminMenuUI {
 	}
 
 	static int modifyUserOption_UI() {
-		cout << " Modify attributes" << endl;
-		cout << " 1 - Username" << endl;
-		cout << " 2 - Email" << endl;
-		cout << "Select an attributes to be modified: ";
+		cout << " USER MENU - Modify attributes" << endl;
+		cout << " [1] Username" << endl;
+		cout << " [2] Email" << endl;
+		cout << "---------------------------------------------------------------------------------------------" << endl;
+		cout << " Select an attributes to be modified: ";
 		int input = 0;
 		cin >> input;
 
@@ -113,8 +115,17 @@ struct adminMenuUI {
 	}
 
 	static void feedback_UI() {
-		cout << "  ------------------------------------------- " << endl;
-		cout << " |              User feedback                |" << endl;
-		cout << "  ------------------------------------------- " << endl;
+		cout << "  --------------------------------------------------------------- " << endl;
+		cout << " |                        User feedback                          |" << endl;
+		cout << "  --------------------------------------------------------------- " << endl;
+	}
+
+	static string addReply_UI() {
+		string reply;
+		cout << "   Enter your new reply: ";
+		cin.ignore();
+		getline(cin, reply);
+
+		return reply;
 	}
 };

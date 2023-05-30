@@ -20,7 +20,6 @@ static void mainMenu() {
             break;
         case 2:
             userMenu::userLogin();
-            // user sign in
             break;
         case 3:
             // register

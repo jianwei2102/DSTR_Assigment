@@ -3,7 +3,6 @@
 #include "uni.hpp"
 
 struct QuickSort {
-
     static void swap(UniNode* array[], int a, int b) {
         UniNode* temp = array[a];
         array[a] = array[b];
@@ -20,6 +19,7 @@ struct QuickSort {
         // traverse each element of the array
         // compare them with the pivot
         for (int j = low; j < high; j++) {
+            // obtain sort value based on sort type
             double uniValue, pivotValue;
             if (sortType == "Ar") {
                 uniValue = array[j]->ArScore;

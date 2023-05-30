@@ -1,11 +1,12 @@
 #include "feedback.hpp"
 #include "repository.h"
 
+int Feedbacklist::size = 1;
 
-FeedbackNode* Feedbacklist::createNewFeedbackNode(string UserID, string Username, const string& Feedback) {
+FeedbackNode* Feedbacklist::createNewFeedbackNode(string UserID, string Username, const string& Feedback, int id) {
     // Create a new FeedbackNode
     FeedbackNode* newFeedback = new FeedbackNode();
-    newFeedback->FeedbackID = to_string(rand());;
+    newFeedback->FeedbackID = "FB"+to_string(id);;
     newFeedback->UserID = UserID;
     newFeedback->UserName = Username;
     newFeedback->Feedback = Feedback;
@@ -14,20 +15,18 @@ FeedbackNode* Feedbacklist::createNewFeedbackNode(string UserID, string Username
     newFeedback->ReplyList = new ReplyList; // For admin and user to reply
     newFeedback->PrevFeedback = NULL;
     newFeedback->NextFeedback = NULL;
-
     return newFeedback;
 }
 
 FeedbackNode* Feedbacklist::getFeedbackNode(string FeedbackID) {
-    // Traverse the list to find a matching feedback
-    Repository* r = Repository::getInstance();
-    Feedbacklist* AllFeedbackLists = r->AllFeedbackLists;
-    if (AllFeedbackLists == NULL) {
-
+    FeedbackNode* currentFeedback = head;
+    
+    // if not feedback available
+    if (currentFeedback == NULL) {
         return NULL;
     }
-    FeedbackNode* currentFeedback = head;
 
+    // Traverse the list to find a matching feedback
     while (currentFeedback != NULL) {
         if (currentFeedback->FeedbackID == FeedbackID) {
             return currentFeedback;
@@ -40,11 +39,17 @@ FeedbackNode* Feedbacklist::getFeedbackNode(string FeedbackID) {
 }
 
 void Feedbacklist::insertIntoFeedbackList(UserNode* User, const string& Feedback) {
+    Repository* r = Repository::getInstance();
+    Feedbacklist* AllFeedbackLists = r->AllFeedbackLists;
+
+    // Retrieve new ID and add 1 to it
+    int id = AllFeedbackLists->size;
+    AllFeedbackLists->size += 1;
+
     // Create a new FeedbackNode
-    FeedbackNode* newFeedback = createNewFeedbackNode(User->UserID, User->Username, Feedback);
-    FeedbackNode* newAllFeedback = createNewFeedbackNode(User->UserID, User->Username, Feedback);
-    // Same ID
-    newAllFeedback->FeedbackID = newFeedback->FeedbackID;
+    FeedbackNode* newFeedback = createNewFeedbackNode(User->UserID, User->Username, Feedback, id);
+    FeedbackNode* newAllFeedback = createNewFeedbackNode(User->UserID, User->Username, Feedback, id);
+
     // If the list is empty, set the new node as the head and tail
     if (head == NULL) {
         head = newFeedback;
@@ -64,10 +69,9 @@ void Feedbacklist::insertIntoFeedbackList(UserNode* User, const string& Feedback
 void Feedbacklist::insertIntoAllFeedbackList(FeedbackNode* NewFeedback) {
     Repository* r = Repository::getInstance();
     Feedbacklist* AllFeedbackLists = r->AllFeedbackLists;
+
     if (AllFeedbackLists == NULL) {
         AllFeedbackLists = new Feedbacklist;
-        string test;
-        cin >> test;
     }
 
     // If the list is empty, set the new node as the head and tail
@@ -84,8 +88,8 @@ void Feedbacklist::insertIntoAllFeedbackList(FeedbackNode* NewFeedback) {
 }
 
 void Feedbacklist::sortFeedbackList() {
+    // if the list is empty or has only one element, no sorting needed
     if (head == nullptr || head->NextFeedback == nullptr) {
-        // The list is empty or has only one element, no sorting needed
         return;
     }
 

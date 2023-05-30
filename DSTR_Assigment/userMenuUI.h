@@ -12,6 +12,17 @@ struct userMenuUI {
 		cout << "  ------------------------------------------- " << endl;
 	}
 
+	static int invalidLogin_UI() {
+		cout << endl << " Invalid username or password!" << endl;
+		cout << " [1] Retry login" << endl;
+		cout << " [2] Return to Main Menu" << endl;
+		cout << " Select an Operation Number: ";
+		int choice = 0;
+		cin >> choice;
+
+		return choice;
+	}
+
 	static int mainMenu_UI() {
 		cout << "  --------------------------------- " << endl;
 		cout << " |               User              |" << endl;
@@ -32,5 +43,23 @@ struct userMenuUI {
 		cout << "  ------------------------------------------- " << endl;
 		cout << " |              User feedback                |" << endl;
 		cout << "  ------------------------------------------- " << endl;
+	}
+
+	static string addReply_UI() {
+		string reply;
+		cout << "   Enter your new reply: ";
+		cin.ignore();
+		getline(cin, reply);
+
+		return reply;
+	}
+
+	static string addFeedback_UI() {
+		string feedback;
+		cout << "   Enter your new feedback: ";
+		cin.ignore();
+		getline(cin, feedback);
+		
+		return feedback;
 	}
 };
