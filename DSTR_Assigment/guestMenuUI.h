@@ -14,7 +14,7 @@ struct guestMenuUI
 		cout << " |  2 - Sort University            |" << endl;
 		cout << " |  3 - Search University          |" << endl;
 		cout << " |  4 - Register                   |" << endl;
-		cout << " |  5 - Logout                     |" << endl;
+		cout << " |  5 - Back                       |" << endl;
 		cout << "  ---------------------------------" << endl;
 
 		int input = 0;
