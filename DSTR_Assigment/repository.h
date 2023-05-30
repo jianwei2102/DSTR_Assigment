@@ -1,31 +1,29 @@
 #pragma once
+#ifndef REPOSITORY_H
+#define REPOSITORY_H
 
 #include "user.hpp"
 #include "uni.hpp"
+#include "favUniCount.h"
 
 class Repository {
 private:
     static Repository * objPtr;
 public:
+    UserNode* loginUser;
+
     UserList* AllUserList;
     UniList* AllUniList;
+    Feedbacklist* AllFeedbackLists;
+    HashMap FavUniCount;
 
-    Repository(){}
+    Repository();
 
-    static Repository* getInstance()
-    {
-        if (objPtr == NULL)
-        {
-            objPtr = new Repository();
-        }
-        return objPtr;
-    }
+    static Repository* getInstance();
 
 private:
-    ~Repository() {
-        delete AllUserList;
-        delete AllUniList;
-    }
+    ~Repository();
 };
 
-Repository* Repository::objPtr = nullptr;
+
+#endif // REPOSITORY_H

@@ -3,6 +3,7 @@
 #include "mainMenuUI.h"
 #include "adminMenu.h"
 #include "userMenu.h"
+#include "guestMenu.h"
 
 using namespace std;
 
@@ -24,9 +25,11 @@ static void mainMenu() {
             break;
         case 3:
             // register
+            guestMenu::registerMenu();
             break;
         case 4:
             // guest
+            guestMenu::mainMenu();
             break;
         case 5:
             // exit system

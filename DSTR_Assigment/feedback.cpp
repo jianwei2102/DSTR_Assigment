@@ -1,30 +1,32 @@
 #include "feedback.hpp"
+#include "repository.h"
 
-Feedbacklist* AllFeedbackLists = NULL;
+int Feedbacklist::size = 1;
 
-FeedbackNode* Feedbacklist::createNewFeedbackNode(string UserID, const string& Feedback) {
+FeedbackNode* Feedbacklist::createNewFeedbackNode(string UserID, string Username, const string& Feedback, int id) {
     // Create a new FeedbackNode
     FeedbackNode* newFeedback = new FeedbackNode();
-    newFeedback->FeedbackID = to_string(rand());;
+    newFeedback->FeedbackID = "FB"+to_string(id);;
     newFeedback->UserID = UserID;
+    newFeedback->UserName = Username;
     newFeedback->Feedback = Feedback;
     newFeedback->CreateTime = time(0);
+    newFeedback->UpdateTime = time(0);
     newFeedback->ReplyList = new ReplyList; // For admin and user to reply
     newFeedback->PrevFeedback = NULL;
     newFeedback->NextFeedback = NULL;
-
     return newFeedback;
 }
 
 FeedbackNode* Feedbacklist::getFeedbackNode(string FeedbackID) {
-    // Traverse the list to find a matching feedback
-
-    if (AllFeedbackLists == NULL) {
-
+    FeedbackNode* currentFeedback = head;
+    
+    // if not feedback available
+    if (currentFeedback == NULL) {
         return NULL;
     }
-    FeedbackNode* currentFeedback = head;
 
+    // Traverse the list to find a matching feedback
     while (currentFeedback != NULL) {
         if (currentFeedback->FeedbackID == FeedbackID) {
             return currentFeedback;
@@ -37,11 +39,17 @@ FeedbackNode* Feedbacklist::getFeedbackNode(string FeedbackID) {
 }
 
 void Feedbacklist::insertIntoFeedbackList(UserNode* User, const string& Feedback) {
+    Repository* r = Repository::getInstance();
+    Feedbacklist* AllFeedbackLists = r->AllFeedbackLists;
+
+    // Retrieve new ID and add 1 to it
+    int id = AllFeedbackLists->size;
+    AllFeedbackLists->size += 1;
+
     // Create a new FeedbackNode
-    FeedbackNode* newFeedback = createNewFeedbackNode(User->UserID, Feedback);
-    FeedbackNode* newAllFeedback = createNewFeedbackNode(User->UserID, Feedback);
-    // Same ID
-    newAllFeedback->FeedbackID = newFeedback->FeedbackID;
+    FeedbackNode* newFeedback = createNewFeedbackNode(User->UserID, User->Username, Feedback, id);
+    FeedbackNode* newAllFeedback = createNewFeedbackNode(User->UserID, User->Username, Feedback, id);
+
     // If the list is empty, set the new node as the head and tail
     if (head == NULL) {
         head = newFeedback;
@@ -59,6 +67,9 @@ void Feedbacklist::insertIntoFeedbackList(UserNode* User, const string& Feedback
 }
 
 void Feedbacklist::insertIntoAllFeedbackList(FeedbackNode* NewFeedback) {
+    Repository* r = Repository::getInstance();
+    Feedbacklist* AllFeedbackLists = r->AllFeedbackLists;
+
     if (AllFeedbackLists == NULL) {
         AllFeedbackLists = new Feedbacklist;
     }
@@ -74,4 +85,132 @@ void Feedbacklist::insertIntoAllFeedbackList(FeedbackNode* NewFeedback) {
         NewFeedback->PrevFeedback = AllFeedbackLists->tail;
         AllFeedbackLists->tail = NewFeedback;
     }
+}
+
+void Feedbacklist::sortFeedbackList() {
+    // if the list is empty or has only one element, no sorting needed
+    if (head == nullptr || head->NextFeedback == nullptr) {
+        return;
+    }
+
+    bool swapped;
+    FeedbackNode* current;
+    FeedbackNode* lastNode = nullptr;
+
+    // Bubble sort
+    do {
+        swapped = false;
+        current = head;
+
+        while (current->NextFeedback != lastNode) {
+            if (current->UpdateTime < current->NextFeedback->UpdateTime) {
+                // Swap the nodes
+                if (current == head) {
+                    head = current->NextFeedback;
+                }
+
+                FeedbackNode* nextNode = current->NextFeedback;
+                FeedbackNode* prevNode = current->PrevFeedback;
+                FeedbackNode* nextNextNode = nextNode->NextFeedback;
+
+                current->NextFeedback = nextNextNode;
+                current->PrevFeedback = nextNode;
+                nextNode->NextFeedback = current;
+                nextNode->PrevFeedback = prevNode;
+
+                if (prevNode != nullptr) {
+                    prevNode->NextFeedback = nextNode;
+                }
+
+                if (nextNextNode != nullptr) {
+                    nextNextNode->PrevFeedback = current;
+                }
+
+                swapped = true;
+            }
+            else {
+                current = current->NextFeedback;
+            }
+        }
+
+        tail = current;
+    } while (swapped);
+}
+
+void Feedbacklist::deleteFeedbackNode(string feedbackID) {
+    FeedbackNode* feedbackNode = getFeedbackNode(feedbackID);
+    // Delete the associated reply list
+    if (feedbackNode->ReplyList != nullptr) {
+        ReplyNode* currentReply = feedbackNode->ReplyList->head;
+        while (currentReply != nullptr) {
+            ReplyNode* nextReply = currentReply->NextReply;
+            delete currentReply;
+            currentReply = nextReply;
+        }
+        delete feedbackNode->ReplyList;
+        feedbackNode->ReplyList = nullptr;
+    }
+
+    // Remove the feedback node from the list
+    if (feedbackNode == head) {
+        head = feedbackNode->NextFeedback;
+        if (head != nullptr) {
+            head->PrevFeedback = nullptr;
+        }
+    }
+    else {
+        feedbackNode->PrevFeedback->NextFeedback = feedbackNode->NextFeedback;
+        if (feedbackNode->NextFeedback != nullptr) {
+            feedbackNode->NextFeedback->PrevFeedback = feedbackNode->PrevFeedback;
+        }
+    }
+
+    if (feedbackNode == tail) {
+        tail = feedbackNode->PrevFeedback;
+        if (tail != nullptr) {
+            tail->NextFeedback = nullptr;
+        }
+    }
+
+    // Delete the feedback node
+    delete feedbackNode;
+    deleteAllFeedbackNode(feedbackID);
+}
+
+void Feedbacklist::deleteAllFeedbackNode(string feedbackID) {
+    Repository* r = Repository::getInstance();
+    FeedbackNode* feedbackNode = r->AllFeedbackLists->getFeedbackNode(feedbackID);
+    // Delete the associated reply list
+    if (feedbackNode->ReplyList != nullptr) {
+        ReplyNode* currentReply = feedbackNode->ReplyList->head;
+        while (currentReply != nullptr) {
+            ReplyNode* nextReply = currentReply->NextReply;
+            delete currentReply;
+            currentReply = nextReply;
+        }
+        delete feedbackNode->ReplyList;
+        feedbackNode->ReplyList = nullptr;
+    }
+    // Remove the feedback node from the list
+    if (feedbackNode == head) {
+        head = feedbackNode->NextFeedback;
+        if (head != nullptr) {
+            head->PrevFeedback = nullptr;
+        }
+    }
+    else {
+        feedbackNode->PrevFeedback->NextFeedback = feedbackNode->NextFeedback;
+        if (feedbackNode->NextFeedback != nullptr) {
+            feedbackNode->NextFeedback->PrevFeedback = feedbackNode->PrevFeedback;
+        }
+    }
+    if (feedbackNode == tail) {
+        tail = feedbackNode->PrevFeedback;
+        if (tail != nullptr) {
+            tail->NextFeedback = nullptr;
+        }
+    }
+    // Delete the feedback node
+    delete feedbackNode;
+
 }

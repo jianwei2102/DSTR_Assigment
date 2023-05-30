@@ -132,6 +132,7 @@
     <ClCompile Include="feedback.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="reply.cpp" />
+    <ClCompile Include="repository.cpp" />
     <ClCompile Include="uni.cpp" />
     <ClCompile Include="user.cpp" />
   </ItemGroup>
@@ -139,15 +140,21 @@
     <ClInclude Include="addUser.h" />
     <ClInclude Include="admin.hpp" />
     <ClInclude Include="adminMenu.h" />
+    <ClInclude Include="binarySearch.h" />
     <ClInclude Include="favUni.hpp" />
+    <ClInclude Include="favUniCount.h" />
     <ClInclude Include="feedback.hpp" />
     <ClInclude Include="adminMenuUI.h" />
+    <ClInclude Include="guestMenu.h" />
+    <ClInclude Include="guestMenuUI.h" />
     <ClInclude Include="loadUniCSV.h" />
     <ClInclude Include="mainMenuUI.h" />
     <ClInclude Include="mainMenu.h" />
+    <ClInclude Include="mergeSort.h" />
     <ClInclude Include="predefinedData.h" />
     <ClInclude Include="reply.hpp" />
     <ClInclude Include="repository.h" />
+    <ClInclude Include="quickSort.h" />
     <ClInclude Include="uni.hpp" />
     <ClInclude Include="user.hpp" />
     <ClInclude Include="userMenu.h" />

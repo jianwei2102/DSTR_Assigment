@@ -1,6 +1,5 @@
 #include "reply.hpp"
 
-
 ReplyNode* ReplyList::createNewReplyNode(string Username, const string& Reply) {
     ReplyNode* newReplyNode = new ReplyNode();
     newReplyNode->Username = Username;

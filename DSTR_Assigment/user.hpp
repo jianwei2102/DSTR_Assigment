@@ -4,11 +4,19 @@
 #include <string>
 #include <iomanip>
 
+#include "feedback.hpp"
+#include "favUni.hpp"
+
 using namespace std;
+
+class FavouriteUnilist; // forward declaration
+class Feedbacklist; // forward declaration
 
 struct UserNode {
     string UserID, Username, Email, Password;
     time_t LastLogin;
+    FavouriteUnilist* FavouriteUniList;
+    Feedbacklist* FeedbackList;
     UserNode* leftUser;
     UserNode* rightUser;
     UserNode* parent;
@@ -18,8 +26,9 @@ struct UserNode {
 class UserList {
 
 private:
-    UserNode* root;
-    UserNode* nullNode = new UserNode;
+    static UserNode* root;
+    static UserNode* nullNode;
+    static int size;
     UserNode* loginUser;
 
 public:
@@ -31,7 +40,7 @@ public:
         root = nullNode;
     }
 
-    UserNode* createNewUserNode(string Username, string Email, string Password);
+    UserNode* createNewUserNode(string Username, string Email, string Password, int id);
 
     void leftRotate(UserNode* node);
     void rightRotate(UserNode* node);
@@ -56,19 +65,27 @@ public:
     UserNode* login(string Username, string Password);
 
     void addFavouriteUniToUser(UserNode* User, string UniID);
+    void removeFavouriteUniFromUser(UserNode* User, string UniID);
     void showOwnFavoriteUni(UserNode* User);
 
     void addFeedbackToUser(UserNode* User, const string& Feedback);
-    void showOwnFeedback(UserNode* User);
+    
+    static void displayUserList();
+    static void displayUser(UserNode* root);
 
-    void insertReplyIntoFeedbackNode(string FeedbackID, UserNode* User, const string& Reply);
-
-    void displayUserList();
-    void displayUser(UserNode* root, std::string indent);
+    static void displayInactiveUserList();
+    static void displayInactiveUser(UserNode* root);
+    void deleteInactiveUser();
+    void deleteInactiveUserLoop(UserNode* root);
+    static void clearLists(UserNode* user);
 
     void displayLoginUser(UserNode* user);
 
     UserNode* getLoginUser();
 
     void setLoginUser(UserNode* user);
+    /*void showOwnFeedback(UserNode* User);
+    * void insertReplyIntoFeedbackNode(string FeedbackID, UserNode* User, const string& Reply);
+    */
+
 };

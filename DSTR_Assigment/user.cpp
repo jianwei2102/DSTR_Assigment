@@ -1,7 +1,13 @@
 #include "user.hpp"
+#include "favUni.hpp"
+#include "userMenuUI.h"
+#include "repository.h"
 
+UserNode* UserList::root;
+int UserList::size = 1;
+UserNode* UserList::nullNode = new UserNode;
 
-UserNode* UserList::createNewUserNode(string Username, string Email, string Password)
+UserNode* UserList::createNewUserNode(string Username, string Email, string Password, int id)
 {
     UserNode* newUser = new UserNode();
 
@@ -13,9 +19,9 @@ UserNode* UserList::createNewUserNode(string Username, string Email, string Pass
     newUser->Password = Password;
     newUser->color = 'R';
     newUser->LastLogin = time(0);
-    /*newUser->FavouriteUniList = new FavouriteUnilist();
-    newUser->FeedbackList = new Feedbacklist();*/
-    newUser->UserID = to_string(rand());
+    newUser->FavouriteUniList = new FavouriteUnilist();
+    newUser->FeedbackList = new Feedbacklist();
+    newUser->UserID = "US"+to_string(id);
 
     return newUser;
 }
@@ -77,12 +83,14 @@ void UserList::inorder(UserNode* root) {
 
 void UserList::insertIntoUserTree(string Username, string Email, string Password)
 {
+    Repository* r = Repository::getInstance();
+    UserList* AllUserList = r->AllUserList;
 
-    //if (AllUserList == NULL) {
-    //    AllUserList = new UserList;
-    //}
+    // Retrieve new ID and add 1 to it
+    int id = AllUserList->size;
+    AllUserList->size += 1;
 
-    UserNode* newUser = createNewUserNode(Username, Email, Password);
+    UserNode* newUser = createNewUserNode(Username, Email, Password, id);
     newUser->leftUser = this->nullNode;
     newUser->rightUser = this->nullNode;
 
@@ -129,7 +137,6 @@ void UserList::insertIntoUserTree(string Username, string Email, string Password
     //newUser->color = 'R';
     insertFixup(newUser);
 }
-
 
 void UserList::insertIntoUserTree(UserNode* newUser) {
     newUser->leftUser = this->nullNode;
@@ -180,7 +187,6 @@ void UserList::insertIntoUserTree(UserNode* newUser) {
 
     insertFixup(newUser);
 }
-
 
 void UserList::insertFixup(UserNode* node)
 {
@@ -446,6 +452,20 @@ UserNode* UserList::searchUserByEmail(string searchKey)
     return x;
 }
 
+UserNode* UserList::searchUserByEmail(string searchKey)
+{
+    UserNode* x = this->root;
+
+    while (x != this->nullNode && searchKey != x->Email)
+    {
+        if (searchKey.compare(x->Email) < 0)
+            x = x->leftUser;
+        else
+            x = x->rightUser;
+    }
+    return x;
+}
+
 UserNode* UserList::minimum(UserNode* node)
 {
     while (node->leftUser != this->nullNode)
@@ -463,116 +483,91 @@ UserNode* UserList::login(string Username, string Password) {
     // Traverse the list to find a matching user
     UserNode* currentUser = searchUser(Username);
 
-    if (currentUser->Username == Username && currentUser->Password == Password) {
-        currentUser->LastLogin = time(0); // update last login time
-        return currentUser;
+    if (currentUser->Username.empty()) {
+        return NULL;  // If no matching user is found, return NULL
     }
-    // If no matching user is found, return NULL
-    return NULL;
+    else if (currentUser->Username == Username && currentUser->Password == Password) {
+        currentUser->LastLogin = time(0); // update last login time
+        Repository* r = Repository::getInstance();
+        r->loginUser = currentUser;
+        return currentUser;
+    }   
 }
 
-//void UserList::addFavouriteUniToUser(UserNode* User, string UniID) {
-//    if (!User) {
-//        cout << "Error: User node is null." << endl;
-//        return;
-//    }
-//
-//    User->FavouriteUniList->insertIntoFavouriteUni(User->UserID, UniID, false);
-//}
+// ----- fav uni -----
+void UserList::addFavouriteUniToUser(UserNode* User, string UniID) {
+    if (!User) {
+        cout << "Error: User node is null." << endl;
+        return;
+    }
 
-//// Add on show uni details
-//void UserList::showOwnFavoriteUni(UserNode* User) {
-//    if (User == NULL) {
-//        cout << "User not found" << endl;
-//        return;
-//    }
-//
-//    UserFavouriteUni* currentUni = User->FavouriteUniList->head;
-//    int count = 0;
-//    while (currentUni != NULL) {
-//        cout << "User ID: " << currentUni->UserID << endl;
-//        cout << "Uni ID: " << currentUni->UniID << endl;
-//        count++;
-//        currentUni = currentUni->NextUni;
-//    }
-//    if (count == 0) {
-//        cout << "No favourite uni found for the user" << endl;
-//    }
-//}
 
-//void UserList::addFeedbackToUser(UserNode* User, const string& Feedback) {
-//    if (!User) {
-//        cout << "Error: User node is null." << endl;
-//        return;
-//    }
-//
-//    User->FeedbackList->insertIntoFeedbackList(User, Feedback);
-//}
+    User->FavouriteUniList->insertIntoFavouriteUni(User->UserID, UniID);
+}
 
-//void UserList::showOwnFeedback(UserNode* User) {
-//
-//
-//    UserNode* currentUser = searchUser(User->Username);
-//
-//    if (User->UserID == "") {
-//        cout << "User not found" << endl;
-//        return;
-//    }
-//
-//    //UserNode* currentUser = AllUserList->head;
-//    if (currentUser->UserID == User->UserID) {
-//        FeedbackNode* currentFeedback = currentUser->FeedbackList->head;
-//        int count = 0;
-//        while (currentFeedback != NULL) {
-//            if (currentFeedback->UserID == User->UserID) {
-//                cout << "Feedback ID: " << currentFeedback->FeedbackID << endl;
-//                cout << "Feedback: " << currentFeedback->Feedback << endl;
-//                ReplyNode* currentReply = currentFeedback->ReplyList->head;
-//
-//                if (currentReply == NULL) {
-//                    cout << "There is no reply yet" << endl;
-//                }
-//                else {
-//                    while (currentReply != NULL) {
-//                        cout << "Replied by " << currentReply->Username << ": " << currentReply->Reply << endl;
-//                        currentReply = currentReply->NextReply;
-//                    }
-//                }
-//
-//
-//                //cout << "Create Time: " << ctime(&currentFeedback->CreateTime);
-//                count++;
-//            }
-//            currentFeedback = currentFeedback->NextFeedback;
-//        }
-//        if (count == 0) {
-//            cout << "No feedback found for the user" << endl;
-//        }
-//    }
-//
-//    if (currentUser == NULL) {
-//        cout << "User not found" << endl;
-//    }
-//}
+void UserList::removeFavouriteUniFromUser(UserNode* User, string UniID)
+{
+    if (!User) {
+        cout << "Error: User node is null." << endl;
+        return;
+    }
 
-//void UserList::insertReplyIntoFeedbackNode(string FeedbackID, UserNode* User, const string& Reply) {
-//    // Get feedback node for both all feedback list and user feedback list
-//    FeedbackNode* currentAllFeedback = AllFeedbackLists->getFeedbackNode(FeedbackID);
-//    FeedbackNode* currentFeedback = User->FeedbackList->getFeedbackNode(FeedbackID);
-//    // Validation on the feedback node
-//    if (currentFeedback == NULL || currentAllFeedback == NULL) {
-//        cout << "Error: Feedback not found" << endl;
-//        return;
-//    }
-//    // Insert to both feedback node
-//    currentAllFeedback->ReplyList->insertReplyIntoFeedback(User->Username, Reply);
-//    currentFeedback->ReplyList->insertReplyIntoFeedback(User->Username, Reply);
-//}
+    User->FavouriteUniList->removeFavouriteUni(User->UserID, UniID);
+}
 
+// Add on show uni details
+void UserList::showOwnFavoriteUni(UserNode* User) {
+
+    UserFavouriteUni* currentUni = User->FavouriteUniList->head;
+
+    if (!currentUni) {
+        cout << " | No favorite uni found for the user                     |" << endl;
+        cout << "  -------------------------------------------------------- " << endl;
+        return;
+    }
+
+    // Sort the uni array first by rank
+
+    while (currentUni != NULL) {
+        // Obtain insitution
+        string uniID_s = currentUni->UniID.substr(3, 4);
+        int uniID_i = stoi(uniID_s) - 1;
+        Repository* r = Repository::getInstance();
+        string insitution = r->AllUniList->UniArray[uniID_i]->Insitution;
+
+        cout << " | " << left << setw(9) << currentUni->UniID;
+        cout << left << setw(46) << insitution << right << "|" << endl;
+       
+        currentUni = currentUni->NextUni;
+    }
+    cout << "  -------------------------------------------------------- " << endl;
+
+}
+
+// ----- feedback -----
+void UserList::addFeedbackToUser(UserNode* User, const string& Feedback) {
+    // If null user being passed
+    if (!User) {
+        cout << "Error: User node is null." << endl;
+        return;
+    }
+
+    // Insert new feedback to the feedback list
+    User->FeedbackList->insertIntoFeedbackList(User, Feedback); 
+    
+    // Sort both the feedback list based on update time
+    Repository* r = Repository::getInstance();
+    r->AllFeedbackLists->sortFeedbackList();
+    User->FeedbackList->sortFeedbackList();
+
+    return;
+}
+
+// ------ user list -----
 void UserList::displayUserList() {
-    // Print table header
+    // Print user list table header
     system("cls");
-    cout << "User List" << endl;
+    cout << " User List" << endl;
     cout << "---------------------------------------------------------------------------------------------" << endl;
     cout << left << setw(17) << "| UserID";
     cout << left << setw(20) << "Username";
@@ -580,10 +575,12 @@ void UserList::displayUserList() {
     cout << left << setw(25) << "Last Login" << right << "|" << endl;
     cout << "---------------------------------------------------------------------------------------------" << endl;
     // Call helper function to recursively display user tree
-    displayUser(root, "");
+    displayUser(root);
     cout << "---------------------------------------------------------------------------------------------" << endl;
 }
-void UserList::displayUser(UserNode* root, string indent) {
+
+void UserList::displayUser(UserNode* root) {
+    
     if (root != nullptr && root != nullNode)
     {
         // Print current user node
@@ -592,18 +589,107 @@ void UserList::displayUser(UserNode* root, string indent) {
         cout << left << setw(20) << root->Username;
         cout << left << setw(30) << root->Email;
 
+        // Print last login time
         time_t lastLoginTime = root->LastLogin;
         char buffer[26];
         ctime_s(buffer, sizeof(buffer), &lastLoginTime);
         buffer[24] = '\0';  // Remove the newline character from the output
-
         cout << left << setw(15) << buffer << " |" << endl;
 
         // Recursively display left and right subtrees
-        displayUser(root->leftUser, indent + "  |");
-        displayUser(root->rightUser, indent + "  ");
+        displayUser(root->leftUser);
+        displayUser(root->rightUser);
     }
 }
+
+void UserList::displayInactiveUserList() {
+    // Print user list table header
+    system("cls");
+    cout << " Inactive User List" << endl;
+    cout << "---------------------------------------------------------------------------------------------" << endl;
+    cout << left << setw(17) << "| UserID";
+    cout << left << setw(20) << "Username";
+    cout << left << setw(30) << "Email";
+    cout << left << setw(25) << "Last Login" << right << "|" << endl;
+    cout << "---------------------------------------------------------------------------------------------" << endl;
+    // Call helper function to recursively display user tree
+    displayInactiveUser(root);
+    cout << "---------------------------------------------------------------------------------------------" << endl;
+}
+
+void UserList::displayInactiveUser(UserNode* root) {
+
+    if (root != nullptr && root != nullNode)
+    {
+        time_t now = time(0);
+        time_t lastLoginTime = root->LastLogin;
+        double secondsSinceLastLogin = difftime(now, lastLoginTime);
+        // if user active a month ago
+        if (secondsSinceLastLogin > 2592000) {
+            // Print current user node
+            cout << "| ";
+            cout << left << setw(15) << root->UserID;
+            cout << left << setw(20) << root->Username;
+            cout << left << setw(30) << root->Email;
+
+            // Print last login time
+            time_t lastLoginTime = root->LastLogin;
+            char buffer[26];
+            ctime_s(buffer, sizeof(buffer), &lastLoginTime);
+            buffer[24] = '\0';  // Remove the newline character from the output
+            cout << left << setw(15) << buffer << " |" << endl;
+        }
+
+        // Recursively display left and right subtrees
+        displayInactiveUser(root->leftUser);
+        displayInactiveUser(root->rightUser);
+    }
+}
+void UserList::deleteInactiveUser() {
+    deleteInactiveUserLoop(root);
+}
+
+void UserList::deleteInactiveUserLoop(UserNode* root) {
+    Repository* r = Repository::getInstance();
+    if (root != nullptr && root != nullNode)
+    {
+        time_t now = time(0);
+        time_t lastLoginTime = root->LastLogin;
+        double secondsSinceLastLogin = difftime(now, lastLoginTime);
+
+        // Recursively display left and right subtrees
+        deleteInactiveUserLoop(root->leftUser);
+        deleteInactiveUserLoop(root->rightUser);
+
+        // if user active a month ago
+        if (secondsSinceLastLogin > 2592000) {
+            clearLists(root);
+            r->AllUserList->deleteNode(root->Username);
+        }
+    }
+}
+
+void UserList::clearLists(UserNode* user) {
+    Repository* r = Repository::getInstance();
+    r->loginUser = user;
+    UserFavouriteUni* currentFav = user->FavouriteUniList->head;
+    while (currentFav != NULL) {
+        string uniID = currentFav->UniID;
+        currentFav = currentFav->NextUni;
+        user->FavouriteUniList->removeFavouriteUni(user->UserID, uniID);
+    }
+
+    FeedbackNode* currentFeedback = user->FeedbackList->head;
+    while (currentFeedback != NULL) {
+        cout << currentFeedback->Feedback << endl;
+        FeedbackNode* nextFeedback = currentFeedback->NextFeedback;
+        user->FeedbackList->deleteFeedbackNode(currentFeedback->FeedbackID);
+        currentFeedback = nextFeedback;
+    }
+
+    r->loginUser = NULL;
+}
+
 
 void UserList::displayLoginUser(UserNode* user) {
 

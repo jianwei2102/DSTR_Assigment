@@ -12,5 +12,8 @@ struct predefinedData
 		Repository* repository = repository->getInstance();
 		repository->AllUniList = loadUniCSV::ReadUniFromFile();
 		repository->AllUserList = addPredefinedUser::addUser();
+		HashMap FavUniCount = repository->FavUniCount;
+
+		// FavUniCount.displaySortedUnis();
 	}
 };
