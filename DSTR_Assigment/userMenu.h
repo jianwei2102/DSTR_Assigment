@@ -22,8 +22,15 @@ struct userMenu {
             Repository* r = Repository::getInstance();
 
             UserNode* currentUser = r->AllUserList->searchUser(username);
+            // Take Note !!!
             if (currentUser->Username != username && currentUser->Password != password) {
                 r->loginUser = currentUser;
+
+            if (currentUser->Username == username && currentUser->Password == password) {
+                r->AllUserList->setLoginUser(currentUser);
+                r->AllUserList->getLoginUser()->LastLogin = time(0);
+              // Take Note ^^^
+
                 mainMenu();
                 return;
             }
@@ -38,12 +45,12 @@ struct userMenu {
                 switch (choice)
                 {
                 case 1:
-                    userLogin();
+                    //userLogin();
                     break;
                 case 2:
                     return;
                 default:
-                    userLogin();
+                    //userLogin();
                     break;
                 }
             }
@@ -66,7 +73,7 @@ struct userMenu {
             case 2:
                 r->AllUserList->displayUserList();
             case 3:
-                // feedback
+                userProfile();
                 break;
             case 4:
                 return;
@@ -80,6 +87,7 @@ struct userMenu {
             }
         }
     }
+
 
     //sorting
     static void scoreSortingMenu() {
@@ -109,3 +117,99 @@ struct userMenu {
         }
     }
 };
+
+    static void userProfile() {
+
+        while (true)
+        {
+            Repository* r = Repository::getInstance();  
+            system("cls");
+            r->AllUserList->displayLoginUser(r->AllUserList->getLoginUser());
+
+            int choice = userMenuUI::profileMenu_UI();
+
+            switch (choice) {
+                case 1:
+                    modifyProfile();
+                    break;
+                case 2:
+                    return; // Return to previous menu, auto break out of the loop
+                default:
+                    break; // Loop again
+            }
+        }
+    }
+
+    static void modifyProfile() {
+        Repository* r = Repository::getInstance();
+        UserNode* loginUser = r->AllUserList->getLoginUser();
+        while (true)
+        {
+            system("cls");
+            string changes;
+            UserNode* check;
+            int choice = userMenuUI::modifyProfileMenu_UI();
+
+            switch (choice) {
+            case 1: // Username
+                changes = userMenuUI::modifyChanges_UI();
+                check = r->AllUserList->searchUser(changes);
+                if (check->Username.empty() || loginUser->Username == changes) // Check username has not been taken
+                {
+                    r->AllUserList->deleteNode(loginUser->Username);
+                    loginUser->Username = changes;
+                    r->AllUserList->insertIntoUserTree(loginUser);
+                    userMenuUI::userSuccess_UI();
+                }
+                else 
+                {
+                    userMenuUI::userExist_UI();
+                    break;
+                }
+                return;
+
+            case 2: // Email
+                changes = userMenuUI::modifyChanges_UI();
+                check = r->AllUserList->searchUserByEmail(changes);
+                if (check->Username.empty() || loginUser->Email == changes) // Check email has not been taken
+                {
+                    r->AllUserList->deleteNode(loginUser->Username); // Remove node from tree, object is not deleted
+                    loginUser->Email = changes; // Update email
+                    r->AllUserList->insertIntoUserTree(loginUser); // Reinsert node
+                    userMenuUI::userSuccess_UI();
+                }
+                else
+                {
+                    userMenuUI::userExist_UI();
+                    break;
+                }
+                return;
+
+            case 3: // Password
+            {
+                    string oldPassword = userMenuUI::userPassword_UI(); // Check input = old password
+                    if (oldPassword != loginUser->Password) // Not equal, display error, loop again
+                    {
+                        userMenuUI::invalidPassword_UI();
+                        break;
+                    }
+                    cout << "Enter the new value: "; // Get new password
+                    getline(cin, changes);
+                    r->AllUserList->deleteNode(loginUser->Username);
+                    cout << loginUser->Password << endl;
+                    loginUser->Password = changes;
+                    r->AllUserList->insertIntoUserTree(loginUser);
+                    userMenuUI::userSuccess_UI(); // Display success
+                    return; // Go back
+            }
+            case 4: // Return to previous menu
+                return;
+
+            default: // Invalid input, loop again
+                break;
+            }
+        }
+        
+    }
+};
+

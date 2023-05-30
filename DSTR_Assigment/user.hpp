@@ -28,6 +28,7 @@ class UserList {
 private:
     UserNode* root;
     UserNode* nullNode = new UserNode;
+    UserNode* loginUser;
 
 public:
     UserList()
@@ -51,6 +52,9 @@ public:
     void deleteFixup(UserNode* x);
 
     UserNode* searchUser(string searchKey);
+    UserNode* searchUserByEmail(string searchKey);
+    UserNode* searchUserByPassword(string searchKey);
+
     UserNode* minimum(UserNode* node);
     UserNode* getRoot();
 
@@ -70,4 +74,9 @@ public:
     void displayUserList();
     void displayUser(UserNode* root, string indent);
 
+    void displayLoginUser(UserNode* user);
+
+    UserNode* getLoginUser();
+
+    void setLoginUser(UserNode* user);
 };
