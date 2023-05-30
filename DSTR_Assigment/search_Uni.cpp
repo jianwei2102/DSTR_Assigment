@@ -46,6 +46,54 @@ UniNode* createNewUniNode(int Rank, string Insitution, string LocationCode, stri
 	return newUniNode;
 }
 
+//quick sort algorithms - 0
+void swap(UniNode& a, UniNode& b) {
+	UniNode temp = a;
+	a = b;
+	b = temp;
+}
+// institution
+int partitionByInst(UniNode* uniArr, int left, int right) {
+	string pivot = uniArr[right].Insitution;
+	int i = left - 1;
+	for (int j = left; j <= right - 1; j++) {
+		if (uniArr[j].Insitution <= pivot) {
+			i++;
+			swap(uniArr[i], uniArr[j]);
+		}
+	}
+	swap(uniArr[i + 1], uniArr[right]);
+	return i + 1;
+}
+void quickSortInst(UniNode* uniArr, int left, int right) {
+	if (left < right) {
+		int pi = partitionByInst(uniArr, left, right);
+		quickSortInst(uniArr, left, pi - 1);
+		quickSortInst(uniArr, pi + 1, right);
+	}
+}
+// location
+int partitionByLoc(UniNode* uniArr, int left, int right) {
+	string pivot = uniArr[right].Location;
+	int i = left - 1;
+	for (int j = left; j <= right - 1; j++) {
+		if (uniArr[j].Location <= pivot) {
+			i++;
+			swap(uniArr[i], uniArr[j]);
+		}
+	}
+	swap(uniArr[i + 1], uniArr[right]);
+	return i + 1;
+}
+void quickSortLoc(UniNode* uniArr, int left, int right) {
+	if (left < right) {
+		int pi = partitionByLoc(uniArr, left, right);
+		quickSortLoc(uniArr, left, pi - 1);
+		quickSortLoc(uniArr, pi + 1, right);
+	}
+}
+//quick sort algorithms - 1
+
 void binarySearchInst(UniNode* uniArr, int size, const string& searchTerm) {
 	auto start = high_resolution_clock::now();
 	int left = 0;
@@ -155,7 +203,6 @@ void displayInfoByLoc(UniNode* uniArr, int size, const string& searchTerm) {
 }
 
 void linearSearchInst(UniNode* uniArr, int size, const string& searchTerm) {
-	cout << "Passed: " << uniArr[0].Insitution << endl;
 	cout << "Size: " << size << endl;
 	auto start = high_resolution_clock::now();
 	bool found = false;
@@ -370,7 +417,7 @@ void searchUni() {
 		university->GerRank = stoi(GerRank);
 		university->ScoreScaled = stod(ScoreScaled);
 		university->NextAdd = NULL;
-		
+
 		if (universities == NULL) {
 			universities = university;
 			lastUniNode = university;
@@ -414,9 +461,7 @@ void searchUni() {
 
 				if (choice2 == 1) {										//<- Binary Search for Institution
 					cout << endl;
-					sort(uniArr, uniArr + size, [](const UniNode& u1, const UniNode& u2) {
-						return u1.Insitution < u2.Insitution;
-						});
+					quickSortInst(uniArr, 0, size - 1);
 					binarySearchInst(uniArr, size, searchTerm);
 				}
 				else if (choice2 == 2) {								//<- Linear Search for Institution
@@ -439,9 +484,7 @@ void searchUni() {
 
 				if (choice2 == 1) {										//<- Binary Search for Location
 					cout << endl;
-					sort(uniArr, uniArr + size, [](const UniNode& u1, const UniNode& u2) {
-						return u1.Location < u2.Location;
-						});
+					quickSortLoc(uniArr, 0, size - 1);
 					displayInfoByLoc(uniArr, size, searchTerm);
 				}
 				else if (choice2 == 2) {								//<- Linear Search for Location
