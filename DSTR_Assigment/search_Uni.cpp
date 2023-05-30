@@ -444,9 +444,9 @@ void searchUni() {
 	//search menu
 	int choice, choice2;
 	string searchTerm;
+	cout << "How would you like to search by?" << endl;
+	cout << "1. Search by Institution Name\n2. Search by Location" << endl;
 	do {
-		cout << "How would you like to search by?" << endl;
-		cout << "1. Search by Institution Name\n2. Search by Location" << endl;
 		cout << "Operation No.: ";
 		cin >> choice;
 		cin.ignore(1, '\n'); // prevent skipping getline()
@@ -497,7 +497,7 @@ void searchUni() {
 			} while (choice2 != 1 && choice2 != 2);
 		}
 		else {
-			cout << endl << "Invalid Input" << endl;
+			cout << endl << "Invalid Input. Please Try Again." << endl << endl;
 		}
 	} while (choice != 1 && choice != 2);
 
