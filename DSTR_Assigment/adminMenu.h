@@ -10,7 +10,7 @@ struct adminMenu {
         
         while (true)
         {
-            //system("cls");
+            system("cls");
             adminMenuUI::loginMenu_UI();
 
             string username, password;

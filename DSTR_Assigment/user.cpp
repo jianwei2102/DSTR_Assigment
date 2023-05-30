@@ -295,12 +295,6 @@ void UserList::deleteNode(string searchKey)
 
     UserNode* target = searchUser(searchKey);
 
-    if (!target) {
-        cout << "ERROR" << endl;
-        return;
-    }
-       
-
 
     if (target == this->nullNode)
     {
@@ -348,9 +342,6 @@ void UserList::deleteNode(string searchKey)
     {
         deleteFixup(x);
     }
-
-    cout << target->Username;
-    cout << "User has been deleted" << endl;
 }
 
 void UserList::deleteFixup(UserNode* x)
@@ -438,6 +429,20 @@ UserNode* UserList::searchUser(string searchKey)
             x = x->rightUser;
     }
 
+    return x;
+}
+
+UserNode* UserList::searchUserByEmail(string searchKey)
+{
+    UserNode* x = this->root;
+
+    while (x != this->nullNode && searchKey != x->Email)
+    {
+        if (searchKey.compare(x->Email) < 0)
+            x = x->leftUser;
+        else
+            x = x->rightUser;
+    }
     return x;
 }
 
@@ -600,3 +605,36 @@ void UserList::displayUser(UserNode* root, string indent) {
     }
 }
 
+void UserList::displayLoginUser(UserNode* user) {
+
+    cout << "---------------------------------------------------------------------------------------------" << endl;
+    cout << left << setw(17) << "| UserID";
+    cout << left << setw(20) << "Username";
+    cout << left << setw(30) << "Email";
+    cout << left << setw(25) << "Last Login" << right << "|" << endl;
+    cout << "---------------------------------------------------------------------------------------------" << endl;
+
+    // Print current user 
+    cout << "| ";
+    cout << left << setw(15) << user->UserID;
+    cout << left << setw(20) << user->Username;
+    cout << left << setw(30) << user->Email;
+
+    time_t lastLoginTime = user->LastLogin;
+    char buffer[26];
+    ctime_s(buffer, sizeof(buffer), &lastLoginTime);
+    buffer[24] = '\0';  // Remove the newline character from the output
+
+    cout << left << setw(15) << buffer << " |" << endl;
+    cout << "---------------------------------------------------------------------------------------------" << endl;
+
+}
+
+
+UserNode* UserList::getLoginUser() {
+    return this->loginUser;
+}
+
+void UserList::setLoginUser(UserNode* loginUser) {
+    this->loginUser = loginUser;
+}
