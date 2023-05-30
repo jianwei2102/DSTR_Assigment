@@ -14,7 +14,6 @@ struct predefinedData
 		repository->AllUserList = addPredefinedUser::addUser();
 		HashMap FavUniCount = repository->FavUniCount;
 
-        cout << "Sorted Unis:" << endl;
-        FavUniCount.displaySortedUnis();
+		// FavUniCount.displaySortedUnis();
 	}
 };

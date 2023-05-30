@@ -30,9 +30,6 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="main.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="user.cpp">
       <Filter>Source Files\Classes</Filter>
     </ClCompile>
@@ -54,6 +51,9 @@
     <ClCompile Include="repository.cpp">
       <Filter>Source Files\Repository</Filter>
     </ClCompile>
+    <ClCompile Include="main.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="repository.h">
@@ -64,9 +64,6 @@
     </ClInclude>
     <ClInclude Include="uni.hpp">
       <Filter>Source Files\Classes</Filter>
-    </ClInclude>
-    <ClInclude Include="predefinedData.h">
-      <Filter>Source Files\Repository</Filter>
     </ClInclude>
     <ClInclude Include="loadUniCSV.h">
       <Filter>Source Files\Repository</Filter>
@@ -109,6 +106,9 @@
     </ClInclude>
     <ClInclude Include="favUniCount.h">
       <Filter>Source Files\Classes</Filter>
+    </ClInclude>
+    <ClInclude Include="predefinedData.h">
+      <Filter>Source Files\Repository</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

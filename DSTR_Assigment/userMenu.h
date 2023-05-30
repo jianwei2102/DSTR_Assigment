@@ -62,13 +62,16 @@ struct userMenu {
                 r->AllUniList->displayUniList();
                 break;
             case 2:
-                showOwnFeedback();
+                favUniManage();
                 break;
             case 3:
+                showOwnFeedback();
+                break;
+            case 4:
                 // profile
                 
                 break;
-            case 4:
+            case 5:
                 // Log out
                 r->loginUser = NULL;
                 return;
@@ -79,6 +82,94 @@ struct userMenu {
         }
     }
 
+
+    // ----- Fav Uni -----
+    static void favUniManage() {
+
+        Repository* r = Repository::getInstance();        
+        string input;
+
+        while (true)
+        {
+            userMenuUI::favUniList_UI();
+            r->AllUserList->showOwnFavoriteUni(r->loginUser);
+            cout << " Navigate: (A)dd, (R)emove, (V)iew, (Q)uit : ";
+
+            cin >> input;
+
+            if (input == "a" || input == "A")
+            {
+                addFavUni();
+            }
+            else if (input == "r" || input == "R")
+            {
+                removeFavUni();
+            }
+            else if (input == "v" || input == "V")
+            {
+                viewFavUni();
+            }
+            else if (input == "q" || input == "Q")
+            {
+                return;
+            }
+            else
+            {
+                cout << "Invalid input. Please enter N for next, P for previous, or Q to quit." << endl;
+
+            }
+        }
+    }
+
+    static void addFavUni(){}
+
+    static void removeFavUni(){}
+
+    static void viewFavUni(){
+        // Prompt uni ID input
+        string id;
+        cout << " Enter the uni ID: ";
+        cin.ignore();
+        getline(cin, id);
+
+        // From id get index
+        Repository* r = Repository::getInstance();
+        UniNode** UniArray = r->AllUniList->UniArray;
+        string uniID_s = id.substr(3, 4);
+        int uniID_i = stoi(uniID_s) - 1;
+
+        system("cls");
+        cout << "  ------------------------------------------------- " << endl;
+        cout << " |               University's Detail               |" << endl;
+        cout << "  ------------------------------------------------- " << endl;
+        cout << " Rank          : " << UniArray[uniID_i]->Rank << endl;
+        cout << " University ID : " << UniArray[uniID_i]->UniID << endl;
+        cout << " Institution   : " << UniArray[uniID_i]->Insitution << endl;
+        cout << " Location Code : " << UniArray[uniID_i]->LocationCode << endl;
+        cout << " Location      : " << UniArray[uniID_i]->Location << endl;
+        cout << " Ar Score      : " << UniArray[uniID_i]->ArScore << endl;
+        cout << " Ar Rank       : " << UniArray[uniID_i]->ArRank << endl;
+        cout << " Er Score      : " << UniArray[uniID_i]->ErScore << endl;
+        cout << " Er Rank       : " << UniArray[uniID_i]->ErRank << endl;
+        cout << " Fsr Score     : " << UniArray[uniID_i]->FsrScore << endl;
+        cout << " Fsr Rank      : " << UniArray[uniID_i]->FsrRank << endl;
+        cout << " Cpf Score     : " << UniArray[uniID_i]->CpfScore << endl;
+        cout << " Cpf Rank      : " << UniArray[uniID_i]->CpfRank << endl;
+        cout << " Ifr Score     : " << UniArray[uniID_i]->IfrScore << endl;
+        cout << " Ifr Rank      : " << UniArray[uniID_i]->IfrRank << endl;
+        cout << " Isr Score     : " << UniArray[uniID_i]->IsrScore << endl;
+        cout << " Isr Rank      : " << UniArray[uniID_i]->IsrRank << endl;
+        cout << " Irn Score     : " << UniArray[uniID_i]->IrnScore << endl;
+        cout << " Irn Rank      : " << UniArray[uniID_i]->IrnRank << endl;
+        cout << " Ger Score     : " << UniArray[uniID_i]->GerScore << endl;
+        cout << " Ger Rank      : " << UniArray[uniID_i]->GerRank << endl;
+        cout << " Score Scaled  : " << UniArray[uniID_i]->ScoreScaled << endl;
+
+
+        string input;
+        cout << "Enter any other key to exit: ";
+        getline(cin, input);
+    }
 
     // ----- Feedback -----
     static void showOwnFeedback() {
@@ -225,4 +316,5 @@ struct userMenu {
         currentAllFeedback->ReplyList->insertReplyIntoFeedback(r->loginUser->Username, reply);
         return;
     }
+
 };

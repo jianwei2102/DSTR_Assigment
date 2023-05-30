@@ -27,9 +27,10 @@ struct userMenuUI {
 		cout << "  --------------------------------- " << endl;
 		cout << " |               User              |" << endl;
 		cout << " |  1 - View List of Universities  |" << endl;
-		cout << " |  2 - View Inbox                 |" << endl;
-		cout << " |  3 - View Profile               |" << endl;
-		cout << " |  4 - Log Out                    |" << endl;
+		cout << " |  2 - View Fav Uni               |" << endl;
+		cout << " |  3 - View Inbox                 |" << endl;
+		cout << " |  4 - View Profile               |" << endl;
+		cout << " |  5 - Log Out                    |" << endl;
 		cout << "  ---------------------------------" << endl;
 
 		int input = 0;
@@ -61,5 +62,16 @@ struct userMenuUI {
 		getline(cin, feedback);
 		
 		return feedback;
+	}
+
+	static void favUniList_UI() {
+		// Display table header
+		system("cls");
+		cout << "  ---------------------------------------------- " << endl;
+		cout << " |              Favourite Uni List              |" << endl;
+		cout << "  ---------------------------------------------- " << endl;
+		cout << left << setw(12) << " | UniID";
+		cout << left << setw(36) << "Insitution" << right << "|" << endl;
+		return;
 	}
 };

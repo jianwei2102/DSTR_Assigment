@@ -78,8 +78,9 @@ public:
     }
 
     void displaySortedUnis() {
-        string unis[SIZE];
-        int counts[SIZE];
+        const int MAX_UNIS = 100;  // Maximum number of universities to handle
+        string unis[MAX_UNIS];
+        int counts[MAX_UNIS];
         int count = 0;
 
         for (int i = 0; i < SIZE; ++i) {
@@ -89,6 +90,10 @@ public:
                 counts[count] = curr->value;
                 curr = curr->next;
                 count++;
+                if (count >= MAX_UNIS) {
+                    cout << "Maximum number of universities reached. Some data may be truncated." << endl;
+                    break;
+                }
             }
         }
 
@@ -104,8 +109,10 @@ public:
 
         // Display the sorted unis with count values
         for (int i = 0; i < count; ++i) {
-            cout << unis[i] << ": " << counts[i] << endl;
+            cout << " | " << left << setw(14) << unis[i];
+            cout << left << setw(31) << counts[i] << right << "|" << endl;
         }
+        cout << "  ---------------------------------------------- " << endl;
     }
 
 private:

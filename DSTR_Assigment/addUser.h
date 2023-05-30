@@ -29,6 +29,15 @@ struct addPredefinedUser {
 		list->addFavouriteUniToUser(alice, "UNI0008");
 		list->addFavouriteUniToUser(alice, "UNI0016");
 		list->addFavouriteUniToUser(alice, "UNI0212");
+		list->addFavouriteUniToUser(alice, "UNI0208");
+		list->addFavouriteUniToUser(alice, "UNI0216");
+		list->addFavouriteUniToUser(alice, "UNI0312");
+		list->addFavouriteUniToUser(alice, "UNI0408");
+		list->addFavouriteUniToUser(alice, "UNI0416");
+		list->addFavouriteUniToUser(alice, "UNI0412");
+		list->addFavouriteUniToUser(alice, "UNI0508");
+		list->addFavouriteUniToUser(alice, "UNI0616");
+		list->addFavouriteUniToUser(alice, "UNI0712");
 		list->removeFavouriteUniFromUser(alice, "UNI0008");
 
 		// Logout alice

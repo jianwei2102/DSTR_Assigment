@@ -58,13 +58,18 @@ struct adminMenu {
                 uniSortMenu();
                 break;
             case 3:
+                adminMenuUI::favReport_UI();
+                r->FavUniCount.displaySortedUnis();
+                adminMenuUI::favReportExit_UI();
+                break;
+            case 4:
                 Admin::displayUserList();
                 userMenu();
                 break;
-            case 4:
+            case 5:
                 viewUserFeedbackList();
                 break;
-            case 5:
+            case 6:
                 return;
             default:
                 mainMenu();
@@ -326,6 +331,7 @@ struct adminMenu {
          // Delete user node if Y being entered
          if (confirmation == "Y" || confirmation == "y") {
              r->AllUserList->deleteNode(username);
+             delete currentUser;
          }
          else {
              return;

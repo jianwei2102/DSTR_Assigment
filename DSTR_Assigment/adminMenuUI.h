@@ -17,9 +17,10 @@ struct adminMenuUI {
 		cout << " |              Admin              |" << endl;
 		cout << " |  1 - View List of Universities  |" << endl;
 		cout << " |  2 - Sort Universitise          |" << endl;
-		cout << " |  3 - View Users                 |" << endl;
-		cout << " |  4 - View Feedback              |" << endl;
-		cout << " |  5 - Log Out                    |" << endl;
+		cout << " |  3 - Generate Fav Uni Report    |" << endl;
+		cout << " |  4 - View Users                 |" << endl;
+		cout << " |  5 - View Feedback              |" << endl;
+		cout << " |  6 - Log Out                    |" << endl;
 		cout << "  ---------------------------------" << endl;
 		
 		int input = 0;
@@ -127,5 +128,23 @@ struct adminMenuUI {
 		getline(cin, reply);
 
 		return reply;
+	}
+
+	static void favReport_UI() {
+		// Display table header
+		system("cls");
+		cout << "  ---------------------------------------------- " << endl;
+		cout << " |             Favourite Uni Report             |" << endl;
+		cout << "  ---------------------------------------------- " << endl;
+		
+		return;
+	}
+
+	static void favReportExit_UI() {
+		cout << " Enter any key to return to main menu.";
+		string input;
+		cin.ignore();
+		getline(cin, input);
+		return;
 	}
 };

@@ -97,6 +97,7 @@ void Feedbacklist::sortFeedbackList() {
     FeedbackNode* current;
     FeedbackNode* lastNode = nullptr;
 
+    // Bubble sort
     do {
         swapped = false;
         current = head;

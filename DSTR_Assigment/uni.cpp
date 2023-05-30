@@ -112,39 +112,44 @@ void UniList::displayUniList() {
 }
 
 void UniList::displayUni() {
+    // Obtain index no.
     int id;
-    cout << "Enter the uni no. (not ID): ";
+    cout << " Enter the uni no. (not ID): ";
     cin.ignore();
     cin >> id;
     id -= 1;
+
     system("cls");
     cout << "University's Detail" << endl;
-    cout << "Rank: " << UniArray[id]->Rank << endl;
-    cout << "University ID: " << UniArray[id]->UniID << endl;
-    cout << "Institution: " << UniArray[id]->Insitution << endl;
-    cout << "Location Code: " << UniArray[id]->LocationCode << endl;
-    cout << "Location: " << UniArray[id]->Location << endl;
-    cout << "Ar Score: " << UniArray[id]->ArScore << endl;
-    cout << "Ar Rank: " << UniArray[id]->ArRank << endl;
-    cout << "Er Score: " << UniArray[id]->ErScore << endl;
-    cout << "Er Rank: " << UniArray[id]->ErRank << endl;
-    cout << "Fsr Score: " << UniArray[id]->FsrScore << endl;
-    cout << "Fsr Rank: " << UniArray[id]->FsrRank << endl;
-    cout << "Cpf Score: " << UniArray[id]->CpfScore << endl;
-    cout << "Cpf Rank: " << UniArray[id]->CpfRank << endl;
-    cout << "Ifr Score: " << UniArray[id]->IfrScore << endl;
-    cout << "Ifr Rank: " << UniArray[id]->IfrRank << endl;
-    cout << "Isr Score: " << UniArray[id]->IsrScore << endl;
-    cout << "Isr Rank: " << UniArray[id]->IsrRank << endl;
-    cout << "Irn Score: " << UniArray[id]->IrnScore << endl;
-    cout << "Irn Rank: " << UniArray[id]->IrnRank << endl;
-    cout << "Ger Score: " << UniArray[id]->GerScore << endl;
-    cout << "Ger Rank: " << UniArray[id]->GerRank << endl;
-    cout << "Score Scaled: " << UniArray[id]->ScoreScaled << endl;
+    cout << "  ------------------------------------------------- " << endl;
+    cout << " |               University's Detail               |" << endl;
+    cout << "  ------------------------------------------------- " << endl;
+    cout << " Rank          : " << UniArray[id]->Rank << endl;
+    cout << " University ID : " << UniArray[id]->UniID << endl;
+    cout << " Institution   : " << UniArray[id]->Insitution << endl;
+    cout << " Location Code : " << UniArray[id]->LocationCode << endl;
+    cout << " Location      : " << UniArray[id]->Location << endl;
+    cout << " Ar Score      : " << UniArray[id]->ArScore << endl;
+    cout << " Ar Rank       : " << UniArray[id]->ArRank << endl;
+    cout << " Er Score      : " << UniArray[id]->ErScore << endl;
+    cout << " Er Rank       : " << UniArray[id]->ErRank << endl;
+    cout << " Fsr Score     : " << UniArray[id]->FsrScore << endl;
+    cout << " Fsr Rank      : " << UniArray[id]->FsrRank << endl;
+    cout << " Cpf Score     : " << UniArray[id]->CpfScore << endl;
+    cout << " Cpf Rank      : " << UniArray[id]->CpfRank << endl;
+    cout << " Ifr Score     : " << UniArray[id]->IfrScore << endl;
+    cout << " Ifr Rank      : " << UniArray[id]->IfrRank << endl;
+    cout << " Isr Score     : " << UniArray[id]->IsrScore << endl;
+    cout << " Isr Rank      : " << UniArray[id]->IsrRank << endl;
+    cout << " Irn Score     : " << UniArray[id]->IrnScore << endl;
+    cout << " Irn Rank      : " << UniArray[id]->IrnRank << endl;
+    cout << " Ger Score     : " << UniArray[id]->GerScore << endl;
+    cout << " Ger Rank      : " << UniArray[id]->GerRank << endl;
+    cout << " Score Scaled  : " << UniArray[id]->ScoreScaled << endl;
 
-    int input;
+    string input;
     cout << "Enter any other key to exit: ";
-    cin >> input;
+    getline(cin, input);
 }
 
 UniNode* UniList::getUniNode(string UniID) { return 0; }

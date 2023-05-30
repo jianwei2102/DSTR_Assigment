@@ -496,10 +496,6 @@ void UserList::removeFavouriteUniFromUser(UserNode* User, string UniID)
 
 // Add on show uni details
 void UserList::showOwnFavoriteUni(UserNode* User) {
-    if (User == NULL) {
-        cout << "User not found" << endl;
-        return;
-    }
 
     UserFavouriteUni* currentUni = User->FavouriteUniList->head;
 
@@ -508,54 +504,22 @@ void UserList::showOwnFavoriteUni(UserNode* User) {
         return;
     }
 
-    cout << endl << "ID " << "Rank " << "Institution " << "Location " << "ArScore " << "ErScore " << "FsrScore " << endl;
+    // Sort the uni array first by rank
 
-    /*while (currentUni != NULL) {
-        cout << "User ID: " << currentUni->UserID << endl;
-        cout << "Uni ID: " << currentUni->UniID << endl;
+    while (currentUni != NULL) {
+        // Obtain insitution
+        string uniID_s = currentUni->UniID.substr(3, 4);
+        int uniID_i = stoi(uniID_s) - 1;
+        Repository* r = Repository::getInstance();
+        string insitution = r->AllUniList->UniArray[uniID_i]->Insitution;
+
+        cout << " | " << left << setw(9) << currentUni->UniID;
+        cout << left << setw(36) << insitution << right << "|" << endl;
        
         currentUni = currentUni->NextUni;
-    }*/
-
-    string input;
-
-    while (true)
-    {
-        cout << endl << "University ID " << endl;
-        cout << currentUni->UniID << endl << endl;
-        cout << "Navigate: (N)ext, (P)revious, (Q)uit : " << endl;
-
-        cin >> input;
-
-        if (input == "n" || input == "N")
-        {
-            if (currentUni->NextUni != NULL) {
-                currentUni = currentUni->NextUni;
-            }
-            else {
-                cout << "(No more record.)" << endl;
-            }
-        }
-        else if (input == "p" || input == "P")
-        {
-            if (currentUni->PrevUni != NULL) {
-                currentUni = currentUni->PrevUni;
-            }
-            else {
-                cout << "(This is the first record)." << endl;
-            }
-        }
-        else if (input == "q" || input == "Q")
-        {
-            return;
-        }
-        else
-        {
-            cout << "Invalid input. Please enter N for next, P for previous, or Q to quit." << endl;
-
-        }
     }
-   
+    cout << "  ---------------------------------------------- " << endl;
+
 }
 
 // ----- feedback -----
