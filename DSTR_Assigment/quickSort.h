@@ -156,7 +156,7 @@ struct QuickSort {
             cout << "Enter [Y] to view another 20 records or [N] to exit: " << endl;
             cin >> sortInput;
 
-            if (sortInput == "Y") {
+            if (sortInput == "Y" || sortInput == "y") {
                 for (currentShownLimit += 20; currentShownTotal < currentShownLimit; currentShownTotal++)
                     if (sortType == "Ar") {
                         cout << left << setw(5) << i + 1;
@@ -181,7 +181,7 @@ struct QuickSort {
                 cout << endl;
                 cout << "Showing " << currentShownLimit << " records" << endl;
             }
-            else if (sortInput == "N") {
+            else if (sortInput == "N" || sortInput == "n") {
                 return;
             }
         }
