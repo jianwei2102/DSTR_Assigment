@@ -13,7 +13,7 @@ struct guestMenu
         Repository* r = Repository::getInstance();
 
         while (true) {
-            //system("cls");
+            system("cls");
             int choice = guestMenuUI::mainMenu_UI();
 
             switch (choice) {
@@ -97,25 +97,87 @@ struct guestMenu
             //get search input value
             string searchValue;
 
-            cout << "Enter a university's full name to search: ";
-            cin >> searchValue;
+            while (true) {
+                cout << "Enter a university's full name to search: ";
+                cin.ignore();
 
-            //sort first 
-            MergeSort::mergeSort(r->AllUniList->UniArray, 0, 1421, "Institution");
+                getline(cin, searchValue);
 
-            //perform binary search
-            UniNode* result = BinarySearch::binarySearch(r->AllUniList->UniArray, 0, 1421, "name", "Sunway University");
-            if (result != nullptr) {
-                //convert to table form
-                cout << "The data is " << result->Location << endl;
+                //sort first 
+                MergeSort::mergeSort(r->AllUniList->UniArray, 0, 1421, "Institution");
+
+                //perform binary search
+                UniNode* result = BinarySearch::binarySearch(r->AllUniList->UniArray, 0, 1421, "name", searchValue);
+                if (result != nullptr) {
+                    //header
+
+                    cout << left << setw(50) << "Insitution";
+                    cout << left << setw(20) << "Location Code";
+                    cout << left << setw(20) << "Location" << endl << endl;
+
+                    //body
+                    cout << left << setw(50) << result->Insitution;
+                    cout << left << setw(20) << result->LocationCode;
+                    cout << left << setw(20) << result->Location << endl << endl;
+                }
+                else {
+                    cout << "University not found (Binary Search)." << endl;
+                }
+
+                cout << endl;
+                string input;
+                cout << "Enter any other key to exit: ";
+                cin >> input;
+
+                break; 
             }
-            else {
-                cout << "University Not found (Binary Search)." << endl;
-            }
+
+            
             break;
         }
             
         case 2:
+            Repository * r = Repository::getInstance();
+
+            //get search input value
+            string searchValue;
+
+            while (true) {
+                cout << "Enter a university's location to search: ";
+                cin.ignore();
+
+                getline(cin, searchValue);
+
+                //sort first 
+                MergeSort::mergeSort(r->AllUniList->UniArray, 0, 1421, "Institution");
+
+                //perform binary search
+                UniNode* result = BinarySearch::binarySearch(r->AllUniList->UniArray, 0, 1421, "location", searchValue);
+                if (result != nullptr) {
+                    //header
+
+                    cout << left << setw(50) << "Insitution";
+                    cout << left << setw(20) << "Location Code";
+                    cout << left << setw(20) << "Location" << endl << endl;
+
+                    //body
+                    cout << left << setw(50) << result->Insitution;
+                    cout << left << setw(20) << result->LocationCode;
+                    cout << left << setw(20) << result->Location << endl << endl;
+                }
+                else {
+                    cout << "Location not found (Binary Search)." << endl;
+                }
+
+                cout << endl;
+                string input;
+                cout << "Enter any other key to exit: ";
+                cin >> input;
+
+                break;
+            }
+
+
             break;
         case 3:
             return;

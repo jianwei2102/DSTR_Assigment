@@ -8,6 +8,7 @@ struct BinarySearch {
         if (low <= high) {
             int mid = low + (high - low) / 2;
 
+            // search by different columns
             string uniValue;
             if (sortType == "name") {
                 uniValue = array[mid]->Insitution;
