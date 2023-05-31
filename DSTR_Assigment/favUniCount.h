@@ -4,7 +4,7 @@
 
 using namespace std;
 
-class HashMap {
+class HashTable {
 private:
     static const int SIZE = 10;  // Size of the hash table
     struct Node {
@@ -14,8 +14,16 @@ private:
     };
     Node* table[SIZE];  // Array of linked lists
 
+    int hashFunction(const string& key) {
+        int hash = 0;
+        for (char c : key) {
+            hash += c;
+        }
+        return hash;
+    }
+
 public:
-    HashMap() {
+    HashTable() {
         for (int i = 0; i < SIZE; ++i) {
             table[i] = nullptr;  // Initialize all buckets as empty
         }
@@ -51,6 +59,7 @@ public:
             curr->next = newNode;
         }
     }
+
     void remove(const string& key) {
         int index = hashFunction(key) % SIZE;
         Node* curr = table[index];
@@ -78,7 +87,7 @@ public:
     }
 
     void displaySortedUnis() {
-        const int MAX_UNIS = 100;  // Maximum number of universities to handle
+        const int MAX_UNIS = 1422;  // Maximum number of universities to handle
         string unis[MAX_UNIS];
         int counts[MAX_UNIS];
         int count = 0;
@@ -98,29 +107,35 @@ public:
         }
 
         // Bubble sort the unis based on their count values in descending order
+        bool swapped;  // Flag to track swaps
         for (int i = 0; i < count - 1; ++i) {
+            swapped = false;  // Initialize the flag
             for (int j = 0; j < count - i - 1; ++j) {
                 if (counts[j] < counts[j + 1]) {
                     swap(unis[j], unis[j + 1]);
                     swap(counts[j], counts[j + 1]);
+                    swapped = true;  // Set the flag if a swap is made
                 }
+            }
+
+            if (!swapped) {
+                break;  // If no swaps were made, the array is already sorted
             }
         }
 
-        // Display the sorted unis with count values
-        for (int i = 0; i < count; ++i) {
-            cout << " | " << left << setw(14) << unis[i];
-            cout << left << setw(31) << counts[i] << right << "|" << endl;
+        // Display top 10 sorted fav unis 
+        for (int i = 0; i < 10; ++i) {
+
+            if (unis[i] != "") {
+                cout << " | " << left << setw(14) << unis[i];
+                cout << left << setw(31) << counts[i] << right << "|" << endl;
+            }
+            else {
+                cout << " | " << left << setw(14) << "";
+                cout << left << setw(31) << "" << right << "|" << endl;
+            }
         }
         cout << "  ---------------------------------------------- " << endl;
     }
-
-private:
-    int hashFunction(const string& key) {
-        int hash = 0;
-        for (char c : key) {
-            hash += c;
-        }
-        return hash;
-    }
 };
+

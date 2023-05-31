@@ -34,6 +34,7 @@ struct adminMenu {
                     adminLogin();
                     break;
                 case 2:
+                    uniSortMenu();
                     return;
                 default:
                     adminLogin();
@@ -81,7 +82,7 @@ struct adminMenu {
      
      //sorting
      static void uniSortMenu() {
-
+         system("cls");
          int choice = adminMenuUI::uniSort_UI();
 
          switch (choice)
@@ -102,61 +103,60 @@ struct adminMenu {
          }
      }
 
+
      static void quickSortMenu() {
          Repository* r = Repository::getInstance();
-         int choice = adminMenuUI::uniSortValue_UI();
 
-         switch (choice)
-         {
-         case 1:
-             QuickSort::quickSort(r->AllUniList->UniArray, 0, 1421, "Ar");
-             return;
-         case 2:
-             QuickSort::quickSort(r->AllUniList->UniArray, 0, 1421, "Fsr");
-             return;
-         case 3:
-             QuickSort::quickSort(r->AllUniList->UniArray, 0, 1421, "Er");
-             return;
-         case 0:
-             return;
-         default:
-             return;
+         while (true) {
+             cout << endl;
+             QuickSort::quickSort(r->AllUniList->UniArray, 0, 1421, "Institution");
+             QuickSort::printByPagination(r->AllUniList->UniArray, "Institution");
+             cout << endl;
+
+             string input;
+             cout << "Enter any other key to exit: ";
+             cin >> input;
+
+             break;
          }
+         return;
      }
 
      static void mergeSortMenu() {
          Repository* r = Repository::getInstance();
-         int choice = adminMenuUI::uniSortValue_UI();
 
-         switch (choice)
-         {
-         case 1:
-             QuickSort::quickSort(r->AllUniList->UniArray, 0, 1421, "Ar");
-             return;
-         case 2:
-             QuickSort::quickSort(r->AllUniList->UniArray, 0, 1421, "Fsr");
-             return;
-         case 3:
-             QuickSort::quickSort(r->AllUniList->UniArray, 0, 1421, "Er");
-             return;
-         case 0:
-             return;
-         default:
-             return;
+         while (true) {
+             cout << endl;
+             MergeSort::mergeSort(r->AllUniList->UniArray, 0, 1421, "Institution");
+             MergeSort::printByPagination(r->AllUniList->UniArray);
+             cout << endl;
+
+             string input;
+             cout << "Enter any other key to exit: ";
+             cin >> input;
+
+             break;
          }
+         return;
      }
 
      static void sortingComparision() {
          Repository* r = Repository::getInstance();
 
+         //reset sorting
+         QuickSort::quickSort(r->AllUniList->UniArray, 0, 1421, "Rank");
+
          //quick sort
          auto startQuickSortTimer = chrono::high_resolution_clock::now();
-         QuickSort::quickSort(r->AllUniList->UniArray, 0, 1421, "Ar");
+         QuickSort::quickSort(r->AllUniList->UniArray, 0, 1421, "Institution");
          auto stopQuickSortTimer = chrono::high_resolution_clock::now();
 
-         //TODO:: merge sort
+         //reset sorting
+         QuickSort::quickSort(r->AllUniList->UniArray, 0, 1421, "Rank");
+
+         //merge sort
          auto startMergeSortTimer = chrono::high_resolution_clock::now();
-         MergeSort::mergeSort(r->AllUniList->UniArray, 0, 1421, "Ar");
+         MergeSort::mergeSort(r->AllUniList->UniArray, 0, 1421, "Institution");
          auto stopMergeSortTimer = chrono::high_resolution_clock::now();
 
          //calculate quick sort duration
@@ -179,7 +179,6 @@ struct adminMenu {
          }
          return;
      }
- 
 
      static void userMenu() {
          while (true) {
