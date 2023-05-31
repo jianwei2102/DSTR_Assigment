@@ -195,7 +195,7 @@ struct adminMenu {
                  deleteUser();
                  break;
              case 3:
-                 // search - pending
+                 searchUser();
                  break;
              case 4:
                  deleteInactiveUser();
@@ -208,6 +208,24 @@ struct adminMenu {
          }
      }
 
+
+     static void searchUser() {
+         system("cls");
+         Repository* r = Repository::getInstance();
+
+         string username = adminMenuUI::searchUser_UI();
+         UserNode* currentUser = r->AllUserList->searchUser(username);
+
+         if (currentUser->Username != username) {
+             adminMenuUI::invalidUser_UI();
+             return;
+         }
+
+         r->AllUserList->displayLoginUser(currentUser);
+         adminMenuUI::favReportExit_UI();
+         return;
+
+     }
 
      // ----- Feedback -----
      static void viewUserFeedbackList() {
