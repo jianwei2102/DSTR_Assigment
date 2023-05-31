@@ -107,22 +107,7 @@ struct guestMenu
                 MergeSort::mergeSort(r->AllUniList->UniArray, 0, 1421, "Institution");
 
                 //perform binary search
-                UniNode* result = BinarySearch::binarySearch(r->AllUniList->UniArray, 0, 1421, "name", searchValue);
-                if (result != nullptr) {
-                    //header
-
-                    cout << left << setw(50) << "Insitution";
-                    cout << left << setw(20) << "Location Code";
-                    cout << left << setw(20) << "Location" << endl << endl;
-
-                    //body
-                    cout << left << setw(50) << result->Insitution;
-                    cout << left << setw(20) << result->LocationCode;
-                    cout << left << setw(20) << result->Location << endl << endl;
-                }
-                else {
-                    cout << "University not found (Binary Search)." << endl;
-                }
+                BinarySearch::binarySearch(r->AllUniList->UniArray, 0, 1421, "name", searchValue);
 
                 cout << endl;
                 string input;
@@ -150,25 +135,10 @@ struct guestMenu
                 getline(cin, searchValue);
 
                 //sort first 
-                MergeSort::mergeSort(r->AllUniList->UniArray, 0, 1421, "Institution");
+                MergeSort::mergeSort(r->AllUniList->UniArray, 0, 1421, "Location");
 
                 //perform binary search
-                UniNode* result = BinarySearch::binarySearch(r->AllUniList->UniArray, 0, 1421, "location", searchValue);
-                if (result != nullptr) {
-                    //header
-
-                    cout << left << setw(50) << "Insitution";
-                    cout << left << setw(20) << "Location Code";
-                    cout << left << setw(20) << "Location" << endl << endl;
-
-                    //body
-                    cout << left << setw(50) << result->Insitution;
-                    cout << left << setw(20) << result->LocationCode;
-                    cout << left << setw(20) << result->Location << endl << endl;
-                }
-                else {
-                    cout << "Location not found (Binary Search)." << endl;
-                }
+                BinarySearch::binarySearch(r->AllUniList->UniArray, 0, 1421, "location", searchValue);
 
                 cout << endl;
                 string input;
@@ -179,10 +149,6 @@ struct guestMenu
             }
             break;
         }
-            
-
-
-     
         case 3:
             return;
         default:
@@ -210,26 +176,37 @@ struct guestMenu
 
                 getline(cin, searchValue);
 
-                // sort first 
+                // no need sorting for linear
                 // MergeSort::mergeSort(r->AllUniList->UniArray, 0, 1421, "Institution");
 
                 //perform binary search
-                UniNode* result = LinearSearch::linearSearch(r->AllUniList->UniArray, 1421, "name", searchValue);
-                if (result != nullptr) {
-                    //header
+                LinearSearch::linearSearch(r->AllUniList->UniArray, 1421, "name", searchValue);
+               
+                cout << endl;
+                string input;
+                cout << "Enter any other key to exit: ";
+                cin >> input;
 
-                    cout << left << setw(50) << "Insitution";
-                    cout << left << setw(20) << "Location Code";
-                    cout << left << setw(20) << "Location" << endl << endl;
+                break;
+            }
+            break;
+        }
 
-                    //body
-                    cout << left << setw(50) << result->Insitution;
-                    cout << left << setw(20) << result->LocationCode;
-                    cout << left << setw(20) << result->Location << endl << endl;
-                }
-                else {
-                    cout << "University not found (Linear Search)." << endl;
-                }
+        case 2:
+        {
+            Repository* r = Repository::getInstance();
+
+            //get search input value
+            string searchValue;
+
+            while (true) {
+                cout << "Enter a university's location to search: ";
+                cin.ignore();
+
+                getline(cin, searchValue);
+
+                //perform binary search
+                LinearSearch::linearSearch(r->AllUniList->UniArray, 1421, "location", searchValue);
 
                 cout << endl;
                 string input;
@@ -238,13 +215,8 @@ struct guestMenu
 
                 break;
             }
-
-
             break;
         }
-
-        case 2:
-            break;
         case 3:
             return;
         default:
@@ -327,7 +299,7 @@ struct guestMenu
 
         //quick sort
         auto startBinarySearchTimer = chrono::high_resolution_clock::now();
-        BinarySearch::binarySearch(r->AllUniList->UniArray, 0, 1421, "name", "Sunway University");
+       // BinarySearch::binarySearch(r->AllUniList->UniArray, 0, 1421, "name", "Sunway University");
         auto stopBinarySearchTimer = chrono::high_resolution_clock::now();
 
         //TODO:: merge sort

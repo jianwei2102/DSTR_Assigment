@@ -98,6 +98,20 @@ struct MergeSort {
                 }
                 ++k;
             }
+            else if (sortType == "Location") {
+                uniValueLeftStr = leftArr[i]->Location;
+                uniValueRightStr = rightArr[j]->Location;
+
+                if (uniValueLeftStr <= uniValueRightStr) {
+                    array[k] = leftArr[i];
+                    ++i;
+                }
+                else {
+                    array[k] = rightArr[j];
+                    ++j;
+                }
+                ++k;
+            }
 
             
         }
