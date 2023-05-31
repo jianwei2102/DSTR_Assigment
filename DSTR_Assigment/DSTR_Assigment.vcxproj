@@ -147,6 +147,7 @@
     <ClInclude Include="adminMenuUI.h" />
     <ClInclude Include="guestMenu.h" />
     <ClInclude Include="guestMenuUI.h" />
+    <ClInclude Include="linearSearch.h" />
     <ClInclude Include="loadUniCSV.h" />
     <ClInclude Include="mainMenuUI.h" />
     <ClInclude Include="mainMenu.h" />

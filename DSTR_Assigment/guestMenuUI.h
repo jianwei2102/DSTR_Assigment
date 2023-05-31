@@ -53,4 +53,18 @@ struct guestMenuUI
 		cin >> input;
 		return input;
 	}
+
+	static int searchCriteria_UI() {
+		cout << "  --------------------------------- " << endl;
+		cout << " |         Searching By            |" << endl;
+		cout << " |  1 - Institution                |" << endl;
+		cout << " |  2 - Location                   |" << endl;
+		cout << " |  3 - Back                       |" << endl;
+		cout << "  ---------------------------------" << endl;
+
+		cout << "Enter your choice: ";
+		int input = 0;
+		cin >> input;
+		return input;
+	}
 };
