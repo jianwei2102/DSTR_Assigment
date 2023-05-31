@@ -156,7 +156,7 @@ struct adminMenu {
 
          //TODO:: merge sort
          auto startMergeSortTimer = chrono::high_resolution_clock::now();
-         MergeSort::mergeSort(r->AllUniList->UniArray, 0, 1421);
+         MergeSort::mergeSort(r->AllUniList->UniArray, 0, 1421, "Ar");
          auto stopMergeSortTimer = chrono::high_resolution_clock::now();
 
          //calculate quick sort duration

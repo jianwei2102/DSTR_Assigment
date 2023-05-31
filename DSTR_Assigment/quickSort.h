@@ -145,16 +145,23 @@ struct QuickSort {
             if (sortInput == "Y") {
                 for (currentShownLimit += 20; currentShownTotal < currentShownLimit; currentShownTotal++)
                     if (sortType == "Ar") {
-                        cout << "[" << currentShownTotal + 1 << "] " << array[currentShownTotal]->ArScore << endl;
+                        cout << left << setw(5) << i + 1;
+                        cout << left << setw(90) << array[currentShownTotal]->Insitution;
+                        cout << left << setw(8) << array[currentShownTotal]->ArScore << endl;
                     }
                     else if (sortType == "Er") {
-                        cout << "[" << currentShownTotal + 1 << "] " << array[currentShownTotal]->ErScore << endl;
+                        cout << left << setw(5) << i + 1;
+                        cout << left << setw(90) << array[currentShownTotal]->Insitution;
+                        cout << left << setw(8) << array[currentShownTotal]->ErScore << endl;
                     }
                     else if (sortType == "Fsr") {
-                        cout << "[" << currentShownTotal + 1 << "] " << array[currentShownTotal]->FsrScore << endl;
+                        cout << left << setw(5) << i + 1;
+                        cout << left << setw(90) << array[currentShownTotal]->Insitution;
+                        cout << left << setw(8) << array[currentShownTotal]->FsrScore << endl;
                     }
                     else if (sortType == "Institution") {
-                        cout << "[" << currentShownTotal + 1 << "] " << array[currentShownTotal]->Insitution << endl;
+                        cout << left << setw(5) << i + 1;
+                        cout << left << setw(90) << array[currentShownTotal]->Insitution;
                     }
                 //cout << "[" << currentShownTotal + 1 << "] " << array[currentShownTotal]->Insitution << endl;
                 cout << endl;

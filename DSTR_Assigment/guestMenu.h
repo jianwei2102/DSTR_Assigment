@@ -4,6 +4,8 @@
 
 #include "guestMenuUI.h"
 #include "repository.h"
+#include "binarySearch.h"
+#include "linearSearch.h"
 
 struct guestMenu
 {
@@ -11,7 +13,7 @@ struct guestMenu
         Repository* r = Repository::getInstance();
 
         while (true) {
-            system("cls");
+            //system("cls");
             int choice = guestMenuUI::mainMenu_UI();
 
             switch (choice) {
@@ -69,10 +71,10 @@ struct guestMenu
             binarySearchMenu();
             break;
         case 2:
+            linearSearchMenu();
             break;
         case 3:
-            // change to search
-            sortingComparision();
+            searchingComparision();
             break;
         case 4:
             return;
@@ -82,7 +84,82 @@ struct guestMenu
     }
 
     static void binarySearchMenu() {
+        system("cls");
 
+        int choice = guestMenuUI::searchCriteria_UI();
+
+        switch (choice)
+        {
+        case 1:
+        {
+            Repository* r = Repository::getInstance();
+
+            //get search input value
+            string searchValue;
+
+            cout << "Enter a university's full name to search: ";
+            cin >> searchValue;
+
+            //sort first 
+            MergeSort::mergeSort(r->AllUniList->UniArray, 0, 1421, "Institution");
+
+            //perform binary search
+            UniNode* result = BinarySearch::binarySearch(r->AllUniList->UniArray, 0, 1421, "name", "Sunway University");
+            if (result != nullptr) {
+                //convert to table form
+                cout << "The data is " << result->Location << endl;
+            }
+            else {
+                cout << "University Not found (Binary Search)." << endl;
+            }
+            break;
+        }
+            
+        case 2:
+            break;
+        case 3:
+            return;
+        default:
+            return;
+        }
+    }
+
+    static void linearSearchMenu() {
+        system("cls");
+
+        int choice = guestMenuUI::searchCriteria_UI();
+
+        switch (choice)
+        {
+        case 1:
+        {
+            Repository* r = Repository::getInstance();
+
+            //get search input value
+            string searchValue;
+
+            cout << "Enter a university's full name to search: ";
+            cin >> searchValue;
+
+            //perform linear search
+            UniNode* result = LinearSearch::linearSearch(r->AllUniList->UniArray, 1421, "name", "Sunway University");
+            if (result != nullptr) {
+                //convert to table form
+                cout << "The data is " << result->Location << endl;
+            }
+            else {
+                cout << "University Not found (Linear Search)." << endl;
+            }
+            break;
+        }
+
+        case 2:
+            break;
+        case 3:
+            return;
+        default:
+            return;
+        }
     }
 
     static void quickSortMenu() {
@@ -108,7 +185,7 @@ struct guestMenu
 
         while (true) {
             cout << endl;
-            MergeSort::mergeSort(r->AllUniList->UniArray, 0, 1421);
+            MergeSort::mergeSort(r->AllUniList->UniArray, 0, 1421, "Institution");
             MergeSort::printByPagination(r->AllUniList->UniArray);
             cout << endl;
 
@@ -126,12 +203,12 @@ struct guestMenu
 
         //quick sort
         auto startQuickSortTimer = chrono::high_resolution_clock::now();
-        QuickSort::quickSort(r->AllUniList->UniArray, 0, 1421, "Ar");
+        QuickSort::quickSort(r->AllUniList->UniArray, 0, 1421, "Institution");
         auto stopQuickSortTimer = chrono::high_resolution_clock::now();
 
         //TODO:: merge sort
         auto startMergeSortTimer = chrono::high_resolution_clock::now();
-        MergeSort::mergeSort(r->AllUniList->UniArray, 0, 1421);
+        MergeSort::mergeSort(r->AllUniList->UniArray, 0, 1421, "Institution");
         auto stopMergeSortTimer = chrono::high_resolution_clock::now();
 
         //calculate quick sort duration
@@ -153,8 +230,40 @@ struct guestMenu
             break;
         }
         return;
+    }
 
+    static void searchingComparision() {
+        Repository* r = Repository::getInstance();
 
+        //quick sort
+        auto startBinarySearchTimer = chrono::high_resolution_clock::now();
+        BinarySearch::binarySearch(r->AllUniList->UniArray, 0, 1421, "name", "Sunway University");
+        auto stopBinarySearchTimer = chrono::high_resolution_clock::now();
+
+        //TODO:: merge sort
+        auto startLinearSearchTimer = chrono::high_resolution_clock::now();
+        LinearSearch::linearSearch(r->AllUniList->UniArray, 1421, "name", "Sunway University");
+        auto stopLinearSearchTimer = chrono::high_resolution_clock::now();
+
+        //calculate quick sort duration
+        auto binarySearchDuration = chrono::duration_cast<chrono::microseconds>(stopBinarySearchTimer - startBinarySearchTimer);
+
+        //calculate merge sort duration
+        auto linearSearchDuration = chrono::duration_cast<chrono::microseconds>(stopLinearSearchTimer - startLinearSearchTimer);
+
+        while (true) {
+            cout << endl;
+            cout << "Time consumption of binary search: " << binarySearchDuration.count() << " ms" << endl;
+            cout << "Time consumption of linear search: " << linearSearchDuration.count() << " ms" << endl;
+            cout << endl;
+
+            string input;
+            cout << "Enter any other key to exit: ";
+            cin >> input;
+
+            break;
+        }
+        return;
     }
 
     static void registerMenu() {
