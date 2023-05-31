@@ -640,6 +640,7 @@ void UserList::deleteInactiveUserLoop(UserNode* root) {
         if (secondsSinceLastLogin > 2592000) {
             clearLists(root);
             r->AllUserList->deleteNode(root->Username);
+            delete root;
         }
     }
 }
