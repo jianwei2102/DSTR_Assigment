@@ -137,7 +137,8 @@ struct guestMenu
         }
             
         case 2:
-            Repository * r = Repository::getInstance();
+        {
+            Repository* r = Repository::getInstance();
 
             //get search input value
             string searchValue;
@@ -176,9 +177,12 @@ struct guestMenu
 
                 break;
             }
-
-
             break;
+        }
+            
+
+
+     
         case 3:
             return;
         default:
@@ -200,18 +204,42 @@ struct guestMenu
             //get search input value
             string searchValue;
 
-            cout << "Enter a university's full name to search: ";
-            cin >> searchValue;
+            while (true) {
+                cout << "Enter a university's full name to search: ";
+                cin.ignore();
 
-            //perform linear search
-            UniNode* result = LinearSearch::linearSearch(r->AllUniList->UniArray, 1421, "name", "Sunway University");
-            if (result != nullptr) {
-                //convert to table form
-                cout << "The data is " << result->Location << endl;
+                getline(cin, searchValue);
+
+                // sort first 
+                // MergeSort::mergeSort(r->AllUniList->UniArray, 0, 1421, "Institution");
+
+                //perform binary search
+                UniNode* result = LinearSearch::linearSearch(r->AllUniList->UniArray, 1421, "name", searchValue);
+                if (result != nullptr) {
+                    //header
+
+                    cout << left << setw(50) << "Insitution";
+                    cout << left << setw(20) << "Location Code";
+                    cout << left << setw(20) << "Location" << endl << endl;
+
+                    //body
+                    cout << left << setw(50) << result->Insitution;
+                    cout << left << setw(20) << result->LocationCode;
+                    cout << left << setw(20) << result->Location << endl << endl;
+                }
+                else {
+                    cout << "University not found (Linear Search)." << endl;
+                }
+
+                cout << endl;
+                string input;
+                cout << "Enter any other key to exit: ";
+                cin >> input;
+
+                break;
             }
-            else {
-                cout << "University Not found (Linear Search)." << endl;
-            }
+
+
             break;
         }
 
