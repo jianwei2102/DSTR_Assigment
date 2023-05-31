@@ -176,11 +176,8 @@ struct guestMenu
 
                 getline(cin, searchValue);
 
-                // no need sorting for linear
-                // MergeSort::mergeSort(r->AllUniList->UniArray, 0, 1421, "Institution");
-
                 //perform binary search
-                LinearSearch::linearSearch(r->AllUniList->UniArray, 1421, "name", searchValue);
+                LinearSearch::linearSearch(r->AllUniList->UniArray, 1422, "name", searchValue);
                
                 cout << endl;
                 string input;
@@ -206,7 +203,7 @@ struct guestMenu
                 getline(cin, searchValue);
 
                 //perform binary search
-                LinearSearch::linearSearch(r->AllUniList->UniArray, 1421, "location", searchValue);
+                LinearSearch::linearSearch(r->AllUniList->UniArray, 1422, "location", searchValue);
 
                 cout << endl;
                 string input;
@@ -263,12 +260,18 @@ struct guestMenu
     static void sortingComparision() {
         Repository* r = Repository::getInstance();
 
+        //reset sorting
+        QuickSort::quickSort(r->AllUniList->UniArray, 0, 1421, "Rank");
+
         //quick sort
         auto startQuickSortTimer = chrono::high_resolution_clock::now();
         QuickSort::quickSort(r->AllUniList->UniArray, 0, 1421, "Institution");
         auto stopQuickSortTimer = chrono::high_resolution_clock::now();
 
-        //TODO:: merge sort
+        //reset sorting
+        QuickSort::quickSort(r->AllUniList->UniArray, 0, 1421, "Rank");
+
+        //merge sort
         auto startMergeSortTimer = chrono::high_resolution_clock::now();
         MergeSort::mergeSort(r->AllUniList->UniArray, 0, 1421, "Institution");
         auto stopMergeSortTimer = chrono::high_resolution_clock::now();
@@ -297,12 +300,12 @@ struct guestMenu
     static void searchingComparision() {
         Repository* r = Repository::getInstance();
 
-        //quick sort
+        //binary search
         auto startBinarySearchTimer = chrono::high_resolution_clock::now();
-       // BinarySearch::binarySearch(r->AllUniList->UniArray, 0, 1421, "name", "Sunway University");
+        BinarySearch::binarySearch(r->AllUniList->UniArray, 0, 1421, "name", "Sunway University");
         auto stopBinarySearchTimer = chrono::high_resolution_clock::now();
 
-        //TODO:: merge sort
+        //linear search
         auto startLinearSearchTimer = chrono::high_resolution_clock::now();
         LinearSearch::linearSearch(r->AllUniList->UniArray, 1421, "name", "Sunway University");
         auto stopLinearSearchTimer = chrono::high_resolution_clock::now();
