@@ -377,7 +377,7 @@ struct userMenu {
         return;
     }
 
-    // ----- Fav Uni -----
+
     static void viewFavUni(){
         cout << endl << " VIEW UNI's DETAILS" << endl;
         // Prompt uni ID input

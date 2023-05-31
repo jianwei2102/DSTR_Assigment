@@ -131,13 +131,13 @@ struct adminMenu {
          switch (choice)
          {
          case 1:
-             QuickSort::quickSort(r->AllUniList->UniArray, 0, 1421, "Ar");
+             MergeSort::mergeSort(r->AllUniList->UniArray, 0, 1421, "Ar");
              return;
          case 2:
-             QuickSort::quickSort(r->AllUniList->UniArray, 0, 1421, "Fsr");
+             MergeSort::mergeSort(r->AllUniList->UniArray, 0, 1421, "Fsr");
              return;
          case 3:
-             QuickSort::quickSort(r->AllUniList->UniArray, 0, 1421, "Er");
+             MergeSort::mergeSort(r->AllUniList->UniArray, 0, 1421, "Er");
              return;
          case 0:
              return;

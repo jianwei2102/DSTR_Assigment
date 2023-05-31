@@ -78,6 +78,20 @@ struct QuickSort {
                     swap(array, i, j);
                 }
             }
+            else if (sortType == "Rank") {
+                uniValueIns = array[j]->Rank;
+                pivotValueIns = pivot->Rank;
+
+                if (uniValueIns <= pivotValueIns) {
+
+                    // if element smaller than pivot is found
+                    // swap it with the greater element pointed by i
+                    i++;
+
+                    // swap element at i with element at j
+                    swap(array, i, j);
+                }
+            }
 
 
         }

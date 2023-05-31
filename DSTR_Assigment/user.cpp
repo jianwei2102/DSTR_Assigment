@@ -2,6 +2,7 @@
 #include "favUni.hpp"
 #include "userMenuUI.h"
 #include "repository.h"
+#include "mergeSort.h"
 
 UserNode* UserList::root;
 int UserList::size = 1;
@@ -491,6 +492,8 @@ void UserList::removeFavouriteUniFromUser(UserNode* User, string UniID)
 void UserList::showOwnFavoriteUni(UserNode* User) {
 
     UserFavouriteUni* currentUni = User->FavouriteUniList->head;
+    Repository* r = Repository::getInstance();
+    MergeSort::mergeSort(r->AllUniList->UniArray, 0, 1421, "Rank");
 
     if (!currentUni) {
         cout << " | No favorite uni found for the user                     |" << endl;

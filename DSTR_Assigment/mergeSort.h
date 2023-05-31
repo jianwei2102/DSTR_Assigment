@@ -84,6 +84,20 @@ struct MergeSort {
                 }
                 ++k;
             }
+            else if (sortType == "Rank") {
+                uniValueLeft = leftArr[i]->Rank;
+                uniValueRight = rightArr[j]->Rank;
+
+                if (uniValueLeft <= uniValueRight) {
+                    array[k] = leftArr[i];
+                    ++i;
+                }
+                else {
+                    array[k] = rightArr[j];
+                    ++j;
+                }
+                ++k;
+            }
 
             
         }
