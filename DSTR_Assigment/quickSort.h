@@ -157,24 +157,28 @@ struct QuickSort {
             cin >> sortInput;
 
             if (sortInput == "Y" || sortInput == "y") {
+                system("cls");
+                cout << left << setw(5) << "No.";
+                cout << left << setw(90) << "Insitution";
+                cout << left << setw(8) << sortType << endl;
                 for (currentShownLimit += 20; currentShownTotal < currentShownLimit; currentShownTotal++)
                     if (sortType == "Ar") {
-                        cout << left << setw(5) << i + 1;
+                        cout << left << setw(5) << currentShownTotal + 1;
                         cout << left << setw(90) << array[currentShownTotal]->Insitution;
                         cout << left << setw(8) << array[currentShownTotal]->ArScore << endl;
                     }
                     else if (sortType == "Er") {
-                        cout << left << setw(5) << i + 1;
+                        cout << left << setw(5) << currentShownTotal + 1;
                         cout << left << setw(90) << array[currentShownTotal]->Insitution;
                         cout << left << setw(8) << array[currentShownTotal]->ErScore << endl;
                     }
                     else if (sortType == "Fsr") {
-                        cout << left << setw(5) << i + 1;
+                        cout << left << setw(5) << currentShownTotal + 1;
                         cout << left << setw(90) << array[currentShownTotal]->Insitution;
                         cout << left << setw(8) << array[currentShownTotal]->FsrScore << endl;
                     }
                     else if (sortType == "Institution") {
-                        cout << left << setw(5) << i + 1;
+                        cout << left << setw(5) << currentShownTotal + 1;
                         cout << left << setw(90) << array[currentShownTotal]->Insitution;
                     }
                 //cout << "[" << currentShownTotal + 1 << "] " << array[currentShownTotal]->Insitution << endl;

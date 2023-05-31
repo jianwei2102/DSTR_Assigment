@@ -157,8 +157,11 @@ struct MergeSort {
             cin >> sortInput;
 
             if (sortInput == "Y") {
+                system("cls");
+                cout << left << setw(5) << "No.";
+                cout << left << setw(90) << "Insitution" << endl;
                 for (currentShownLimit += 20; currentShownTotal < currentShownLimit; currentShownTotal++)
-                    cout << left << setw(5) << i + 1 << setw(90) << array[currentShownTotal]->Insitution << endl;
+                    cout << left << setw(5) << currentShownTotal + 1 << setw(90) << array[currentShownTotal]->Insitution << endl;
 
                 cout << endl;
                 cout << "Showing " << currentShownLimit << " records" << endl;
