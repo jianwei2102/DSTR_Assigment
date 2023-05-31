@@ -135,7 +135,7 @@ struct adminMenuUI {
 		// Display table header
 		system("cls");
 		cout << "  ---------------------------------------------- " << endl;
-		cout << " |             Favourite Uni Report             |" << endl;
+		cout << " |          Top 10 Favourite Uni Report         |" << endl;
 		cout << "  ---------------------------------------------- " << endl;
 		cout << left << setw(17) << " | UniID";
 		cout << left << setw(31) << "Favourite Count" << right << "|" << endl;

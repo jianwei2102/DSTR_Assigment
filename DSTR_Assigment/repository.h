@@ -15,7 +15,7 @@ public:
     UserList* AllUserList;
     UniList* AllUniList;
     Feedbacklist* AllFeedbackLists;
-    HashMap FavUniCount;
+    HashTable FavUniCount;
 
     Repository();
 
