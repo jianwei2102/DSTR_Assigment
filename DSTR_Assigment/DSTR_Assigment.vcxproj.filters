@@ -122,5 +122,8 @@
     <ClInclude Include="guestMenuUI.h">
       <Filter>Source Files\UI</Filter>
     </ClInclude>
+    <ClInclude Include="linearSearch.h">
+      <Filter>Source Files\Algorithms</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

@@ -437,7 +437,7 @@ struct userMenu {
         string input;
         cout << "Enter any other key to exit: ";
         getline(cin, input);
-
+        system("cls");
         return;
     }
 

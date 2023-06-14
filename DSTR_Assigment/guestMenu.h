@@ -230,9 +230,9 @@ struct guestMenu
             QuickSort::printByPagination(r->AllUniList->UniArray, "Institution");
             cout << endl;
 
-            string input;
+            /*string input;
             cout << "Enter any other key to exit: ";
-            cin >> input;
+            cin >> input;*/
 
             break;
         }
@@ -248,9 +248,9 @@ struct guestMenu
             MergeSort::printByPagination(r->AllUniList->UniArray);
             cout << endl;
 
-            string input;
+            /*string input;
             cout << "Enter any other key to exit: ";
-            cin >> input;
+            cin >> input;*/
 
             break;
         }
@@ -380,14 +380,14 @@ struct guestMenu
             if (password.length() == 0)
                 return;
 
-            if (password.length() > 8)
+            if (password.length() >= 8)
                 break;
 
             cout << "Password must be 8 or more characters" << endl;
         }
 
         r->AllUserList->insertIntoUserTree(username, email, password);
-        cout << "Your account has been successfully created" << endl;
+        cout << "Your account has been successfully created! Press any key to exit: " ;
         string input;
         getline(cin, input);
         return;

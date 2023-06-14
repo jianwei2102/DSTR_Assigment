@@ -22,8 +22,8 @@ struct adminMenu {
             }
             else {
                 cout << endl << "Invalid username and password!" << endl;
-                cout << "1 - Retry login" << endl;
-                cout << "2 - Return to Main Menu" << endl;
+                cout << "[1] - Retry login" << endl;
+                cout << "[2] - Return to Main Menu" << endl;
 
                 int choice = 0;
                 cout << "Select an Operation Number: ";
@@ -34,7 +34,6 @@ struct adminMenu {
                     adminLogin();
                     break;
                 case 2:
-                    uniSortMenu();
                     return;
                 default:
                     adminLogin();
