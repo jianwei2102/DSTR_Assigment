@@ -153,7 +153,7 @@ struct QuickSort {
         cout << endl;
 
         while (currentShownTotal < 1421) {
-            cout << "Enter [Y] to view another 20 records or [N] to exit: " << endl;
+            cout << "Enter [Y] to view another 20 records or [N] to exit: ";
             cin >> sortInput;
 
             if (sortInput == "Y" || sortInput == "y") {

@@ -212,5 +212,4 @@ void Feedbacklist::deleteAllFeedbackNode(string feedbackID) {
     }
     // Delete the feedback node
     delete feedbackNode;
-
 }

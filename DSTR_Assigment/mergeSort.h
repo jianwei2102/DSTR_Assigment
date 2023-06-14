@@ -167,10 +167,10 @@ struct MergeSort {
         cout << endl;
 
         while (currentShownTotal < 1422) {
-            cout << "Enter [Y] to view another 20 records or [N] to exit: " << endl;
+            cout << "Enter [Y] to view another 20 records or [N] to exit: ";
             cin >> sortInput;
 
-            if (sortInput == "Y") {
+            if (sortInput == "Y" || sortInput == "y") {
                 system("cls");
                 cout << left << setw(5) << "No.";
                 cout << left << setw(90) << "Insitution" << endl;
@@ -180,7 +180,7 @@ struct MergeSort {
                 cout << endl;
                 cout << "Showing " << currentShownLimit << " records" << endl;
             }
-            else if (sortInput == "N") {
+            else if (sortInput == "N" || sortInput == "n") {
                 return;
             }
         }

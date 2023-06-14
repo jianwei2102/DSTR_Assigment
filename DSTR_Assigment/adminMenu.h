@@ -113,9 +113,9 @@ struct adminMenu {
              QuickSort::printByPagination(r->AllUniList->UniArray, "Institution");
              cout << endl;
 
-             string input;
+             /*string input;
              cout << "Enter any other key to exit: ";
-             cin >> input;
+             cin >> input;*/
 
              break;
          }
@@ -131,9 +131,9 @@ struct adminMenu {
              MergeSort::printByPagination(r->AllUniList->UniArray);
              cout << endl;
 
-             string input;
+             /*string input;
              cout << "Enter any other key to exit: ";
-             cin >> input;
+             cin >> input;*/
 
              break;
          }

@@ -17,7 +17,7 @@ struct addPredefinedUser {
 		list->insertIntoUserTree("Alice", "alice@gmail.com", "Alice123");
 		list->insertIntoUserTree("Bob", "bob@gmail.com", "qwerty");
 		list->insertIntoUserTree("C", "ac@gmail.com", "ac");
-		list->insertIntoUserTree("Inacti", "jianwei@gmail.com", "Inacti12");
+		list->insertIntoUserTree("Inacti", "inacti@gmail.com", "Inacti12");
 
 		// Login alice
 		UserNode* alice = list->login("Alice", "Alice123");
