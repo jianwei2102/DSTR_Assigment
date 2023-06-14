@@ -388,6 +388,8 @@ struct guestMenu
 
         r->AllUserList->insertIntoUserTree(username, email, password);
         cout << "Your account has been successfully created" << endl;
+        string input;
+        getline(cin, input);
         return;
     }
 

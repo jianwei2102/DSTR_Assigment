@@ -46,8 +46,8 @@ struct adminMenuUI {
 		cout << "USER MENU" << endl;
 		cout << " [1] Modify User           " << endl;
 		cout << " [2] Delete User           " << endl;
-		cout << " [3] Search                " << endl;
-		cout << " [4] Delete Inavtive User  " << endl;
+		cout << " [3] Search User           " << endl;
+		cout << " [4] Delete Inactive User  " << endl;
 		cout << " [5] Back                  " << endl;
 		int input = 0;
 		cout << "Select an Operation Number: ";
@@ -61,6 +61,15 @@ struct adminMenuUI {
 		cin.ignore();
 		getline(cin, input);
 		
+		return input;
+	}
+
+	static string searchUser_UI() {
+		cout << " Enter the user's username to search: ";
+		string input;
+		cin.ignore();
+		getline(cin, input);
+
 		return input;
 	}
 

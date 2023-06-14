@@ -299,16 +299,13 @@ void UserList::deleteNode(string searchKey)
 {
     UserNode* y;
     UserNode* x;
-
     UserNode* target = searchUser(searchKey);
-
 
     if (target == this->nullNode)
     {
         cout << "User does not exist";
         return;
     }
-
     y = target;
     char y_original_color = y->color;
 
@@ -338,13 +335,11 @@ void UserList::deleteNode(string searchKey)
             y->rightUser = target->rightUser;
             y->rightUser->parent = y;
         }
-
         transplant(target, y);
         y->leftUser = target->leftUser;
         y->leftUser->parent = y;
         y->color = target->color;
     }
-
     if (y_original_color == 'B')
     {
         deleteFixup(x);
@@ -354,7 +349,6 @@ void UserList::deleteNode(string searchKey)
 void UserList::deleteFixup(UserNode* x)
 {
     UserNode* s;
-
     while (x != root && x->color == 'B') {
         if (x == x->parent->leftUser) {
             s = x->parent->rightUser;
@@ -398,7 +392,7 @@ void UserList::deleteFixup(UserNode* x)
                 s = x->parent->leftUser;
             }
 
-            if (s->rightUser->color == 'B' && s->rightUser->color == 'B') {
+            if (s->rightUser->color == 'B' && s->leftUser->color == 'B') {
                 // case 3.2
                 s->color = 'R';
                 x = x->parent;
